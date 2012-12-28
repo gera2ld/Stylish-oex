@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<title class=i18n>Options - Stylish for Opera</title>
+	</head>
+	<body>
+		<h1 class=i18n>Options - Stylish for Opera</h1>
+		<div class=main>
+			<div id=header>
+				<div class=left>
+					<button id=bNew class=i18n>New</button>
+					<a href=http://userstyles.org target=_blank class=i18n>Get more styles from UserStyles.org</a>
+				</div>
+				<div class=right>
+					<button id=bUpdate class=i18n>Update all</button>
+					<button id=bAdvanced class=i18n>Advanced</button>
+				</div>
+			</div>
+			<div class=x></div>
+			<fieldset>
+				<legend class=i18n>CSS List</legend>
+				<div id=cssList></div>
+			</fieldset>
+			<div id=footer class=i18n>Designed by Gerald</div>
+		</div>
+		<div id=overlay></div>
+		<table id=editor class="float hide">
+			<tr>
+				<td class=side>
+					<h2 class=i18n>CSS Editor</h2>
+					<label class=i18n>Name:</label>
+					<input type=text id=mName>
+					<label class=i18n>Sections:</label>
+					<div id=mSection class=list></div>
+					<div><button id=mNew class=i18n>New</button> <button id=mDel class=i18n>Del</button></div>
+				</td>
+				<td class=content>
+					<div class="i18n right">Hint for rules</div>
+					<label class=i18n>Includes:</label>
+					<textarea id=mInc></textarea>
+					<label class=i18n>Excludes:</label>
+					<textarea id=mExc></textarea>
+					<label class=i18n>CSS:</label>
+					<textarea id=mCss></textarea>
+					<div class=left>
+						<label class=i18n>Remove prefixes while applying:</label>
+						<input type=checkbox id=mDeMoz><label for=mDeMoz class=em>-moz-</label>
+						<input type=checkbox id=mDeWebkit><label for=mDeWebkit class=em>-webkit-</label>
+					</div>
+					<div class=right>
+						<button id=mSave class=i18n>Save</button>
+						<button id=mSaveClose class=i18n>Save and Close</button>
+						<button id=mClose class=i18n>Close</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<div id=export class="float hide">
+			<h2 class=i18n>Data Export</h2>
+			<label class=i18n>CSS List</label>
+			<div class=right>
+				<button id=bSelect class=i18n>All/None</button>
+			</div>
+			<div id=xList class=list></div>
+			<div class=right>
+				<button id=bExport class=i18n>Export</button>
+				<button id=bClose class=i18n>Close</button>
+			</div>
+		</div>
+		<div id=advanced class="float hide">
+			<h2 class=i18n>Advanced</h2>
+			<div><input type=checkbox id=cShow><label for=cShow class=i18n>Show button on toolbar</label></div>
+			<div><input type=checkbox id=cInstall><label for=cInstall class=i18n>Allow installing .user.css files loaded by Opera.</label></div>
+			<fieldset><legend class=i18n>Data</legend><button id=aExport class=i18n>Export to zip file</button></fieldset>
+			<div class=right><button id=aClose class=i18n>Close</button></div>
+		</div>
+	</body>
+</html>
+<script src="jszip.js"></script>
+<script src="options.js"></script>
+<script src="i18n.js"></script>
