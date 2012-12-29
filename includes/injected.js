@@ -13,6 +13,9 @@ opera.extension.addEventListener('message', function(event) {
 	} else if(message.topic=='ParsedCSS') {
 		alert(message.data.message);
 		if(!message.data.error) window.fireCustomEvent('styleInstalled');
+	} else if(message.topic=='Confirm') {
+		if(message.data&&confirm(message.data))
+			opera.extension.postMessage({topic:'ParseFirefoxCSS',data:{code:document.body.innerText}});
 	} else {
 		c=callbacks[message.topic];
 		if(c) {c(message.data);delete callbacks[message.topic];}
@@ -91,10 +94,7 @@ function fixOpera(){
 	window.addCustomEventListener('stylishInstallOpera',install);
 	window.addCustomEventListener('stylishUpdate',install);
 }
-if(/\.user\.css$/.test(window.location.href)) window.addEventListener('load',function(){
-	if(eval(widget.preferences.getItem('installFile'))) {
-		var c=confirm('Do you want to install this UserCSS?');
-		if(c) opera.extension.postMessage({topic:'ParseFirefoxCSS',data:{code:document.body.innerText}});
-	}
-},false); else if(/^http:\/\/userstyles\.org\/styles\//.test(window.location.href))
+if(/\.user\.css$/.test(window.location.href))
+	opera.extension.postMessage({topic:'InstallCSS'});
+else if(/^http:\/\/userstyles\.org\/styles\//.test(window.location.href))
 	window.addEventListener('DOMNodeInserted',fixOpera,false);

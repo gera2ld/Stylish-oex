@@ -43,10 +43,11 @@ function addItem(n){
 	return d;
 }
 L.onclick=function(e){
-	var p=e.target;
-	if(p.tagName!='BUTTON') return;
+	var o=e.target;
+	if(o.tagName!='BUTTON') return;
 	e.preventDefault();
-	e=p.getAttribute('data');p=p.parentNode.parentNode;
+	e=o.getAttribute('data');
+	var p=o.parentNode.parentNode;
 	var i=Array.prototype.indexOf.call(L.childNodes,p);
 	switch(e){
 		case 'edit':

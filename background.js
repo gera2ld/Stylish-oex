@@ -152,6 +152,7 @@ function parseFirefoxCSS(e,d){
 		p=code.indexOf('{',i);
 		m=code.slice(i,p);r={domains:[],regexps:[],urlPrefixes:[],urls:[]};
 		m.replace(/([\w-]+)\(('|")?(.*?)\2\)/g,function(v,g1,g2,g3){
+			try{g3=JSON.parse('"'+g3+'"');}catch(e){}
 			if(g1=='url-prefix') r.urlPrefixes.push(g3);
 			else if(g1=='url') r.urls.push(g3);
 			else if(g1=='domain') r.domains.push(g3);
@@ -235,12 +236,22 @@ function parseCSSURL(e, data){
 	if(data.options) url+='?'+data.options;
 	fetchURL(url,function(s,t){data.status=s;data.code=t;parseCSS(e,data);});
 }
+function installCSS(e,url){
+	if(!url) {
+		if(installFile) e.source.postMessage({topic:'Confirm',data:_('Do you want to install this UserCSS?')});
+	}
+}
 
+var messages={
+	'LoadCSS':loadCSS,
+	'ParseCSSURL':parseCSSURL,
+	'ParseFirefoxCSS':parseFirefoxCSS,
+	'CheckCSS':checkCSS,
+	'InstallCSS':installCSS,
+};
 function onMessage(e) {
-	var message = e.data;
-	if(message.topic=='LoadCSS') loadCSS(e, message.data);
-	else if(message.topic=='ParseCSSURL') parseCSSURL(e, message.data);
-	else if(message.topic=='CheckCSS') checkCSS(e, message.data);
+	var message = e.data,c=messages[message.topic];
+	if(c) c(e,message.data);
 }
 
 var isApplied=getSetting('isApplied',true),
