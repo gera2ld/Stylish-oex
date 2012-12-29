@@ -28,7 +28,7 @@
 		<div id=overlay></div>
 		<table id=editor class="float hide">
 			<tr>
-				<td class=side>
+				<td class=side rowspan=3>
 					<h2 class=i18n>CSS Editor</h2>
 					<label class=i18n>Name:</label>
 					<input type=text id=mName>
@@ -36,14 +36,29 @@
 					<div id=mSection class=list></div>
 					<div><button id=mNew class=i18n>New</button> <button id=mDel class=i18n>Del</button></div>
 				</td>
-				<td class=content>
-					<div class="i18n right">Hint for rules</div>
-					<label class=i18n>Includes:</label>
-					<textarea id=mInc></textarea>
-					<label class=i18n>Excludes:</label>
-					<textarea id=mExc></textarea>
-					<label class=i18n>CSS:</label>
-					<textarea id=mCss></textarea>
+				<td class=rules>
+					<label class=i18n>Domains:</label>
+					<textarea id=mDomain></textarea>
+				</td>
+				<td class=rules>
+					<label class=i18n>Regular-Expressions:</label>
+					<textarea id=mRegexp></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td class=rules>
+					<label class=i18n>Url-prefixes:</label>
+					<textarea id=mUrlPrefix></textarea>
+				</td>
+				<td class=rules>
+					<label class=i18n>Urls:</label>
+					<textarea id=mUrl></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td class=content colspan=2>
+					<label class=i18n>Code:</label>
+					<textarea id=mCode></textarea>
 					<div class=left>
 						<label class=i18n>Remove prefixes while applying:</label>
 						<input type=checkbox id=mDeMoz><label for=mDeMoz class=em>-moz-</label>

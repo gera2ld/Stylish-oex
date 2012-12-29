@@ -19,7 +19,7 @@ function getTime(r){
 // Main options
 function loadName(d,n){
 	var a=d.firstChild;
-	if(n.id>1) a.href='http://userstyles.org/styles/'+n.id+'/';
+	if(n.url) a.href=n.url;
 	a.title=n.name;
 	a.innerText=n.name||'('+_('Null')+')';
 }
@@ -29,10 +29,10 @@ function loadItem(d,n){
 	+'<span class=updated>'+(n.updated?_('Last updated: ')+getDate(n.updated):'')+'</span>'
 	+'<span class=message></span>'
 	+'<div class=panel>'
-		+(n.id>1?'<button onclick="work(this,3);">'+_('Update')+'</button> ':'')
-		+'<button onclick="work(this,0);">'+_('Edit')+'</button> '
-		+'<button onclick="work(this,1);">'+_(n.enabled?'Disable':'Enable')+'</button> '
-		+'<button onclick="work(this,2);">'+_('Remove')+'</button>'
+		+(n.metaUrl?'<button data=update>'+_('Update')+'</button> ':'')
+		+'<button data=edit>'+_('Edit')+'</button> '
+		+'<button data=enable>'+_(n.enabled?'Disable':'Enable')+'</button> '
+		+'<button data=remove>'+_('Remove')+'</button>'
 	+'</div>';
 	loadName(d,n);
 }
@@ -42,14 +42,17 @@ function addItem(n){
 	L.appendChild(d);
 	return d;
 }
-function work(o,f){
-	var p=o,i;
-	while(p&&p.parentNode!=L) p=p.parentNode;i=Array.prototype.indexOf.call(L.childNodes,p);
-	switch(f){
-		case 0:	// Edit
+L.onclick=function(e){
+	var p=e.target;
+	if(p.tagName!='BUTTON') return;
+	e.preventDefault();
+	e=p.getAttribute('data');p=p.parentNode.parentNode;
+	var i=Array.prototype.indexOf.call(L.childNodes,p);
+	switch(e){
+		case 'edit':
 			edit(i);
 			break;
-		case 1:	// Enable
+		case 'enable':
 			if(bg.css[i].enabled=!bg.css[i].enabled) {
 				p.classList.remove('disabled');
 				o.innerText=_('Disable');
@@ -59,22 +62,22 @@ function work(o,f){
 			}
 			bg.saveCSS();
 			break;
-		case 2:	// Remove
+		case 'remove':
 			bg.removeCSS(i);
 			L.removeChild(p);
 			break;
-		case 3:	// Update
+		case 'update':
 			check(i);
 			break;
 	}
-}
+};
 function load(){
 	L.innerHTML='';
 	for(var i=0;i<bg.css.length;i++) addItem(bg.css[i]);
 }
 load();
 $('bNew').onclick=function(){var d=bg.newCSS(null,true);addItem(d);};
-$('bUpdate').onclick=function(){for(var i=0;i<bg.css.length;i++) if(bg.css[i].id>1) check(i);};
+$('bUpdate').onclick=function(){for(var i=0;i<bg.css.length;i++) if(bg.css[i].metaUrl) check(i);};
 function showDialog(D){
 	O.classList.add('o_in');
 	O.onclick=D.onclose;
@@ -121,17 +124,17 @@ $('bSelect').onclick=function(){
 	for(i=0;i<c.length;i++) if(v) c[i].classList.add('selected'); else c[i].classList.remove('selected');
 };
 function getCSS(c){
-	var d=['/* @id '+c.id+ ' */','/* @name '+c.name+' */'];
+	var d=[];
+	['id','name','url','metaUrl','updateUrl'].forEach(function(i){
+		if(c[i]) d.push('/* @'+i+' '+c[i].toString().replace(/\*/g,'+')+' */');
+	});
 	c.data.forEach(function(i){
 		var p=[];
-		i.inc.forEach(function(j){
-			var m;
-			if(m=j.match(/^([^\*]*)\*$/)) p.push('url-prefix("'+m[1]+'")');
-			else if(m=j.match(/^\/\^([^\*]+)\$\/$/)) p.push('url("'+m[1].replace(/\\([\.\?])/g,'$1')+'")');
-			else if(m=j.match(/^\*([^\/\?\*]+)\/\*$/)) p.push('domain("'+m[1].replace(/\\\./g,'.')+'")');
-			else if(m=j.match(/^\/(.*?)\/$/)) p.push('regexp("'+m[1]+'")');
-		});
-		d.push('@-moz-document '+p.join(',\n')+'{\n'+i.css+'\n}\n');
+		i.domains.forEach(function(j){p.push('domain('+JSON.stringify(j)+')');});
+		i.regexps.forEach(function(j){p.push('regexp('+JSON.stringify(j)+')');});
+		i.urlPrefixes.forEach(function(j){p.push('url-prefix('+JSON.stringify(j)+')');});
+		i.urls.forEach(function(j){p.push('url('+JSON.stringify(j)+')');});
+		d.push('@-moz-document '+p.join(',\n')+'{\n'+i.code+'\n}\n');
 	});
 	return d.join('\n');
 }
@@ -150,52 +153,49 @@ X.onclose=$('bClose').onclick=function(){closeDialog(X);};
 
 // Update checker
 function check(i){
-	var l=L.childNodes[i],o=l.childNodes[3].firstChild,m=l.childNodes[2],s=bg.css[i],d;
+	var l=L.childNodes[i],o=l.childNodes[3].firstChild,m=l.childNodes[2],c=bg.css[i],d;
 	m.innerHTML=_('Checking for updates...');
 	o.disabled=true;
 	function update(){
 		m.innerHTML=_('Updating...');
-		req=new window.XMLHttpRequest();
-		req.open('GET', 'http://userstyles.org/styles/'+s.id+'.css', true);
-		req.onreadystatechange=function(){
-			if(req.readyState==4) {
-				if(req.status==200) {
-					bg.parseCSS(null,{id:s.id,updated:d,code:req.responseText});
-					l.childNodes[1].innerHTML=_('Last updated: ')+getDate(d);
-					m.innerHTML=_('Update finished!');
-				} else m.innerHTML=_('Update failed!');
-				o.disabled=false;
-			}
-		};
-		req.send();
+		bg.fetchURL(c.updateUrl,function(s,t){
+			if(s==200) {
+				bg.parseCSS(null,{id:c.id,updated:d,code:t});
+				l.childNodes[1].innerHTML=_('Last updated: ')+getDate(d);
+				m.innerHTML=_('Update finished!');
+			} else m.innerHTML=_('Update failed!');
+			o.disabled=false;
+		});
 	}
-	var req=new window.XMLHttpRequest();
-	req.open('GET', 'http://userstyles.org/styles/'+s.id+'.json', true);
-	req.onreadystatechange=function(){
-		if(req.readyState==4) try {
-			d=getTime(JSON.parse(req.responseText));
-			if(!s.updated||s.updated<d) {
-				if(s.options) m.innerHTML='<span class=new>'+_('New version is found!')+'</span> '+_('Go to homepage for update.');
-				else return update();
+	bg.fetchURL(c.metaUrl,function(s,t){
+		try {
+			d=getTime(JSON.parse(t));
+			if(!c.updated||c.updated<d) {
+				if(c.updateUrl) return update();
+				else m.innerHTML='<span class=new>'+_('New version is found!')+'</span> '+_('Go to homepage for update.');
 			} else m.innerHTML=_('No update is found!');
 		} catch(e) {
 			m.innerHTML=_('Failed fetching update information.');
 			opera.postError(e);
 		}
 		o.disabled=false;
-	};
-	req.send();
+	});
 }
 
 // CSS Editor
-var M=$('editor'),S=$('mSection'),N=$('mName'),
-	I=$('mInc'),E=$('mExc'),T=$('mCss'),dM=$('mDeMoz'),dW=$('mDeWebkit');
+var M=$('editor'),S=$('mSection'),N=$('mName'),T=$('mCode'),
+    rD=$('mDomain'),rR=$('mRegexp'),rP=$('mUrlPrefix'),rU=$('mUrl'),
+    dM=$('mDeMoz'),dW=$('mDeWebkit');
 function cloneData(d){
 	var c=[];
-	for(var i=0;i<d.length;i++) if(d[i].css) c.push({
-		inc:d[i].inc.concat(),
-		exc:d[i].exc.concat(),
-		css:d[i].css
+	d.forEach(function(i){
+		if(i.code) c.push({
+			domains:i.domains.concat(),
+			regexps:i.regexps.concat(),
+			urlPrefixes:i.urlPrefixes.concat(),
+			urls:i.urls.concat(),
+			code:i.code
+		});
 	});
 	return c;
 }
@@ -221,9 +221,11 @@ function mSaveSection(r){
 	if(M.data[S.cur]){
 		if(S.dirty){
 			S.dirty=false;
-			M.data[S.cur].inc=split(I.value);
-			M.data[S.cur].exc=split(E.value);
-			M.data[S.cur].css=T.value;
+			M.data[S.cur].domains=split(rD.value);
+			M.data[S.cur].regexps=split(rR.value);
+			M.data[S.cur].urlPrefixes=split(rP.value);
+			M.data[S.cur].urls=split(rU.value);
+			M.data[S.cur].code=T.value;
 		}
 		if(r) S.childNodes[S.cur].classList.remove('selected');
 	}
@@ -241,29 +243,31 @@ function mSave(){
 }
 function mShow(){
 	var c=S.childNodes[S.cur];
-	I.disabled=E.disabled=T.disabled=!c;
+	rD.disabled=rR.disabled=rP.disabled=rU.disabled=T.disabled=!c;
 	if(c) {
 		S.childNodes[S.cur].classList.add('selected');
-		I.value=M.data[S.cur].inc.join('\n');
-		E.value=M.data[S.cur].exc.join('\n');
-		T.value=M.data[S.cur].css;
-	} else I.value=E.value=T.value='';
+		rD.value=M.data[S.cur].domains.join('\n');
+		rR.value=M.data[S.cur].regexps.join('\n');
+		rP.value=M.data[S.cur].urlPrefixes.join('\n');
+		rU.value=M.data[S.cur].urls.join('\n');
+		T.value=M.data[S.cur].code;
+	} else rD.value=rR.value=rP.value=rU.value=T.value='';
 }
 function mClose(){
 	closeDialog(M);
 	loadName(L.childNodes[M.cur],bg.css[M.cur]);
 	M.cur=M.css=null;
 }
-I.onchange=E.onchange=T.onchange=$('mDeMoz').onchange=$('mDeWebkit').onchange=function(e){M.dirty=S.dirty=true;};
+rD.onchange=rR.onchange=rP.onchange=rU.onchange=T.onchange=function(e){M.dirty=S.dirty=true;};
+N.onchange=$('mDeMoz').onchange=$('mDeWebkit').onchange=function(e){M.dirty=true;};
 S.onclick=function(e){
 	var t=e.target;
 	if(t.parentNode!=this) return;
 	mSaveSection(1);S.cur=Array.prototype.indexOf.call(S.childNodes,t);
 	if(!t.classList.contains('selected')) mShow();
 };
-N.onchange=function(){M.css.name=N.value;M.dirty=true;};
 $('mNew').onclick=function(){
-	var d={inc:[],exc:[],css:''};
+	var d={domains:[],regexps:[],urlPrefixes:[],urls:[],code:''};
 	mSaveSection(1);
 	S.cur=M.data.length;
 	M.data.push(d);
