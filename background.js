@@ -104,28 +104,28 @@ function str2RE(s){return s.replace(/(\.|\?|\/)/g,'\\$1').replace(/\*/g,'.*?');}
 function testURL(url,e,c){
 	function testDomain(){
 		r=d.domains;
-		for(i=0;i<r.length;i++) if(RegExp('://(|[^/]*\\.)'+r[i].replace(/\./g,'\\.')+'/').test(url)) return true;
-		return false;
+		for(i=0;i<r.length;i++) if(RegExp('://(|[^/]*\\.)'+r[i].replace(/\./g,'\\.')+'/').test(url)) return f=1;
+		if(i&&f<0) f=0;
 	}
 	function testRegexp(){
 		r=d.regexps;
-		for(i=0;i<r.length;i++) if(RegExp(r[i]).test(url)) return true;
-		return false;
+		for(i=0;i<r.length;i++) if(RegExp(r[i]).test(url)) return f=1;
+		if(i&&f<0) f=0;
 	}
 	function testUrlPrefix(){
 		r=d.urlPrefixes;
-		for(i=0;i<r.length;i++) if(url.substr(0,r[i].length)==r[i]) return true;
-		return false;
+		for(i=0;i<r.length;i++) if(url.substr(0,r[i].length)==r[i]) return f=1;
+		if(i&&f<0) f=0;
 	}
 	function testUrl(){
 		r=d.urls;
-		for(i=0;i<r.length;i++) if(r[i]==url) return true;
-		return false;
+		for(i=0;i<r.length;i++) if(r[i]==url) return f=1;
+		if(i&&f<0) f=0;
 	}
 	var k,f,d,F=false,i,r;
 	for(k=0;k<e.data.length;k++){
-		d=e.data[k];
-		f=testDomain()||testRegexp()||testUrlPrefix()||testUrl();
+		d=e.data[k];f=-1;
+		testDomain();testRegexp();testUrlPrefix();testUrl();
 		if(c) {if(e.enabled&&f) c.push(d.code);}
 		else if(F=F||f) return true;
 	}

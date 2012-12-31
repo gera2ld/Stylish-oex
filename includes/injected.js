@@ -82,7 +82,8 @@ function fixOpera(){
 			metaUrl:metaUrl,
 			options:window.getOptions(),
 			updated:updated,
-			url:getData('stylish-code-opera')
+			//url:getData('stylish-code-opera'),
+			url:getData('stylish-code-chrome'),
 		};
 		opera.extension.postMessage({topic:'ParseCSSURL',data:data});
 		if(e.type=='stylishInstallOpera') {
