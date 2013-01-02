@@ -18,5 +18,5 @@ Stylish-for-Opera
 <ul><li><font color=dodgerblue>domain</font>: matches a domain and all of its subdomains.</li><li><font color=dodgerblue>regexp</font>: parsed as a regular-expression and then test the URL.</li><li><font color=dodgerblue>url-prefix</font>: matches the URLs that exactly starts with the rule text.</li><li><font color=dodgerblue>url</font>: matches the URL that is exactly the same as the rule text.</li></ul><p>If any one of the rules matches the URL of current page, the CSS code will be applied.</p></li>
 <li><a name=faq_section></a><b>Why are CSS separated into sections?</b><p>Since <i>@document</i> rules are discarded by the standards and only supported by Firefox now, Opera itself will not apply CSS according to the rules. So it is easier for Stylish for Opera to manage and apply CSS stored in sections. After version 1.3, CSS can be exported into a zip file with .user.css files inside, of which the sections are integrated again into a Stylish format.</p></li>
 </ol>
-<p>Support page: http://my.opera.com/gera2ld/blog/2012/12/09/stylish-for-opera</p>
+<p>Preview release (2013-1-2): https://skydrive.live.com/redir?resid=9F63DC97688A095E!611</p>
 <p>Author: Gerald &lt;gera2ld&#x40;myopera.com&gt;</p>
