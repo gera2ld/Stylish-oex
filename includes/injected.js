@@ -116,7 +116,7 @@ function fixOpera(){
 	window.addCustomEventListener('stylishUpdate',install);
 }
 var installCallback=null;
-if(/\.user\.css$/.test(window.location.href))
+if(/\.user\.css$/.test(window.location.href)) window.addEventListener('load',function(){
 	opera.extension.postMessage({topic:'InstallStyle'});
-else if(/^http:\/\/userstyles\.org\/styles\//.test(window.location.href))
+},false); else if(/^http:\/\/userstyles\.org\/styles\//.test(window.location.href))
 	window.addEventListener('DOMNodeInserted',fixOpera,false);

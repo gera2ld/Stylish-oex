@@ -43,10 +43,10 @@ function addItem(n){
 	return d;
 }
 L.onclick=function(e){
-	var o=e.target,d=o.getAttribute('data');
+	var o=e.target,d=o.getAttribute('data'),p;
 	if(!d) return;
 	e.preventDefault();
-	var p=o.parentNode.parentNode;
+	for(p=o;p&&p.parentNode!=L;p=p.parentNode);
 	var i=Array.prototype.indexOf.call(L.childNodes,p);
 	switch(d){
 		case 'edit':
