@@ -1,5 +1,5 @@
 function $(i){return document.getElementById(i);}
-var bg=opera.extension.bgProcess,L=$('cssList'),O=$('overlay'),_=bg.getI18nString;
+var bg=opera.extension.bgProcess,L=$('cList'),O=$('overlay'),_=bg.getI18nString;
 function getDate(t){var d=new Date();d.setTime(t*1000);return d.toDateString();}
 function getTime(r){
 	var d=new Date(),z,m=r.updated.match(/(\d+)\/(\d+)\/(\d+)\s+(\d+):(\d+):(\d+)\s+(\+|-)(\d+)/);
@@ -21,15 +21,15 @@ function loadName(d,n){
 	var a=d.firstChild;
 	if(n.url) a.href=n.url;
 	a.title=n.name;
-	a.innerText=n.name||'('+_('Null')+')';
+	a.innerText=n.name||'('+_('Null name')+')';
 }
 function loadItem(d,n){
 	if(!n.enabled) d.className='disabled';
 	d.innerHTML='<a class="name ellipsis"></a>'
 	+'<span class=updated>'+(n.updated?_('Last updated: ')+getDate(n.updated):'')+'</span>'
+	+(n.metaUrl?'<a href=# data=update class=update>'+_('Check for Updates')+'</a> ':'')
 	+'<span class=message></span>'
 	+'<div class=panel>'
-		+(n.metaUrl?'<button data=update>'+_('Update')+'</button> ':'')
 		+'<button data=edit>'+_('Edit')+'</button> '
 		+'<button data=enable>'+_(n.enabled?'Disable':'Enable')+'</button> '
 		+'<button data=remove>'+_('Remove')+'</button>'
@@ -43,13 +43,12 @@ function addItem(n){
 	return d;
 }
 L.onclick=function(e){
-	var o=e.target;
-	if(o.tagName!='BUTTON') return;
+	var o=e.target,d=o.getAttribute('data');
+	if(!d) return;
 	e.preventDefault();
-	e=o.getAttribute('data');
 	var p=o.parentNode.parentNode;
 	var i=Array.prototype.indexOf.call(L.childNodes,p);
-	switch(e){
+	switch(d){
 		case 'edit':
 			edit(i);
 			break;
@@ -154,18 +153,19 @@ X.onclose=$('bClose').onclick=function(){closeDialog(X);};
 
 // Update checker
 function check(i){
-	var l=L.childNodes[i],o=l.childNodes[3].firstChild,m=l.childNodes[2],c=bg.css[i],d;
+	var l=L.childNodes[i],o=l.querySelector('[data=update]'),m=l.querySelector('.message'),c=bg.css[i],d;
 	m.innerHTML=_('Checking for updates...');
-	o.disabled=true;
+	o.classList.add('hide');
 	function update(){
 		m.innerHTML=_('Updating...');
 		bg.fetchURL(c.updateUrl,function(s,t){
-			if(s==200) {
-				bg.parseCSS(null,{id:c.id,updated:d,code:t});
+			var r=bg.parseCSS(null,{status:s,id:c.id,updated:d,code:t});
+			if(r.error) m.innerHTML=r.message;
+			else {
 				l.childNodes[1].innerHTML=_('Last updated: ')+getDate(d);
 				m.innerHTML=_('Update finished!');
-			} else m.innerHTML=_('Update failed!');
-			o.disabled=false;
+			}
+			o.classList.remove('hide');
 		});
 	}
 	bg.fetchURL(c.metaUrl,function(s,t){
@@ -173,17 +173,17 @@ function check(i){
 			d=getTime(JSON.parse(t));
 			if(!c.updated||c.updated<d) {
 				if(c.updateUrl) return update();
-				else m.innerHTML='<span class=new>'+_('New version is found!')+'</span> '+_('Go to homepage for update.');
-			} else m.innerHTML=_('No update is found!');
+				else m.innerHTML='<a class=new title="'+_('Please go to homepage for update since there are options for this style.')+'">'+_('New version found')+'</a>';
+			} else m.innerHTML=_('No update found');
 		} catch(e) {
 			m.innerHTML=_('Failed fetching update information.');
 			opera.postError(e);
 		}
-		o.disabled=false;
+		o.classList.remove('hide');
 	});
 }
 
-// CSS Editor
+// Style Editor
 var M=$('editor'),S=$('mSection'),N=$('mName'),T=$('mCode'),
     rD=$('mDomain'),rR=$('mRegexp'),rP=$('mUrlPrefix'),rU=$('mUrl'),
     dM=$('mDeMoz'),dW=$('mDeWebkit');
@@ -204,7 +204,7 @@ function edit(i){
 	showDialog(M);
 	M.cur=i;M.dirty=false;M.css=bg.css[M.cur];
 	M.data=cloneData(M.css.data);
-	S.innerHTML='';S.cur=null;S.dirty=false;
+	S.innerHTML='';S.cur=0;S.dirty=false;
 	N.value=M.css.name;
 	for(var i=0;i<M.data.length;i++) mAddItem(i+1);
 	dM.checked=M.css.deprefix.indexOf('-moz-')>=0;
@@ -283,10 +283,10 @@ $('mDel').onclick=function(){
 	}
 };
 $('mSave').onclick=function(){
-	if(mSave()) {M.css.data=cloneData(M.data);bg.saveCSS();}
+	if(mSave()) {M.css.data=cloneData(M.data);bg.saveCSS(M.css);}
 };
 $('mSaveClose').onclick=function(){
-	if(mSave()) {bg.css[M.cur].data=M.data;bg.saveCSS();}
+	if(mSave()) {bg.css[M.cur].data=M.data;bg.saveCSS(bg.css[M.cur]);}
 	mClose();
 };
 M.onclose=$('mClose').onclick=function(){

@@ -82,10 +82,10 @@ function getId(map,d){	// get random ID (0<id<1)
 	map[s]=d;
 	return s;
 }
-function saveCSS(){saveSetting('cssList',css);}
+function saveCSS(i){saveSetting('cssList',css);if(i) updateCSS(i);}
 function newCSS(c,save){
 	var r={
-		name:c?c.name:'New CSS',
+		name:c?c.name:_('New Style'),
 		id:c&&c.id,
 		metaUrl:c&&c.metaUrl,
 		updated:c?c.updated:null,
@@ -98,10 +98,15 @@ function newCSS(c,save){
 	if(save) saveCSS();
 	return r;
 }
-function removeCSS(i){i=css.splice(i,1)[0];delete map[i.id];saveCSS();return i;}
+function removeCSS(i){
+	i=css.splice(i,1)[0];delete map[i.id];saveCSS();
+	var d={};d[i.id]=undefined;
+	opera.extension.broadcastMessage({topic:'UpdateCSS',data:d});
+	return i;
+}
 
 function str2RE(s){return s.replace(/(\.|\?|\/)/g,'\\$1').replace(/\*/g,'.*?');}
-function testURL(url,e,c){
+function testURL(url,e){
 	function testDomain(){
 		r=d.domains;
 		for(i=0;i<r.length;i++) if(RegExp('://(|[^/]*\\.)'+r[i].replace(/\./g,'\\.')+'/').test(url)) return f=1;
@@ -122,23 +127,30 @@ function testURL(url,e,c){
 		for(i=0;i<r.length;i++) if(r[i]==url) return f=1;
 		if(i&&f<0) f=0;
 	}
-	var k,f,d,F=false,i,r;
+	var k,f,d,i,r,c=[];
 	for(k=0;k<e.data.length;k++){
 		d=e.data[k];f=-1;
 		testDomain();testRegexp();testUrlPrefix();testUrl();
-		if(c) {if(e.enabled&&f) c.push(d.code);}
-		else if(F=F||f) return true;
+		if(f) c.push(e.enabled?d.code:'');
 	}
-	return F;
+	if(c.length) return c.join('');
 }
 function loadCSS(e) {
-	var c=[];
-	if(isApplied) css.forEach(function(i){testURL(e.origin,i,c);});
+	var c={};
+	css.forEach(function(i){
+		var d=testURL(e.origin,i,true);
+		if(typeof d=='string') c[i.id]=d;
+	});
 	e.source.postMessage({
 		topic: 'LoadedCSS',
-		data: {
-			isApplied: isApplied,
-			css:c.join('\n')
+		data: {isApplied:isApplied,data:c}
+	});
+}
+function updateCSS(c){
+	opera.extension.tabs.getAll().forEach(function(t){
+		if(t.port) {
+			var d={};d[c.id]=testURL(t.url,c);
+			t.postMessage({topic:'UpdateCSS',data:d});
 		}
 	});
 }
@@ -169,13 +181,9 @@ function parseFirefoxCSS(e,d){
 	r={error:0};
 	if(!code) {
 		c=map[d.id];
-		if(!c) {
-			d.enabled=1;c=newCSS(d);d=_('added');
-		} else {
-			for(i in d) c[i]=d[i];d=_('updated');
-		}
-		c.data=data;saveCSS();
-		r.message=format(_('UserStyle <$1> is $2!\nCheck it out in the options page.'),c.name,d);
+		if(!c) {d.enabled=1;c=newCSS(d);}
+		else for(i in d) c[i]=d[i];
+		c.data=data;saveCSS(c);
 	} else {
 		r.error=-1;
 		r.message=_('Error parsing CSS code!');
@@ -210,44 +218,33 @@ function parseCSS(e,data){
 			data.name=j.name;
 			data.enabled=1;
 			c=newCSS(data);
-			data=_('added');
-		} else {
-			c.updated=data.updated;
-			data=_('updated');
-		}
+		} else c.updated=data.updated;
 		c.data=d;
 		c.url=j.url;
 		c.updateUrl=j.updateUrl;
-		saveCSS();
-		r.message=format(_('UserStyle <$1> is $2!\nCheck it out in the options page.'),c.name,data);
+		saveCSS(c);
 	}catch(e){
 		opera.postError(e);
-		opera.postError('>>>'+data.code+'<<<');
 		r.message=_('Error parsing CSS code!');
 		r.error=-1;
 	}
-	if(e) e.source.postMessage({
-		topic: 'ParsedCSS',
-		data: r
-	});
+	if(e) e.source.postMessage({topic:'ParsedCSS',data:r});
+	else return r;
 }
-function parseCSSURL(e, data){
-	var url=data.url;
-	if(data.options) url+='?'+data.options;
-	fetchURL(url,function(s,t){data.status=s;data.code=t;parseCSS(e,data);});
-}
-function installCSS(e,url){
-	if(!url) {
-		if(installFile) e.source.postMessage({topic:'Confirm',data:_('Do you want to install this UserCSS?')});
-	}
+function installStyle(e,data){
+	if(data) {
+		var url=data.url;
+		if(data.options) url+='?'+data.options;
+		fetchURL(url,function(s,t){data.status=s;data.code=t;parseCSS(e,data);});
+	} else if(installFile)
+		e.source.postMessage({topic:'ConfirmInstall',data:_('Do you want to install this style?')});
 }
 
 var messages={
 	'LoadCSS':loadCSS,
-	'ParseCSSURL':parseCSSURL,
 	'ParseFirefoxCSS':parseFirefoxCSS,
 	'CheckCSS':checkCSS,
-	'InstallCSS':installCSS,
+	'InstallStyle':installStyle,
 };
 function onMessage(e) {
 	var message = e.data,c=messages[message.topic];

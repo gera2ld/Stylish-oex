@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget xmlns="http://www.w3.org/ns/widgets" id="https://addons.opera.com/extensions/details/stylish-for-opera/" version="1.2.9-preview" href="https://addons.opera.com/extensions/details/stylish-for-opera/" defaultlocale="en">
-  <name>Stylish for Opera</name>
+  <name>Stylish</name>
   <author href="http://my.opera.com/gera2ld" email="gera2ld@163.net">Gerald</author>
   <icon src="images/icon64.png"/>
   <icon src="images/icon18.png"/>
   <access origin="http://userstyles.org"/>
   <update-description href="https://extension-updates.opera.com/api/w3c-wd1/update/49c35286-5d6b-4905-9c8d-36380a740fcc/"/>
-  <description xml:lang="en">Stylish for Opera, allowing UserCSS for different URLs decided by regular expressions, UserStyles.org supported.</description>
-  <description xml:lang="zh">Stylish for Opera，通过正则匹配地址来添加UserCSS，支持UserStyles.org。</description>
+  <description xml:lang="en">Stylish for Opera, allowing UserCSS for different URLs, userstyles.org supported.</description>
+  <description xml:lang="zh">Stylish for Opera，根据地址来添加UserCSS，支持userstyles.org。</description>
 </widget>

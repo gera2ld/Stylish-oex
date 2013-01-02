@@ -3,35 +3,33 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html;charset=utf-8">
 		<link rel="stylesheet" type="text/css" href="style.css" />
-		<title class=i18n>Options - Stylish for Opera</title>
+		<title class=i18n>Options - Stylish</title>
 	</head>
 	<body>
-		<h1 class=i18n>Options - Stylish for Opera</h1>
-		<div class=main>
-			<div id=header>
-				<div class=left>
-					<button id=bNew class=i18n>New</button>
-					<a href=http://userstyles.org target=_blank class=i18n>Get more styles from UserStyles.org</a>
-				</div>
-				<div class=right>
-					<button id=bUpdate class=i18n>Update all</button>
-					<button id=bAdvanced class=i18n>Advanced</button>
-				</div>
+		<div id=header class=main>
+			<h1 class=i18n>Options - Stylish</h1>
+			<div class=left>
+				<button id=bNew class=i18n>New</button>
+				<a href=http://userstyles.org target=_blank class=i18n>Get more styles from userstyles.org</a>
+			</div>
+			<div class=right>
+				<a id=bUpdate class=i18n href=#>Check all for updates</a>
+				<button id=bAdvanced class=i18n>Advanced</button>
 			</div>
 			<div class=x></div>
-			<fieldset>
-				<legend class=i18n>CSS List</legend>
-				<div id=cssList></div>
-			</fieldset>
-			<div id=footer class=i18n>Designed by Gerald</div>
 		</div>
+		<fieldset class=main>
+			<legend class=i18n>Installed Styles</legend>
+			<div id=cList></div>
+		</fieldset>
+		<div id=footer class="i18n main">Designed by Gerald</div>
 		<div id=overlay></div>
 		<table id=editor class="float hide">
 			<tr>
 				<td class=side rowspan=3>
-					<h2 class=i18n>CSS Editor</h2>
+					<h2 class=i18n>Style Editor</h2>
 					<label class=i18n>Name:</label>
-					<input type=text id=mName>
+					<textarea id=mName></textarea>
 					<label class=i18n>Sections:</label>
 					<div id=mSection class=list></div>
 					<div><button id=mNew class=i18n>New</button> <button id=mDel class=i18n>Del</button></div>
@@ -41,17 +39,17 @@
 					<textarea id=mDomain></textarea>
 				</td>
 				<td class=rules>
-					<label class=i18n>Regular-Expressions:</label>
+					<label class=i18n>Regular Expressions:</label>
 					<textarea id=mRegexp></textarea>
 				</td>
 			</tr>
 			<tr>
 				<td class=rules>
-					<label class=i18n>Url-prefixes:</label>
+					<label class=i18n>URL prefixes:</label>
 					<textarea id=mUrlPrefix></textarea>
 				</td>
 				<td class=rules>
-					<label class=i18n>Urls:</label>
+					<label class=i18n>URLs:</label>
 					<textarea id=mUrl></textarea>
 				</td>
 			</tr>
@@ -74,7 +72,7 @@
 		</table>
 		<div id=export class="float hide">
 			<h2 class=i18n>Data Export</h2>
-			<label class=i18n>CSS List</label>
+			<label class=i18n>Installed Styles</label>
 			<div class=right>
 				<button id=bSelect class=i18n>All/None</button>
 			</div>

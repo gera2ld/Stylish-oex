@@ -46,7 +46,7 @@ Commands:
         print('Package loaded: %s version %s' % (self.name,self.version))
         return True
     def cmd_pack(self, arg=None):
-        with zipfile.ZipFile('%s-v%s.oex' % (self.name,self.version),'w',zipfile.ZIP_DEFLATED) as z:
+        with zipfile.ZipFile('%s-v%s.oex' % (self.name.replace(' ','_'),self.version),'w',zipfile.ZIP_DEFLATED) as z:
             for root,dirs,files in os.walk(self.path):
                 f=0
                 while f<len(dirs):
