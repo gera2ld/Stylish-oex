@@ -101,18 +101,25 @@ function fixOpera(){
 				url:getData('stylish-code-opera'),
 			}
 		});
-		if(installCallback.type=='stylishInstallOpera') {
-			var req=new window.XMLHttpRequest();
-			req.open('GET', getData('stylish-install-ping-url-opera'), true);
-			req.send();
-		}
 	};
 	function install(e){
-		installCallback.type=e.type;
+		opera.extension.postMessage({topic:'InstallStyle'});
+		var req=new window.XMLHttpRequest();
+		req.open('GET', getData('stylish-install-ping-url-opera'), true);
+		req.send();
+	}
+	function update(e){
+		var options = getOptions(true);
+		if (options != null) {
+			var link = document.querySelector("link[rel='stylish-code-opera']");
+			var url = link.href.split("?")[0];
+			if (options != "") link.setAttribute("href", url + "?" + options);
+			else link.setAttribute("href", url);
+		}
 		opera.extension.postMessage({topic:'InstallStyle'});
 	}
 	window.addCustomEventListener('stylishInstallOpera',install);
-	window.addCustomEventListener('stylishUpdate',install);
+	window.addCustomEventListener('stylishUpdate',update);
 }
 var installCallback=null;
 if(/\.user\.css$/.test(window.location.href)) window.addEventListener('load',function(){
