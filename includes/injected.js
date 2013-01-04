@@ -109,7 +109,7 @@ function fixOpera(){
 		req.send();
 	}
 	function update(e){
-		var options = getOptions(true);
+		var options = window.getOptions(true);
 		if (options != null) {
 			var link = document.querySelector("link[rel='stylish-code-opera']");
 			var url = link.href.split("?")[0];
