@@ -7,14 +7,14 @@ Stylish facilitates modification of the way websites look. This extension lets y
 Features
 -----------------
 1. Stylesheets from <http://userstyles.org> can be installed.
-1. Checking and applying updates from UserStyles.org is allowed.
+1. Checking and applying updates from <http://userstyles.org> is allowed.
 
    *However, updates for styles with options will not be fetched since the options may change. Instead, a hint will be showed.*
 
-1. Removing -moz- and -webkit- prefixes while applying CSS is supported.
-1. Export to a zip file with .user.css files inside.
-1. Allow installing .user.css files (as exported).
-1. Matching rules have been changed to four types: domain/regexp/url-prefix/url. <a href=#faq_match>FAQ</a>
+1. Removing *-moz-* and *-webkit-* prefixes while applying CSS is supported.
+1. Export to a zip file with *.user.css* files inside.
+1. Allow installing *.user.css* files (as exported).
+1. Matching rules have been changed to four types: *domain*/*regexp*/*url-prefix*/*url*. <a href=#faq_match>FAQ</a>
 
 FAQ
 -----------------
