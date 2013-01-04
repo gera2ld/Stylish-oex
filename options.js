@@ -21,7 +21,7 @@ function loadName(d,n){
 	var a=d.firstChild;
 	if(n.url) a.href=n.url;
 	a.title=n.name;
-	a.innerText=n.name||'('+_('Null name')+')';
+	a.innerHTML=n.name.replace(/&/g,'&amp;').replace(/</g,'&lt;')||'<em>'+_('Null name')+'</em>';
 }
 function loadItem(d,n){
 	if(!n.enabled) d.className='disabled';
@@ -78,15 +78,23 @@ function load(){
 load();
 $('bNew').onclick=function(){var d=bg.newCSS(null,true);addItem(d);};
 $('bUpdate').onclick=function(){for(var i=0;i<bg.css.length;i++) if(bg.css[i].metaUrl) check(i);};
+function showOverlay(){
+	O.classList.remove('hide');
+	setTimeout(function(){O.style.opacity=0.6;},1);
+}
+function hideOverlay(){
+	O.style.opacity=0;
+	setTimeout(function(){O.classList.add('hide');},500);
+}
 function showDialog(D){
-	O.classList.add('o_in');
+	showOverlay();
 	O.onclick=D.onclose;
 	D.classList.remove('hide');
 	D.style.top=(window.innerHeight-D.offsetHeight)/2+'px';
 	D.style.left=(window.innerWidth-D.offsetWidth)/2+'px';
 }
 function closeDialog(D){
-	O.classList.remove('o_in');
+	hideOverlay();
 	D.classList.add('hide');
 }
 

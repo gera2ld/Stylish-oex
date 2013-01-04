@@ -196,7 +196,7 @@ function parseFirefoxCSS(e,d){
 function fetchURL(url, load){
 	var req=new XMLHttpRequest();
 	req.open('GET', url, true);
-	req.onreadystatechange=function(){if(req.readyState==4) load&&load(req.status,req.responseText);};
+	req.onload=function(){if(load) load(req.status,req.responseText);};
 	req.send();
 }
 function parseCSS(e,data){
@@ -232,11 +232,9 @@ function parseCSS(e,data){
 	else return r;
 }
 function installStyle(e,data){
-	if(data) {
-		var url=data.url;
-		if(data.options) url+='?'+data.options;
-		fetchURL(url,function(s,t){data.status=s;data.code=t;parseCSS(e,data);});
-	} else if(installFile)
+	if(data)
+		fetchURL(data.url,function(s,t){data.status=s;data.code=t;parseCSS(e,data);});
+	else if(installFile)
 		e.source.postMessage({topic:'ConfirmInstall',data:_('Do you want to install this style?')});
 }
 

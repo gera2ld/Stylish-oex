@@ -97,7 +97,6 @@ function fixOpera(){
 			data:{
 				id:id,
 				metaUrl:metaUrl,
-				options:window.getOptions(),
 				updated:updated,
 				url:getData('stylish-code-opera'),
 			}

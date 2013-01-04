@@ -22,7 +22,7 @@ function addItem(h,t,c){
 	if('data' in c) loadItem(d,c.data);
 }
 function menuStyle(i){
-	var n=i.name||'('+_('Null name')+')';
+	var n=i.name||'<em>'+_('Null name')+'</em>';
 	addItem(n.replace(/&/g,'&amp;').replace(/</g,'&lt;'),n,{data:i.enabled,onclick:function(){
 		loadItem(this,i.enabled=!i.enabled);bg.saveCSS(i);
 	}});
