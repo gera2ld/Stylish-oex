@@ -21,7 +21,7 @@ function loadName(d,n){
 	var a=d.firstChild;
 	if(n.url) a.href=n.url;
 	a.title=n.name;
-	a.innerHTML=n.name.replace(/&/g,'&amp;').replace(/</g,'&lt;')||'<em>'+_('Null name')+'</em>';
+	a.innerHTML=n.name?n.name.replace(/&/g,'&amp;').replace(/</g,'&lt;'):'<em>'+_('Null name')+'</em>';
 }
 function loadItem(d,n){
 	if(!n.enabled) d.className='disabled';
