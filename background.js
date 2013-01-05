@@ -228,8 +228,10 @@ function parseCSS(e,data){
 		r.message=_('Error parsing CSS code!');
 		r.error=-1;
 	}
-	if(e) e.source.postMessage({topic:'ParsedCSS',data:r});
-	else return r;
+	if(e) {
+		e.source.postMessage({topic:'ParsedCSS',data:r});
+		optionsUpdate();
+	} else return r;
 }
 function installStyle(e,data){
 	if(data)
@@ -251,12 +253,28 @@ function onMessage(e) {
 
 var isApplied=getSetting('isApplied',true),
     installFile=getSetting('installFile',true),
-    button;
+    button,_options=[];
 function showButton(show){
 	if(show) opera.contexts.toolbar.addItem(button);
 	else opera.contexts.toolbar.removeItem(button);
 }
 function updateIcon() {button.icon='images/icon18'+(isApplied?'':'w')+'.png';}
+function optionsUpdate(){
+	var i=0;
+	while(i<_options.length)
+		if(_options[i].closed) _options.splice(i,1);
+		else {
+			try{_options[i].load();}catch(e){opera.postError(e);}
+			i++;
+		}
+}
+function optionsLoad(w){
+	var i=0;
+	while(i<_options.length)
+		if(_options[i].closed) _options.splice(i,1);
+		else {if(_options[i]==w) w=null;i++;}
+	if(w) _options.push(w);
+}
 
 // Multilingual
 var i18nMessages={};

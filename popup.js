@@ -28,10 +28,10 @@ function menuStyle(i){
 	}});
 }
 function load(e,data){
-	addItem(_('Manage styles'),true,{symbol:'>>',onclick:function(){
+	addItem(_('Manage styles'),true,{symbol:'➤',onclick:function(){
 		bg.opera.extension.tabs.create({url:'/options.html'}).focus();
 	}});
-	if(data) addItem(_('Find styles for this site'),true,{symbol:'>>',onclick:function(){
+	if(data) addItem(_('Find styles for this site'),true,{symbol:'➤',onclick:function(){
 		bg.opera.extension.tabs.create({url:'http://userstyles.org/styles/search/'+encodeURIComponent(tab.url)}).focus();
 	}});
 	addItem(_('Enable styles'),true,{data:bg.isApplied,onclick:function(){
