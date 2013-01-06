@@ -11,7 +11,7 @@ Features
 1. Removing *-moz-* and *-webkit-* prefixes while applying CSS is supported.
 1. Export to a zip file with *.user.css* files inside.
 1. Allow installing *.user.css* files (as exported).
-1. Matching rules have been changed to four types: *domain* / *regexp* / *url-prefix* / *url*. <a href=#faq_match>FAQ</a>
+1. Matching rules have been changed to four types: *domain* / *regexp* / *url-prefix* / *url*. <a href=#faq_match>(?)</a>
 
 FAQ
 -----------------
@@ -19,7 +19,7 @@ FAQ
 
 1. <a name=faq_store></a>**Where is the data stored?**<br>Since extensions of Opera do not have the permission to read or write files in local drives, all the data are stored in the extension storage. CSS files can be exported since version 1.3.
 
-1. <a name=faq_match></a>**What are the matching rules?**<br>There are four types of rules. (Each rule per line)
+1. <a name=faq_match></a>**What are the matching rules?**<br>There are four types of rules. (One per line)
  * **domain**: matches a domain and all of its subdomains.
  * **regexp**: parsed as a regular-expression and then test the URL.
  * **url-prefix**: matches the URLs that exactly starts with the rule text.
