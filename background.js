@@ -74,6 +74,9 @@ css.forEach(function(i){if(i.id) map[i.id]=i; else i.id=getId(map,i);});
 		});
 		saveCSS();
 		saveSetting('version_storage',0.2);
+		opera.extension.tabs.getAll().forEach(function(i){
+			if(/^http:\/\/userstyles\.org\/styles\//.test(i.url)) i.refresh();
+		});
 	}
 })();
 
