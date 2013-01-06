@@ -89,23 +89,15 @@ load();
 bg.optionsLoad(window);
 $('bNew').onclick=function(){var d=bg.newCSS(null,true);addItem(d);};
 $('bUpdate').onclick=function(){for(var i=0;i<bg.css.length;i++) if(bg.css[i].metaUrl) check(i);};
-function showOverlay(){
-	O.classList.remove('hide');
-	setTimeout(function(){O.style.opacity=0.6;},1);
-}
-function hideOverlay(){
-	O.style.opacity=0;
-	setTimeout(function(){O.classList.add('hide');},500);
-}
 function showDialog(D,o){
-	if(o==undefined||o) showOverlay();
+	if(o==undefined||o) {O.classList.remove('hide');setTimeout(function(){O.classList.add('overlay');},1);}
 	O.onclick=D.onclose;
 	D.classList.remove('hide');
 	D.style.top=(window.innerHeight-D.offsetHeight)/2+'px';
 	D.style.left=(window.innerWidth-D.offsetWidth)/2+'px';
 }
 function closeDialog(D,o){
-	if(o==undefined||o) hideOverlay();
+	if(o==undefined||o) {O.classList.remove('overlay');setTimeout(function(){O.classList.add('hide');},500);}
 	D.classList.add('hide');
 }
 
