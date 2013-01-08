@@ -18,13 +18,13 @@ function getTime(r){
 function getName(n){
 	return n.name?n.name.replace(/&/g,'&amp;').replace(/</g,'&lt;'):'<em>'+_('Null name')+'</em>';
 }
-function fillCell(e,p){
+function fillHeight(e,p){
 	if(p==undefined) p=e.parentNode;
 	var b=0;
 	Array.prototype.forEach.call(p.children,function(i){if(b<i.offsetTop+i.offsetHeight) b=i.offsetTop+i.offsetHeight;});
 	e.style.pixelHeight=e.offsetHeight+window.getComputedStyle(p).pixelHeight-b;
 }
-fillCell(L,document.body);
+fillHeight(L,document.body);
 
 // Main options
 function loadName(d,n){
@@ -212,7 +212,7 @@ function cloneData(d){
 	return c;
 }
 function edit(i){
-	showDialog(M);fillCell(T);fillCell(S);
+	showDialog(M);fillHeight(T);fillHeight(S);
 	M.cur=i;M.dirty=false;M.css=bg.css[M.cur];
 	M.data=cloneData(M.css.data);
 	S.innerHTML='';S.cur=0;S.dirty=false;

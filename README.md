@@ -6,12 +6,12 @@ Stylish facilitates modification of the way websites look. This extension lets y
 
 Features
 -----------------
-1. Stylesheets from <http://userstyles.org> can be installed.
-1. Checking and applying updates from <http://userstyles.org> is allowed.<br>*However, updates for styles with options will not be fetched since the options may change. Instead, a hint will be showed.*
-1. Removing *-moz-* and *-webkit-* prefixes while applying CSS is supported.
+1. Install stylesheets from <http://userstyles.org>.
+1. Check and apply updates from <http://userstyles.org>.<br>*Updates for styles with options will not be fetched since the options may change. Instead, a hint will be showed.*
+1. Remove *-moz-* and *-webkit-* prefixes while applying CSS.
 1. Export to a zip file with *.user.css* files inside.
-1. Allow installing *.user.css* files (as exported).
-1. Matching rules have been changed to four types: *domain* / *regexp* / *url-prefix* / *url*. <a href=#faq_match>(?)</a>
+1. Install *.user.css* files (as exported).
+1. Match URLs according to four types of rules: *domain* / *regexp* / *url-prefix* / *url*. <a href=#faq_match>(?)</a>
 
 FAQ
 -----------------
@@ -26,6 +26,8 @@ FAQ
  * **url**: matches the URL that is exactly the same as the rule text.
 
  If any one of the rules matches the URL of current page, the CSS code will be applied.
+
+ Excluding rules are removed to keep up with official Stylish. If you have any questions or suggestions, please contact <http://userstyles.org> directly.
 
 1. <a name=faq_section></a>**Why are CSS separated into sections?**<br>Since *@document* rules are discarded by the standards and only supported by Firefox now, Opera itself will not apply CSS according to the rules. So it is easier for Stylish for Opera to manage and apply CSS stored in sections. Since version 1.3, CSS can be exported into a zip file with *.user.css* files inside, of which the sections are integrated again into a *@-moz-document* format.
 
