@@ -18,13 +18,12 @@ function getTime(r){
 function getName(n){
 	return n.name?n.name.replace(/&/g,'&amp;').replace(/</g,'&lt;'):'<em>'+_('Null name')+'</em>';
 }
-function fillHeight(e,p){
+function fillHeight(e,b,p){
 	if(p==undefined) p=e.parentNode;
-	var b=0;
-	Array.prototype.forEach.call(p.children,function(i){if(b<i.offsetTop+i.offsetHeight) b=i.offsetTop+i.offsetHeight;});
+	b=b?b.offsetTop+b.offsetHeight:0;
 	e.style.pixelHeight=e.offsetHeight+window.getComputedStyle(p).pixelHeight-b;
 }
-fillHeight(L,document.body);
+fillHeight(L,$('footer'),document.body);
 
 // Main options
 function loadName(d,n){
@@ -212,7 +211,9 @@ function cloneData(d){
 	return c;
 }
 function edit(i){
-	showDialog(M);fillHeight(T);fillHeight(S);
+	showDialog(M);
+	fillHeight(S,S.nextElementSibling);
+	fillHeight(T,T.nextElementSibling);
 	M.cur=i;M.dirty=false;M.css=bg.css[M.cur];
 	M.data=cloneData(M.css.data);
 	S.innerHTML='';S.cur=0;S.dirty=false;
