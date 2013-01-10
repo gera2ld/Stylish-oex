@@ -74,6 +74,7 @@ css.forEach(function(i){if(i.id) map[i.id]=i; else i.id=getId(map,i);});
 		});
 		saveCSS();
 		saveSetting('version_storage',0.2);
+		if(opera.extension.tabs.getAll)	// Opera 12+ Only
 		opera.extension.tabs.getAll().forEach(function(i){
 			if(/^http:\/\/userstyles\.org\/styles\//.test(i.url)) i.refresh();
 		});
@@ -150,6 +151,7 @@ function loadCSS(e) {
 	});
 }
 function updateCSS(c){
+	if(opera.extension.tabs.getAll)	// Opera 12+ Only
 	opera.extension.tabs.getAll().forEach(function(t){
 		if(t.port) {
 			var d={};d[c.id]=testURL(t.url,c);

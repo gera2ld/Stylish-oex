@@ -29,10 +29,12 @@ function menuStyle(i){
 }
 function load(e,data){
 	addItem(_('Manage styles'),true,{symbol:'➤',onclick:function(){
-		bg.opera.extension.tabs.create({url:'/options.html'}).focus();
+		var t=bg.opera.extension.tabs.create({url:'/options.html'});
+		if(t.focus) t.focus();	// Opera 12+ Only
 	}});
 	if(data) addItem(_('Find styles for this site'),true,{symbol:'➤',onclick:function(){
-		bg.opera.extension.tabs.create({url:'http://userstyles.org/styles/search/'+encodeURIComponent(tab.url)}).focus();
+		var t=bg.opera.extension.tabs.create({url:'http://userstyles.org/styles/search/'+encodeURIComponent(tab.url)});
+		if(t.focus) t.focus();	// Opera 12+ Only
 	}});
 	addItem(_('Enable styles'),true,{data:bg.isApplied,onclick:function(){
 		bg.saveSetting('isApplied',bg.isApplied=!bg.isApplied);bg.updateIcon();loadItem(this,bg.isApplied);
@@ -44,7 +46,5 @@ function load(e,data){
 	}
 	bg.button.popup.height=document.body.offsetHeight;
 }
-if(tab.port) {
-	bg.messages['GotPopup']=load;
-	tab.postMessage({topic:'GetPopup'}); 
-} else load();
+bg.messages['GotPopup']=load;
+try{tab.postMessage({topic:'GetPopup'});}catch(e){load();}
