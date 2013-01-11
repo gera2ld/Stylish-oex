@@ -1,13 +1,19 @@
 var updated=0,style=null,css={};
+function getKeys(d){var k=[];for(i in d) k.push(i);return k;}
 // Message
 opera.extension.addEventListener('message', function(event) {
 	var message=event.data;
 	if(message.topic=='LoadedCSS') onCSS(message.data);
 	else if(message.topic=='UpdateCSS') updateCSS(message.data);
-	else if(message.topic=='GetPopup') {
-		var i,c=[];for(i in css) c.push(i);
-		opera.extension.postMessage({topic:'GotPopup',data:c});
-	} else if(message.topic=='LoadCSS') opera.extension.postMessage({topic:'LoadCSS'});
+	else if(message.topic=='GetPopup') opera.extension.postMessage({
+		topic:'GotPopup',
+		data:{
+			styles:getKeys(css),
+			astyles:getKeys(astyles),
+			cstyle:cur
+		}
+	}); else if(message.topic=='AlterStyle') alterStyle(message.data);
+	else if(message.topic=='LoadCSS') opera.extension.postMessage({topic:'LoadCSS'});
 	else if(message.topic=='CheckedCSS') {
 		if(message.data) {
 			if(!message.data.updated||message.data.updated<updated) window.fireCustomEvent('styleCanBeUpdated');
@@ -51,6 +57,20 @@ function onCSS(data) {
 		document.head.removeChild(style);
 		style=null;
 	}
+}
+
+// Alternative style sheets
+var astyles={},cur=undefined;
+function addStylesheet(i){
+	var c=astyles[i.title];
+	if(!c) astyles[i.title]=c=[];
+	c.push(i);
+	if(cur==undefined) cur=i.title;
+}
+Array.prototype.forEach.call(document.querySelectorAll('link[rel=stylesheet][title]'),addStylesheet);
+Array.prototype.forEach.call(document.querySelectorAll('link[rel="alternate stylesheet"][title]'),addStylesheet);
+function alterStyle(s){
+	for(var i in astyles) astyles[i].forEach(function(l){l.disabled=i!=s;});cur=s;
 }
 
 // Stylish fix
