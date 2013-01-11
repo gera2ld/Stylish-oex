@@ -67,11 +67,13 @@ function addStylesheet(i){
 	c.push(i);
 	if(cur==undefined) cur=i.title;
 }
-Array.prototype.forEach.call(document.querySelectorAll('link[rel=stylesheet][title]'),addStylesheet);
-Array.prototype.forEach.call(document.querySelectorAll('link[rel="alternate stylesheet"][title]'),addStylesheet);
 function alterStyle(s){
 	for(var i in astyles) astyles[i].forEach(function(l){l.disabled=i!=s;});cur=s;
 }
+window.addEventListener('DOMContentLoaded',function(){
+	Array.prototype.forEach.call(document.querySelectorAll('link[rel=stylesheet][title]'),addStylesheet);
+	Array.prototype.forEach.call(document.querySelectorAll('link[rel="alternate stylesheet"][title]'),addStylesheet);
+},false);
 
 // Stylish fix
 function getTime(r){
