@@ -58,7 +58,7 @@ function load(e,data){
 		addItem(_('Alter stylesheet...'),true,{holder:pT,symbol:'➤',onclick:function(){
 			P.classList.add('hide');A.classList.remove('hide');
 			bg.button.popup.height=A.offsetHeight;
-			setTimeout(function(){A.style.pixelHeight=innerHeight-A.offsetTop;},0);
+			setTimeout(function(){aB.style.pixelHeight=innerHeight-aB.offsetTop;},0);
 		}});
 	}
 	addItem(_('Enable styles'),true,{holder:pT,data:bg.isApplied,onclick:function(){
