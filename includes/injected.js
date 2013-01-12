@@ -144,7 +144,11 @@ function fixOpera(){
 	window.addCustomEventListener('stylishUpdate',update);
 }
 var installCallback=null;
-if(/\.user\.css$/.test(window.location.href)) window.addEventListener('load',function(){
-	opera.extension.postMessage({topic:'InstallStyle'});
-},false); else if(/^http:\/\/userstyles\.org\/styles\//.test(window.location.href))
+if(/\.user\.css$/.test(window.location.href)) (function(){
+	function install(){
+		if(document&&document.body&&!document.querySelector('title')) opera.extension.postMessage({topic:'InstallStyle'});
+	}
+	if(document.readyState!='complete') window.addEventListener('load',install,false);
+	else  install();
+})(); else if(/^http:\/\/userstyles\.org\/styles\//.test(window.location.href))
 	window.addEventListener('DOMNodeInserted',fixOpera,false);
