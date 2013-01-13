@@ -49,3 +49,4 @@ textarea,input[type=text]{width:100%;border:none;margin:0;padding:0;}
 .menu>div.disabled:hover{color:silver;}
 .menu>div span{display:inline-block;width:20px;}
 .menu>hr{border:none;border-top:1px dashed gray;}
+#mCode{font-family:monospace;}
