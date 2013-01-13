@@ -303,7 +303,7 @@ function format(){
 window.addEventListener('DOMContentLoaded', function() {
 	opera.extension.onmessage = onMessage;
 	button = opera.contexts.toolbar.createItem({
-		title: "Stylish for Opera",
+		title: "Stylish",
 		popup:{
 			href: "popup.html",
 			width:222,
