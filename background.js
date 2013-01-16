@@ -40,7 +40,8 @@ function setItem(key,val){
 				enabled:1,
 				data:[{inc:x.includes,css:x.css}]
 			};
-			css[i].id=getId(map,css[i]);
+			do{css[i].id=Math.random();}while(map[css[i].id]);
+			map[css[i].id]=css[i];
 		}
 	}
 	if(version<0.2) {
@@ -88,11 +89,6 @@ function setItem(key,val){
 var ids=getItem('ids',[]),map={};
 ids.forEach(function(i){map[i]=getItem('us:'+i);});
 function saveIDs(){setItem('ids',ids);}
-function getId(map,d){	// get random ID (0<id<1)
-	do{var s=Math.random();}while(map[s]);
-	map[s]=d;
-	return s;
-}
 function newStyle(c,save){
 	var r={
 		name:c?c.name:_('New Style'),
