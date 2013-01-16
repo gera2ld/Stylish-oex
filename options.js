@@ -71,7 +71,7 @@ L.onclick=function(e){
 				p.classList.add('disabled');
 				o.innerText=_('Enable');
 			}
-			bg.saveScript();
+			bg.saveStyle();
 			break;
 		case 'remove':
 			bg.removeScript(i);
