@@ -1,14 +1,16 @@
-function getSetting(key,def){
-	try{return JSON.parse(widget.preferences.getItem(key)||'');}catch(e){return saveSetting(key,def);}
+function getItem(key,def){
+	var v=widget.preferences.getItem(key);
+	if(v==null&&def) return setItem(key,def);
+	try{return JSON.parse(v);}catch(e){return def;}
 }
-function saveSetting(key,val){widget.preferences.setItem(key,JSON.stringify(val));return val;}
+function setItem(key,val){
+	widget.preferences.setItem(key,JSON.stringify(val));
+	return val;
+}
 
-var css=getSetting('cssList',[]),map={};
-css.forEach(function(i){if(i.id) map[i.id]=i; else i.id=getId(map,i);});
-
-/* ================Data format 0.2=================
- * List	[
- * 	Item	{
+/* ===============Data format 0.3==================
+ * ids	List [id]
+ * us:id Item	{
  * 		name:	String(stylish-description)
  * 		url:	String		// Homepage
  * 		id:	url||random
@@ -27,11 +29,10 @@ css.forEach(function(i){if(i.id) map[i.id]=i; else i.id=getId(map,i);});
  * 					}
  * 				]
  * 		}
- * 	]
  */
 (function(){	// Upgrading data to new version
-	// Upgrade to version 0.1
-	if(css[0]&&css[0].css!=undefined) {
+	var version=getItem('version_storage',0),css=getItem('cssList');
+	if(css&&css[0]&&css[0].css!=undefined) {
 		for(var i=0;i<css.length;i++){
 			var x=css[i];
 			css[i]={
@@ -42,9 +43,8 @@ css.forEach(function(i){if(i.id) map[i.id]=i; else i.id=getId(map,i);});
 			css[i].id=getId(map,css[i]);
 		}
 	}
-	// Upgrade to version 0.2
-	if(getSetting('version_storage',0)<0.2) {
-		css.forEach(function(i){
+	if(version<0.2) {
+		css&&css.forEach(function(i){
 			var d=i.data;
 			i.data=[];
 			if(parseInt(i.id)>1) {
@@ -72,22 +72,28 @@ css.forEach(function(i){if(i.id) map[i.id]=i; else i.id=getId(map,i);});
 				i.data.push(r);
 			});
 		});
-		saveCSS();
-		saveSetting('version_storage',0.2);
+	}
+	if(version<0.3){
+		widget.preferences.removeItem('cssList');
+		var ids=[];
+		css&&css.forEach(function(i){setItem('us:'+i.id,i);ids.push(i.id);});
+		setItem('ids',ids);
+		setItem('version_storage',0.3);
 		if(opera.extension.tabs.getAll)	// Opera 12+ Only
 		opera.extension.tabs.getAll().forEach(function(i){
 			if(/^http:\/\/userstyles\.org\/styles\//.test(i.url)) i.refresh();
 		});
 	}
 })();
-
+var ids=getItem('ids',[]),map={};
+ids.forEach(function(i){map[i]=getItem('us:'+i);});
+function saveIDs(){setItem('ids',ids);}
 function getId(map,d){	// get random ID (0<id<1)
 	do{var s=Math.random();}while(map[s]);
 	map[s]=d;
 	return s;
 }
-function saveCSS(i){saveSetting('cssList',css);if(i) updateCSS(i);}
-function newCSS(c,save){
+function newStyle(c,save){
 	var r={
 		name:c?c.name:_('New Style'),
 		id:c&&c.id,
@@ -98,15 +104,26 @@ function newCSS(c,save){
 		data:[]
 	};
 	if(r.id) map[r.id]=r; else r.id=getId(map,r);
-	css.push(r);
-	if(save) saveCSS();
+	if(save) saveStyle(r);
 	return r;
 }
-function removeCSS(i){
-	i=css.splice(i,1)[0];delete map[i.id];saveCSS();
-	var d={};d[i.id]=undefined;
-	opera.extension.broadcastMessage({topic:'UpdateCSS',data:d});
-	return i;
+function saveStyle(s){
+	if(!map[s.id]) {ids.push(s.id);saveIDs();}
+	setItem('us:'+s.id,map[s.id]=s);
+	// Update Style: Opera 12+ Only
+	if(opera.extension.tabs.getAll)
+	opera.extension.tabs.getAll().forEach(function(t){
+		if(t.port) {
+			var d={};d[s.id]=testURL(t.url,s);
+			t.postMessage({topic:'UpdateStyle',data:d});
+		}
+	});
+}
+function removeStyle(i){
+	optionsUpdate('remove',i);
+	i=ids.splice(i,1)[0];saveIDs();delete map[i];
+	var d={};d[i]=undefined;
+	opera.extension.broadcastMessage({topic:'UpdateStyle',data:d});
 }
 
 function str2RE(s){return s.replace(/(\.|\?|\/)/g,'\\$1').replace(/\*/g,'.*?');}
@@ -139,27 +156,18 @@ function testURL(url,e){
 	}
 	if(c.length) return c.join('');
 }
-function loadCSS(e) {
+function loadStyle(e) {
 	var c={};
-	css.forEach(function(i){
-		var d=testURL(e.origin,i,true);
-		if(typeof d=='string') c[i.id]=d;
+	ids.forEach(function(i){
+		var d=testURL(e.origin,map[i],true);
+		if(typeof d=='string') c[i]=d;
 	});
 	e.source.postMessage({
-		topic: 'LoadedCSS',
+		topic: 'LoadedStyle',
 		data: {isApplied:isApplied,data:c}
 	});
 }
-function updateCSS(c){
-	if(opera.extension.tabs.getAll)	// Opera 12+ Only
-	opera.extension.tabs.getAll().forEach(function(t){
-		if(t.port) {
-			var d={};d[c.id]=testURL(t.url,c);
-			t.postMessage({topic:'UpdateCSS',data:d});
-		}
-	});
-}
-function checkCSS(e,d){e.source.postMessage({topic:'CheckedCSS',data:map[d]});}
+function checkStyle(e,d){e.source.postMessage({topic:'CheckedStyle',data:map[d]});}
 function parseFirefoxCSS(e,d){
 	var c=null,i,p,m={},r,code=d.code.replace(/\s+$/,''),data=[];
 	code.replace(/\/\*\s+@(\w+)\s+(.*?)\s+\*\//g,function(v,g1,g2){m[g1]=g2;});
@@ -186,9 +194,9 @@ function parseFirefoxCSS(e,d){
 	r={error:0};
 	if(!code) {
 		c=map[d.id];
-		if(!c) {d.enabled=1;c=newCSS(d);}
+		if(!c) {d.enabled=1;c=newStyle(d);}
 		else for(i in d) c[i]=d[i];
-		c.data=data;saveCSS(c);
+		c.data=data;saveStyle(c);
 	} else {
 		r.error=-1;
 		r.message=_('Error parsing CSS code!');
@@ -200,12 +208,19 @@ function parseFirefoxCSS(e,d){
 }
 function fetchURL(url, load){
 	var req=new XMLHttpRequest();
-	req.open('GET', url, true);
-	req.onload=function(){if(load) load(req.status,req.responseText);};
-	req.send();
+	if(load) req.onload=function(){load(req.status,req.responseText);};
+	if(url.length>2000) {
+		var parts=url.split('?');
+		req.open('POST',parts[0],true);
+		req.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		req.send(parts[1]);
+	} else {
+		req.open('GET', url, true);
+		req.send();
+	}
 }
 function parseCSS(e,data){
-	var j,d=[],r={error:0};
+	var j,c,d=[],r={error:0};
 	if(data.status!=200) {r.error=-1;r.message=_('Error fetching CSS code!');}
 	else try{
 		j=JSON.parse(data.code);
@@ -218,16 +233,16 @@ function parseCSS(e,data){
 				code:i.code
 			});
 		});
-		var c=map[data.id];
+		c=map[data.id];
 		if(!c) {
 			data.name=j.name;
 			data.enabled=1;
-			c=newCSS(data);
+			c=newStyle(data);
 		} else c.updated=data.updated;
 		c.data=d;
 		c.url=j.url;
 		c.updateUrl=j.updateUrl;
-		saveCSS(c);
+		saveStyle(c);
 	}catch(e){
 		opera.postError(e);
 		r.message=_('Error parsing CSS code!');
@@ -235,7 +250,7 @@ function parseCSS(e,data){
 	}
 	if(e) {
 		e.source.postMessage({topic:'ParsedCSS',data:r});
-		optionsUpdate();
+		optionsUpdate(data.type,Array.prototype.indexOf.call(ids,c.id));
 	} else return r;
 }
 function installStyle(e,data){
@@ -246,9 +261,9 @@ function installStyle(e,data){
 }
 
 var messages={
-	'LoadCSS':loadCSS,
+	'LoadStyle':loadStyle,
 	'ParseFirefoxCSS':parseFirefoxCSS,
-	'CheckCSS':checkCSS,
+	'CheckStyle':checkStyle,
 	'InstallStyle':installStyle,
 };
 function onMessage(e) {
@@ -256,20 +271,20 @@ function onMessage(e) {
 	if(c) c(e,message.data);
 }
 
-var isApplied=getSetting('isApplied',true),
-    installFile=getSetting('installFile',true),
+var isApplied=getItem('isApplied',true),
+    installFile=getItem('installFile',true),
     button,_options=[];
 function showButton(show){
 	if(show) opera.contexts.toolbar.addItem(button);
 	else opera.contexts.toolbar.removeItem(button);
 }
 function updateIcon() {button.icon='images/icon18'+(isApplied?'':'w')+'.png';}
-function optionsUpdate(){
+function optionsUpdate(t,j){
 	var i=0;
 	while(i<_options.length)
 		if(_options[i].closed) _options.splice(i,1);
 		else {
-			try{_options[i].load();}catch(e){opera.postError(e);}
+			try{_options[i].updateItem(t,j);}catch(e){opera.postError(e);}
 			i++;
 		}
 }
@@ -311,5 +326,5 @@ window.addEventListener('DOMContentLoaded', function() {
 		}
 	});
 	updateIcon();
-	showButton(getSetting('showButton',true));
+	showButton(getItem('showButton',true));
 }, false);

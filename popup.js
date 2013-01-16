@@ -27,7 +27,7 @@ function addItem(h,t,c){
 function menuStyle(i){
 	var n=i.name?i.name.replace(/&/g,'&amp;').replace(/</g,'&lt;'):'<em>'+_('Null name')+'</em>';
 	addItem(n,i.name,{holder:pB,data:i.enabled,onclick:function(){
-		loadItem(this,i.enabled=!i.enabled);bg.saveCSS(i);
+		loadItem(this,i.enabled=!i.enabled);bg.saveScript(i);
 	}});
 }
 var cur=null,_title;
@@ -62,8 +62,8 @@ function load(e,data){
 		}});
 	}
 	addItem(_('Enable styles'),true,{holder:pT,data:bg.isApplied,onclick:function(){
-		bg.saveSetting('isApplied',bg.isApplied=!bg.isApplied);bg.updateIcon();loadItem(this,bg.isApplied);
-		bg.opera.extension.broadcastMessage({topic:'LoadedCSS',data:{isApplied:bg.isApplied}});
+		bg.setItem('isApplied',bg.isApplied=!bg.isApplied);bg.updateIcon();loadItem(this,bg.isApplied);
+		bg.opera.extension.broadcastMessage({topic:'LoadedStyle',data:{isApplied:bg.isApplied}});
 	}});
 	if(data&&data.styles&&data.styles.length) {
 		pT.appendChild(document.createElement('hr'));
