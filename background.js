@@ -103,7 +103,7 @@ function newStyle(c,save){
 		deprefix:c&&c.deprefix||[],
 		data:[]
 	};
-	if(r.id) map[r.id]=r; else r.id=getId(map,r);
+	if(!r.id) do{r.id=Math.random();}while(map[r.id]);
 	if(save) saveStyle(r);
 	return r;
 }
