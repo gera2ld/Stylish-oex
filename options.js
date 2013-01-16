@@ -74,7 +74,7 @@ L.onclick=function(e){
 			bg.saveStyle(e);
 			break;
 		case 'remove':
-			bg.removeScript(i);
+			bg.removeStyle(i);
 			break;
 		case 'update':
 			check(i);
