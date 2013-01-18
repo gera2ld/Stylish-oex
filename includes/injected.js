@@ -124,21 +124,18 @@ function fixOpera(){
 			}
 		});
 	};
+	installCallback.ping=true;
 	function install(e){
 		opera.extension.postMessage({topic:'InstallStyle'});
-		var req=new window.XMLHttpRequest();
-		req.open('GET', getData('stylish-install-ping-url-opera'), true);
-		req.send();
+		if(installCallback.ping){
+			var req=new window.XMLHttpRequest();
+			req.open('GET', getData('stylish-install-ping-url-opera'), true);
+			req.send();
+		}
 	}
 	function update(e){
-		var options = window.getOptions(true);
-		if (options != null) {
-			var link = document.querySelector("link[rel='stylish-code-opera']");
-			var url = link.href.split("?")[0];
-			if (options != "") link.setAttribute("href", url + "?" + window.toQueryString(options));
-			else link.setAttribute("href", url);
-		}
-		opera.extension.postMessage({topic:'InstallStyle'});
+		installCallback.ping=false;
+		window.fireCustomEvent('stylishInstall');
 	}
 	window.addCustomEventListener('stylishInstallOpera',install);
 	window.addCustomEventListener('stylishUpdate',update);
