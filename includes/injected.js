@@ -135,7 +135,7 @@ function fixOpera(){
 	}
 	function update(e){
 		installCallback.ping=false;
-		window.fireCustomEvent('stylishInstall');
+		window.stylishInstallOpera(e);
 	}
 	window.addCustomEventListener('stylishInstallOpera',install);
 	window.addCustomEventListener('stylishUpdate',update);
