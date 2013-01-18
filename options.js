@@ -106,7 +106,7 @@ O.onclick=function(){
 	if(dialogs.length) (dialogs[dialogs.length-1].close||closeDialog)();
 };
 function confirmCancel(D){
-	return !D.dirty||confirm(_('Modifications are not saved!\nClick OK to discard them or Cancel to stay.'));
+	return !D.dirty||confirm(_('Modifications are not saved!'));
 }
 function bindChange(e,d){
 	function change(){d.forEach(function(i){i.dirty=true;});}
