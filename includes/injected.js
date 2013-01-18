@@ -118,7 +118,6 @@ function fixOpera(){
 			topic:'InstallStyle',
 			data:{
 				id:id,
-				type:installCallback.type,
 				metaUrl:metaUrl,
 				updated:updated,
 				url:getData('stylish-code-opera'),
@@ -126,14 +125,12 @@ function fixOpera(){
 		});
 	};
 	function install(e){
-		installCallback.type='add';
 		opera.extension.postMessage({topic:'InstallStyle'});
 		var req=new window.XMLHttpRequest();
 		req.open('GET', getData('stylish-install-ping-url-opera'), true);
 		req.send();
 	}
 	function update(e){
-		installCallback.type='update';
 		var options = window.getOptions(true);
 		if (options != null) {
 			var link = document.querySelector("link[rel='stylish-code-opera']");

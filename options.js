@@ -33,7 +33,6 @@ function loadName(d,n){
 	a.innerHTML=getName(n);
 }
 function loadItem(d,n,m){
-	if(!n.enabled) d.className='disabled';
 	d.innerHTML='<a class="name ellipsis"></a>'
 	+'<span class=updated>'+(n.updated?_('Last updated: ')+getDate(n.updated):'')+'</span>'
 	+(n.metaUrl?'<a href=# data=update class=update>'+_('Check for Updates')+'</a> ':'')
@@ -43,6 +42,7 @@ function loadItem(d,n,m){
 		+'<button data=enable>'+_(n.enabled?'Disable':'Enable')+'</button> '
 		+'<button data=remove>'+_('Remove')+'</button>'
 	+'</div>';
+	d.className=n.enabled?'':'disabled';
 	loadName(d,n);
 	if(m) d.querySelector('.message').innerHTML=m;
 }
@@ -64,14 +64,9 @@ L.onclick=function(e){
 			break;
 		case 'enable':
 			e=bg.map[bg.ids[i]];
-			if(e.enabled=!e.enabled) {
-				p.classList.remove('disabled');
-				o.innerText=_('Disable');
-			} else {
-				p.classList.add('disabled');
-				o.innerText=_('Enable');
-			}
+			e.enabled=!e.enabled;
 			bg.saveStyle(e);
+			bg.optionsUpdate('save',i);
 			break;
 		case 'remove':
 			bg.removeStyle(i);
@@ -107,7 +102,9 @@ function closeDialog(){
 		setTimeout(function(){O.classList.add('hide');},500);
 	}
 }
-O.onclick=function(){(dialogs[dialogs.length-1].close||closeDialog)();};
+O.onclick=function(){
+	if(dialogs.length) (dialogs[dialogs.length-1].close||closeDialog)();
+};
 function confirmCancel(D){
 	return !D.dirty||confirm(_('Modifications are not saved!\nClick OK to discard them or Cancel to stay.'));
 }
@@ -320,13 +317,15 @@ $('mSaveClose').onclick=function(){
 	mClose();
 };
 M.close=$('mClose').onclick=function(){if(confirmCancel(M)) mClose();};
-// Allow fixing unexpected errors
+
+// Load at last
 L.innerHTML='';
 bg.ids.forEach(function(i){addItem(bg.map[i]);});
 function updateItem(c,i){
 	var p=L.childNodes[i],n=bg.map[bg.ids[i]];
 	if(c=='add') addItem(n);
 	else if(c=='update') loadItem(p,n,_('Update finished!'));
+	else if(c=='save') loadItem(p,n);
 	else if(c=='remove') L.removeChild(p);
 }
 bg.optionsLoad(window);

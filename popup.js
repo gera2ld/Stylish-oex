@@ -27,7 +27,7 @@ function addItem(h,t,c){
 function menuStyle(i){
 	var n=i.name?i.name.replace(/&/g,'&amp;').replace(/</g,'&lt;'):'<em>'+_('Null name')+'</em>';
 	addItem(n,i.name,{holder:pB,data:i.enabled,onclick:function(){
-		loadItem(this,i.enabled=!i.enabled);bg.saveStyle(i);
+		loadItem(this,i.enabled=!i.enabled);bg.saveStyle(i);bg.optionsUpdate('save',i);
 	}});
 }
 var cur=null,_title;

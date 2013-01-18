@@ -216,7 +216,7 @@ function fetchURL(url, load){
 	}
 }
 function parseCSS(e,data){
-	var j,c,d=[],r={error:0};
+	var j,c,d=[],r={error:0},t;
 	if(data.status!=200) {r.error=-1;r.message=_('Error fetching CSS code!');}
 	else try{
 		j=JSON.parse(data.code);
@@ -234,7 +234,11 @@ function parseCSS(e,data){
 			data.name=j.name;
 			data.enabled=1;
 			c=newStyle(data);
-		} else c.updated=data.updated;
+			t='add';
+		} else {
+			c.updated=data.updated;
+			t='update';
+		}
 		c.data=d;
 		c.url=j.url;
 		c.updateUrl=j.updateUrl;
@@ -244,10 +248,9 @@ function parseCSS(e,data){
 		r.message=_('Error parsing CSS code!');
 		r.error=-1;
 	}
-	if(e) {
-		e.source.postMessage({topic:'ParsedCSS',data:r});
-		optionsUpdate(data.type,Array.prototype.indexOf.call(ids,c.id));
-	} else return r;
+	optionsUpdate(t,Array.prototype.indexOf.call(ids,c.id));
+	if(e) e.source.postMessage({topic:'ParsedCSS',data:r});
+	else return r;
 }
 function installStyle(e,data){
 	if(data)
@@ -276,6 +279,8 @@ function showButton(show){
 }
 function updateIcon() {button.icon='images/icon18'+(isApplied?'':'w')+'.png';}
 function optionsUpdate(t,j){
+	if(typeof j!='number') j=Array.prototype.indexOf.call(ids,j.id);
+	if(j<0) return;
 	var i=0;
 	while(i<_options.length)
 		if(_options[i].closed) _options.splice(i,1);
