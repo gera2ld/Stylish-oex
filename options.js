@@ -124,9 +124,9 @@ $('aExport').onclick=function(){showDialog(X);xLoad();};
 A.close=$('aClose').onclick=closeDialog;
 
 // Export
-var X=$('export'),xL=$('xList');
+var X=$('export'),xL=$('xList'),xE=$('bExport');
 function xLoad() {
-	xL.innerHTML='';
+	xL.innerHTML='';xE.disabled=false;xE.innerHTML=_('Export');
 	bg.ids.forEach(function(i){
 		var d=document.createElement('div');
 		d.className='ellipsis';
@@ -162,7 +162,8 @@ function getCSS(c){
 	return d.join('\n');
 }
 $('bExport').onclick=function(){
-	var z=new JSZip(),n,_n,names={},c;
+	xE.disabled=true;xE.innerHTML=_('Exporting...');
+	var z=new JSZip(),n,_n,names={},c,i,s;
 	for(i=0;i<bg.ids.length;i++) if(xL.childNodes[i].classList.contains('selected')) {
 		c=bg.map[bg.ids[i]];n=_n=c.name||'Noname';s=0;
 		while(names[n]) n=_n+(++s);names[n]=1;
@@ -170,6 +171,7 @@ $('bExport').onclick=function(){
 	}
 	n=z.generate();
 	window.open('data:application/zip;base64,'+n);
+	X.close();
 };
 X.close=$('bClose').onclick=closeDialog;
 
