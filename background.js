@@ -99,7 +99,7 @@ function newStyle(c,save){
 		deprefix:c&&c.deprefix||[],
 		data:[]
 	};
-	if(!r.id) do{r.id=Math.random();}while(map[r.id]);
+	if(!r.id) r.id=Date.now()+Math.random().toString().substr(1);
 	if(save) saveStyle(r);
 	return r;
 }
