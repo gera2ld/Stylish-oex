@@ -7,6 +7,24 @@ function setItem(key,val){
 	widget.preferences.setItem(key,JSON.stringify(val));
 	return val;
 }
+// Multilingual
+var i18nMessages={};
+function loadMessages(locale){
+	var filename='messages.json';
+	if(locale) filename='locales/'+locale+'/'+filename;
+	var req=new XMLHttpRequest();
+	req.open('GET',filename,false);
+	req.send();
+	var j=JSON.parse(req.responseText);
+	for(var i in j) i18nMessages[i]=j[i];
+}
+function getI18nString(s) {return i18nMessages[s]||s;}
+var _=getI18nString;
+try{loadMessages();}catch(e){opera.postError(e);}
+function format(){
+	var a=arguments;
+	if(a[0]) return a[0].replace(/\$(?:\{(\d+)\}|(\d+))/g,function(v,g1,g2){return a[g1||g2]||v;});
+}
 
 /* ===============Data format 0.3==================
  * ids	List [id]
@@ -116,7 +134,6 @@ function saveStyle(s){
 	});
 }
 function removeStyle(i){
-	optionsUpdate('remove',i);
 	i=ids.splice(i,1)[0];saveIDs();delete map[i];
 	var d={};d[i]=undefined;
 	opera.extension.broadcastMessage({topic:'UpdateStyle',data:d});
@@ -270,62 +287,34 @@ function onMessage(e) {
 	if(c) c(e,message.data);
 }
 
-var isApplied=getItem('isApplied',true),
-    installFile=getItem('installFile',true),
-    button,_options=[];
+var isApplied=getItem('isApplied',true),installFile=getItem('installFile',true);
 function showButton(show){
 	if(show) opera.contexts.toolbar.addItem(button);
 	else opera.contexts.toolbar.removeItem(button);
 }
 function updateIcon() {button.icon='images/icon18'+(isApplied?'':'w')+'.png';}
-function optionsUpdate(t,j){
+function optionsUpdate(t,j){	// update loaded options pages
 	if(typeof j!='number') j=Array.prototype.indexOf.call(ids,j.id);
-	if(j<0) return;
-	var i=0;
-	while(i<_options.length)
-		if(_options[i].closed) _options.splice(i,1);
-		else {
-			try{_options[i].updateItem(t,j);}catch(e){opera.postError(e);}
-			i++;
-		}
-}
-function optionsLoad(w){
-	var i=0;
-	while(i<_options.length)
-		if(_options[i].closed) _options.splice(i,1);
-		else {if(_options[i]==w) w=null;i++;}
-	if(w) _options.push(w);
+	if(j>=0&&options&&options.window) try{
+		options.window.updateItem(t,j);
+	}catch(e){opera.postError(e);options={};}
 }
 
-// Multilingual
-var i18nMessages={};
-function loadMessages(locale){
-	var filename='messages.json';
-	if(locale) filename='locales/'+locale+'/'+filename;
-	var req=new XMLHttpRequest();
-	req.open('GET',filename,false);
-	req.send();
-	var j=JSON.parse(req.responseText);
-	for(var i in j) i18nMessages[i]=j[i];
-}
-function getI18nString(s) {return i18nMessages[s]||s;}
-var _=getI18nString;
-try{loadMessages();}catch(e){opera.postError(e);}
-function format(){
-	var a=arguments;
-	if(a[0]) return a[0].replace(/\$(?:\{(\d+)\}|(\d+))/g,function(v,g1,g2){return a[g1||g2]||v;});
-}
-
-window.addEventListener('DOMContentLoaded', function() {
-	opera.extension.onmessage = onMessage;
-	button = opera.contexts.toolbar.createItem({
-		title: "Stylish",
-		popup:{
-			href: "popup.html",
-			width:222,
-			height:100
-		}
-	});
-	updateIcon();
-	showButton(getItem('showButton',true));
-}, false);
+opera.extension.onmessage = onMessage;
+var button = opera.contexts.toolbar.createItem({
+	title: "Stylish",
+	popup:{
+		href: "popup.html",
+		width:222,
+		height:100
+	}
+}),options={},optionsURL=new RegExp('^'+(location.protocol+'//'+location.host+'/options.html').replace(/\./g,'\\.'));
+updateIcon();
+showButton(getItem('showButton',true));
+opera.extension.tabs.oncreate=function(e){
+	if(optionsURL.test(e.tab.url)) {
+		if(options.tab&&!options.tab.closed) {e.tab.close();options.tab.focus();}
+		else options.tab=e.tab;
+	}
+};
+opera.extension.tabs.onclose=function(e){if(options.tab===e.tab) options={};};

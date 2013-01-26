@@ -64,12 +64,18 @@ L.onclick=function(e){
 			break;
 		case 'enable':
 			e=bg.map[bg.ids[i]];
-			e.enabled=!e.enabled;
+			if(e.enabled=!e.enabled) {
+				p.classList.remove('disabled');
+				o.innerText=_('Disable');
+			} else {
+				p.classList.add('disabled');
+				o.innerText=_('Enable');
+			}
 			bg.saveStyle(e);
-			bg.optionsUpdate('save',i);
 			break;
 		case 'remove':
-			bg.removeStyle(i);
+			bg.removeScript(i);
+			L.removeChild(p);
 			break;
 		case 'update':
 			check(i);
@@ -340,11 +346,12 @@ M.close=$('mClose').onclick=function(){if(confirmCancel(M.dirty||!T.isClean())) 
 // Load at last
 L.innerHTML='';
 bg.ids.forEach(function(i){addItem(bg.map[i]);});
-function updateItem(c,i){
+function updateItem(t,i){
 	var p=L.childNodes[i],n=bg.map[bg.ids[i]];
-	if(c=='add') addItem(n);
-	else if(c=='update') loadItem(p,n,_('Update finished!'));
-	else if(c=='save') loadItem(p,n);
-	else if(c=='remove') L.removeChild(p);
-}
-bg.optionsLoad(window);
+	switch(t){
+		case 'add':addItem(n);break;
+		case 'update':loadItem(p,n,_('Update finished!'));break;
+		case 'save':loadItem(p,n);break;
+	}
+};
+if(!bg.options.window) bg.options.window=window;
