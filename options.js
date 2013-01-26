@@ -194,19 +194,15 @@ function check(i){
 	o.classList.add('hide');
 	function update(){
 		m.innerHTML=_('Updating...');
-		bg.fetchURL(c.updateUrl,function(s,t){
-			var r=bg.parseCSS(null,{status:s,id:c.id,updated:d,code:t});
-			if(r.error) m.innerHTML=r.message;
-			else {
-				l.childNodes[1].innerHTML=_('Last updated: ')+getDate(d);
-				m.innerHTML=_('Update finished!');
-			}
+		bg.fetchURL(c.updateUrl,function(){
+			var r=bg.parseCSS(null,{status:this.status,id:c.id,updated:d,code:this.responseText});
+			if(r) m.innerHTML=r;
 			o.classList.remove('hide');
 		});
 	}
-	bg.fetchURL(c.metaUrl,function(s,t){
+	bg.fetchURL(c.metaUrl,function(){
 		try {
-			d=getTime(JSON.parse(t));
+			d=getTime(JSON.parse(this.responseText));
 			if(!c.updated||c.updated<d) {
 				if(c.updateUrl) return update();
 				else m.innerHTML='<a class=new title="'+_('Please go to homepage for update since there are options for this style.')+'">'+_('New version found')+'</a>';
@@ -346,12 +342,11 @@ M.close=$('mClose').onclick=function(){if(confirmCancel(M.dirty||!T.isClean())) 
 // Load at last
 L.innerHTML='';
 bg.ids.forEach(function(i){addItem(bg.map[i]);});
-function updateItem(t,i){
+function updateItem(t,i,r){
 	var p=L.childNodes[i],n=bg.map[bg.ids[i]];
 	switch(t){
 		case 'add':addItem(n);break;
-		case 'update':loadItem(p,n,_('Update finished!'));break;
-		case 'save':loadItem(p,n);break;
+		case 'update':loadItem(p,n,r);break;
 	}
 };
 if(!bg.options.window) bg.options.window=window;

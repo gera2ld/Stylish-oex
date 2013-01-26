@@ -214,14 +214,11 @@ function parseFirefoxCSS(e,d){
 		r.error=-1;
 		r.message=_('Error parsing CSS code!');
 	}
-	if(e) e.source.postMessage({
-		topic: 'ParsedCSS',
-		data: r
-	});
+	if(e) e.source.postMessage({topic: 'ParsedCSS',data: r});
 }
 function fetchURL(url, load){
 	var req=new XMLHttpRequest();
-	if(load) req.onload=function(){load(req.status,req.responseText);};
+	if(load) req.onload=load;
 	if(url.length>2000) {
 		var parts=url.split('?');
 		req.open('POST',parts[0],true);
@@ -233,7 +230,7 @@ function fetchURL(url, load){
 	}
 }
 function parseCSS(e,data){
-	var j,c,d=[],r={error:0},t;
+	var j,c=null,d=[],r={error:0},t;
 	if(data.status!=200) {r.error=-1;r.message=_('Error fetching CSS code!');}
 	else try{
 		j=JSON.parse(data.code);
@@ -265,14 +262,14 @@ function parseCSS(e,data){
 		r.message=_('Error parsing CSS code!');
 		r.error=-1;
 	}
-	optionsUpdate(t,Array.prototype.indexOf.call(ids,c.id));
 	if(e) e.source.postMessage({topic:'ParsedCSS',data:r});
-	else return r;
+	if(c) optionsUpdate(t,Array.prototype.indexOf.call(ids,c.id),_('Style updated.'));
+	else return r.message;
 }
 function installStyle(e,data){
-	if(data)
-		fetchURL(data.url,function(s,t){data.status=s;data.code=t;parseCSS(e,data);});
-	else if(installFile)
+	if(data) fetchURL(data.url,function(){
+		data.status=this.status;data.code=this.responseText;parseCSS(e,data);
+	}); else if(installFile)
 		e.source.postMessage({topic:'ConfirmInstall',data:_('Do you want to install this style?')});
 }
 
@@ -293,28 +290,27 @@ function showButton(show){
 	else opera.contexts.toolbar.removeItem(button);
 }
 function updateIcon() {button.icon='images/icon18'+(isApplied?'':'w')+'.png';}
-function optionsUpdate(t,j){	// update loaded options pages
+function optionsUpdate(t,j,r){	// update loaded options pages
 	if(typeof j!='number') j=Array.prototype.indexOf.call(ids,j.id);
-	if(j>=0&&options&&options.window) try{
-		options.window.updateItem(t,j);
-	}catch(e){opera.postError(e);options={};}
+	if(j>=0&&options&&options.window)
+		try{options.window.updateItem(t,j,r);}catch(e){opera.postError(e);options={};}
 }
 
 opera.extension.onmessage = onMessage;
 var button = opera.contexts.toolbar.createItem({
 	title: "Stylish",
 	popup:{
-		href: "popup.html",
+		href:"popup.html",
 		width:222,
 		height:100
 	}
-}),options={},optionsURL=new RegExp('^'+(location.protocol+'//'+location.host+'/options.html').replace(/\./g,'\\.'));
+    }),options={},optionsURL=new RegExp('^'+(location.protocol+'//'+location.host+'/options.html').replace(/\./g,'\\.'));
 updateIcon();
 showButton(getItem('showButton',true));
 opera.extension.tabs.oncreate=function(e){
 	if(optionsURL.test(e.tab.url)) {
 		if(options.tab&&!options.tab.closed) {e.tab.close();options.tab.focus();}
-		else options.tab=e.tab;
+		else options={tab:e.tab};
 	}
 };
 opera.extension.tabs.onclose=function(e){if(options.tab===e.tab) options={};};
