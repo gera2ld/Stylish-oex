@@ -263,7 +263,7 @@ function parseCSS(e,data){
 		r.error=-1;
 	}
 	if(e) e.source.postMessage({topic:'ParsedCSS',data:r});
-	if(c) optionsUpdate(t,Array.prototype.indexOf.call(ids,c.id),_('Style updated.'));
+	if(c) optionsUpdate(t,ids.indexOf(c.id),_('Style updated.'));
 	else return r.message;
 }
 function installStyle(e,data){
@@ -291,7 +291,7 @@ function showButton(show){
 }
 function updateIcon() {button.icon='images/icon18'+(isApplied?'':'w')+'.png';}
 function optionsUpdate(t,j,r){	// update loaded options pages
-	if(typeof j!='number') j=Array.prototype.indexOf.call(ids,j.id);
+	if(typeof j!='number') j=ids.indexOf(j.id);
 	if(j>=0&&options&&options.window)
 		try{options.window.updateItem(t,j,r);}catch(e){opera.postError(e);options={};}
 }
