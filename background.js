@@ -167,7 +167,11 @@ function testURL(url,e){
 		testDomain();testRegexp();testUrlPrefix();testUrl();
 		if(f) c.push(e.enabled?d.code:'');
 	}
-	if(c.length) return c.join('');
+	if(c.length) {
+		c=c.join('');
+		if(e.deprefix.length) c=c.replace(new RegExp('('+e.deprefix.join('|')+')','g'),'')
+		return c;
+	}
 }
 function loadStyle(e) {
 	var c={};

@@ -2,7 +2,7 @@ function $(i){return document.getElementById(i);}
 var bg=opera.extension.bgProcess,P=$('popup'),A=$('astyles'),
     pT=P.querySelector('.top'),pB=P.querySelector('.bot'),
     aT=A.querySelector('.top'),aB=A.querySelector('.bot'),
-    _=bg.getI18nString,tab=bg.opera.extension.tabs.getFocused(),cL=[];
+    _=bg.getI18nString,tab=bg.opera.extension.tabs.getFocused();
 function loadItem(d,c){
 	if(c) {
 		d.firstChild.innerText=d.symbol;

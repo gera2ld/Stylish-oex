@@ -1,4 +1,4 @@
-var updated=0,style=null,css={};
+var updated=0,style=null,styles={};
 function getKeys(d){var k=[];for(i in d) k.push(i);return k;}
 // Message
 opera.extension.addEventListener('message', function(event) {
@@ -8,7 +8,7 @@ opera.extension.addEventListener('message', function(event) {
 	else if(message.topic=='GetPopup') opera.extension.postMessage({
 		topic:'GotPopup',
 		data:{
-			styles:getKeys(css),
+			styles:getKeys(styles),
 			astyles:getKeys(astyles),
 			cstyle:cur
 		}
@@ -32,37 +32,31 @@ opera.extension.addEventListener('message', function(event) {
 opera.extension.postMessage({topic:'LoadStyle'});
 
 // CSS applying
-function loadStyle(){
-	if(style&&css) {
-		var i,c=[];
-		for(i in css) c.push(css[i]);
-		style.innerHTML=c.join('');
-	}
-}
-function updateStyle(data) {
-	for(var i in data)
-		if(typeof data[i]=='string') css[i]=data[i]; else delete css[i];
-	loadStyle();
-}
-function addStyle(e){
+function loadStyle(e){
 	if(e){
-		if(document.head) window.removeEventListener('DOMNodeInserted',addStyle,false);
+		if(document.head) window.removeEventListener('DOMNodeInserted',loadStyle,false);
 		else return;
-	} else if(!document.head) return window.addEventListener('DOMNodeInserted',addStyle,false);
+	} else if(!document.head) return window.addEventListener('DOMNodeInserted',loadStyle,false);
 	if(!style) {
 		style=document.createElement('style');
 		style.setAttribute('type', 'text/css');
 		document.head.appendChild(style);
 	}
+	if(styles) {
+		var i,c=[];
+		for(i in styles) c.push(styles[i]);
+		style.innerHTML=c.join('');
+	}
+}
+function updateStyle(data) {
+	for(var i in data)
+		if(typeof data[i]=='string') styles[i]=data[i]; else delete styles[i];
 	loadStyle();
 }
 function onCSS(data) {
-	if(data.data) css=data.data;
-	if(data.isApplied) addStyle();
-	else if(style) {
-		document.head.removeChild(style);
-		style=null;
-	}
+	if(data.data) styles=data.data;
+	if(data.isApplied) loadStyle();
+	else if(style) {document.head.removeChild(style);style=null;}
 }
 
 // Alternative style sheets
@@ -107,15 +101,13 @@ function fixOpera(){
 	var id=getData('stylish-id-url'),metaUrl=id+'.json';
 	var req = new window.XMLHttpRequest();
 	req.open('GET', metaUrl, true);
-	req.onreadystatechange=function(){
-		if(req.readyState==4) {
-			try{
-				updated=getTime(JSON.parse(req.responseText));
-			} catch(e) {
-				alert('Oops! Failed checking for update!');updated=0;
-			}
-			opera.extension.postMessage({topic:'CheckStyle',data:id});
+	req.onload=function(){
+		try{
+			updated=getTime(JSON.parse(req.responseText));
+		} catch(e) {
+			alert('Oops! Failed checking for update!');updated=0;
 		}
+		opera.extension.postMessage({topic:'CheckStyle',data:id});
 	};
 	req.send();
 
@@ -129,20 +121,14 @@ function fixOpera(){
 				url:getData('stylish-code-opera'),
 			}
 		});
-	};
-	installCallback.ping=true;
-	function install(e){
-		opera.extension.postMessage({topic:'InstallStyle'});
 		if(installCallback.ping){
 			var req=new window.XMLHttpRequest();
 			req.open('GET', getData('stylish-install-ping-url-opera'), true);
 			req.send();
 		}
-	}
-	function update(e){
-		installCallback.ping=false;
-		window.stylishInstallOpera(e);
-	}
+	};
+	function install(e){installCallback.ping=true;opera.extension.postMessage({topic:'InstallStyle'});}
+	function update(e){installCallback.ping=false;window.stylishInstallOpera(e);}
 	window.addCustomEventListener('stylishInstallOpera',install);
 	window.addCustomEventListener('stylishUpdate',update);
 }
@@ -152,6 +138,6 @@ if(/\.user\.css$/.test(window.location.href)) (function(){
 		if(document&&document.body&&!document.querySelector('title')) opera.extension.postMessage({topic:'InstallStyle'});
 	}
 	if(document.readyState!='complete') window.addEventListener('load',install,false);
-	else  install();
+	else install();
 })(); else if(/^http:\/\/userstyles\.org\/styles\//.test(window.location.href))
 	window.addEventListener('DOMNodeInserted',fixOpera,false);

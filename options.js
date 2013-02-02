@@ -35,7 +35,7 @@ function loadName(d,n){
 function loadItem(d,n,m){
 	d.innerHTML='<a class="name ellipsis"></a>'
 	+'<span class=updated>'+(n.updated?_('Last updated: ')+getDate(n.updated):'')+'</span>'
-	+(n.metaUrl?'<a href=# data=update class=update>'+_('Check for Updates')+'</a> ':'')
+	+(n.metaUrl?'<a href=# data=update class=update>'+_('Check for updates')+'</a> ':'')
 	+'<span class=message></span>'
 	+'<div class=panel>'
 		+'<button data=edit>'+_('Edit')+'</button> '
@@ -175,10 +175,10 @@ function getCSS(c){
 }
 $('bExport').onclick=function(){
 	xE.disabled=true;xE.innerHTML=_('Exporting...');
-	var z=new JSZip(),n,_n,names={},c,i,s;
+	var z=new JSZip(),n,_n,names={},c,i,j;
 	for(i=0;i<bg.ids.length;i++) if(xL.childNodes[i].classList.contains('selected')) {
-		c=bg.map[bg.ids[i]];n=_n=c.name||'Noname';s=0;
-		while(names[n]) n=_n+(++s);names[n]=1;
+		c=bg.map[bg.ids[i]];n=_n=c.name||'Noname';j=0;
+		while(names[n]) n=_n+(++j);names[n]=1;
 		z.file(n+'.user.css',getCSS(c));
 	}
 	n=z.generate();
@@ -205,8 +205,8 @@ function check(i){
 			d=getTime(JSON.parse(this.responseText));
 			if(!c.updated||c.updated<d) {
 				if(c.updateUrl) return update();
-				else m.innerHTML='<a class=new title="'+_('Please go to homepage for update since there are options for this style.')+'">'+_('New version found')+'</a>';
-			} else m.innerHTML=_('No update found');
+				else m.innerHTML='<a class=new title="'+_('Please go to homepage for update since there are options for this style.')+'">'+_('New version found.')+'</a>';
+			} else m.innerHTML=_('No update found.');
 		} catch(e) {
 			m.innerHTML=_('Failed fetching update information.');
 			opera.postError(e);
