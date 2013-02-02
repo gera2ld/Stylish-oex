@@ -44,16 +44,22 @@ function updateStyle(data) {
 		if(typeof data[i]=='string') css[i]=data[i]; else delete css[i];
 	loadStyle();
 }
+function addStyle(e){
+	if(e){
+		if(document.head) window.removeEventListener('DOMNodeInserted',addStyle,false);
+		else return;
+	} else if(!document.head) return window.addEventListener('DOMNodeInserted',addStyle,false);
+	if(!style) {
+		style=document.createElement('style');
+		style.setAttribute('type', 'text/css');
+		document.head.appendChild(style);
+	}
+	loadStyle();
+}
 function onCSS(data) {
 	if(data.data) css=data.data;
-	if(data.isApplied) {
-		if(!style) {
-			style = document.createElement('style');
-			style.setAttribute('type', 'text/css');
-			document.head.appendChild(style);
-		}
-		loadStyle();
-	} else if(style) {
+	if(data.isApplied) addStyle();
+	else if(style) {
 		document.head.removeChild(style);
 		style=null;
 	}
