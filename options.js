@@ -250,7 +250,11 @@ editor.prototype={
 			this.type=i;
 		}
 	},
-	resize:function(){var w=this.getWrapperElement();fillHeight(w,w.nextElementSibling);},
+	resize:function(){
+		var w=this.getWrapperElement();
+		fillHeight(w,w.nextElementSibling);
+		if(this.type) w.style.width=w.parentNode.clientWidth+'px';
+	},
 	isClean:function(){return this.clean&&this.editor.isClean();},
 	markClean:function(){this.clean=true;this.editor.markClean();},
 	getValue:function(){return this.editor.getValue();},

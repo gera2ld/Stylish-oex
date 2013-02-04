@@ -33,14 +33,10 @@ opera.extension.postMessage({topic:'LoadStyle'});
 
 // CSS applying
 function loadStyle(e){
-	if(e){
-		if(document.head) window.removeEventListener('DOMNodeInserted',loadStyle,false);
-		else return;
-	} else if(!document.head) return window.addEventListener('DOMNodeInserted',loadStyle,false);
 	if(!style) {
 		style=document.createElement('style');
 		style.setAttribute('type', 'text/css');
-		document.head.appendChild(style);
+		document.documentElement.appendChild(style);
 	}
 	if(styles) {
 		var i,c=[];
