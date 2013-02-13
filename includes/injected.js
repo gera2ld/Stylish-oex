@@ -1,5 +1,4 @@
 var updated=0,style=null,styles={};
-function getKeys(d){var k=[];for(i in d) k.push(i);return k;}
 // Message
 opera.extension.addEventListener('message', function(event) {
 	var message=event.data;
@@ -8,8 +7,8 @@ opera.extension.addEventListener('message', function(event) {
 	else if(message.topic=='GetPopup') opera.extension.postMessage({
 		topic:'GotPopup',
 		data:{
-			styles:getKeys(styles),
-			astyles:getKeys(astyles),
+			styles:Object.getOwnPropertyNames(styles),
+			astyles:Object.getOwnPropertyNames(astyles),
 			cstyle:cur
 		}
 	}); else if(message.topic=='AlterStyle') alterStyle(message.data);

@@ -373,10 +373,7 @@ $('mSave').onclick=function(){
 	if(mSave()) {M.css.data=cloneData(M.data);bg.saveStyle(M.css);}
 };
 $('mSaveClose').onclick=function(){
-	if(mSave()) {
-		var c=bg.map[bg.ids[M.cur]];
-		c.data=M.data;bg.saveStyle(c);
-	}
+	if(mSave()) {M.css.data=M.data;bg.saveStyle(M.css);}
 	mClose();
 };
 M.close=$('mClose').onclick=function(){if(confirmCancel(M.dirty||!T.isClean())) mClose();};
