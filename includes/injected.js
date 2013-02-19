@@ -51,7 +51,7 @@ function updateStyle(data) {
 function onCSS(data) {
 	if(data.data) styles=data.data;
 	if(data.isApplied) loadStyle();
-	else if(style) {document.head.removeChild(style);style=null;}
+	else if(style) {document.documentElement.removeChild(style);style=null;}
 }
 
 // Alternative style sheets
