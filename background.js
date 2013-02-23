@@ -176,7 +176,7 @@ function testURL(url,e){
 function loadStyle(e) {
 	var c={};
 	ids.forEach(function(i){
-		var d=testURL(e.origin,map[i],true);
+		var d=testURL(e.origin,map[i]);
 		if(typeof d=='string') c[i]=d;
 	});
 	e.source.postMessage({

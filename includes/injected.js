@@ -12,7 +12,6 @@ opera.extension.addEventListener('message', function(event) {
 			cstyle:cur
 		}
 	}); else if(message.topic=='AlterStyle') alterStyle(message.data);
-	else if(message.topic=='LoadStyle') opera.extension.postMessage({topic:'LoadStyle'});
 	else if(message.topic=='CheckedStyle') {
 		if(message.data) {
 			if(!message.data.updated||message.data.updated<updated) window.fireCustomEvent('styleCanBeUpdated');
