@@ -71,7 +71,7 @@ function newStyle(c,save){
 		id:c&&c.id,
 		metaUrl:c&&c.metaUrl,
 		updated:c?c.updated:null,
-		enabled:c&&('enabled' in c)?c.enabled:1,
+		enabled:c&&c.enabled!=undefined?c.enabled:1,
 		deprefix:c&&c.deprefix||[],
 		data:[]
 	};
@@ -144,13 +144,14 @@ function loadStyle(e) {
 }
 function checkStyle(e,d){e.source.postMessage({topic:'CheckedStyle',data:map[d]});}
 function parseFirefoxCSS(e,d){
-	var c=null,i,p,m={},r,code=d.code.replace(/\s+$/,''),data=[],t;
-	code.replace(/\/\*\s+@(\w+)\s+(.*?)\s+\*\//g,function(v,g1,g2){m[g1]=g2;});
-	for(i in m) if(!(i in d)) {
-		d[i]=m[i];
-		if(['updated','enabled'].indexOf(i)>=0)
-			try{d[i]=JSON.parse(d[i]);}catch(e){delete d[i];}
-	}
+	var c=null,i,p,m,r,code=d.code.replace(/\s+$/,''),data=[],t;
+	code.replace(/\/\*\s+@(\w+)\s+(.*?)\s+\*\//g,function(v,g1,g2){
+		if(d[g1]==undefined) {
+			d[g1]=g2;
+			if(['updated','enabled'].indexOf(g1)>=0)
+				try{d[g1]=JSON.parse(d[g1]);}catch(e){delete d[g1];}
+		}
+	});
 	while(code){
 		i=code.indexOf('@-moz-document');if(i<0) break;
 		p=code.indexOf('{',i);
