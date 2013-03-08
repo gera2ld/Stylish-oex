@@ -183,7 +183,7 @@ $('bSelect').onclick=function(){
 function getCSS(c){
 	var d=[];
 	['id','name','url','metaUrl','updateUrl','updated','enabled'].forEach(function(i){
-		if(i in c) d.push('/* @'+i+' '+String(c[i]).replace(/\*/g,'+')+' */');
+		if(c[i]!=undefined) d.push('/* @'+i+' '+String(c[i]).replace(/\*/g,'+')+' */');
 	});
 	c.data.forEach(function(i){
 		var p=[];

@@ -49,49 +49,7 @@ function format(){
  * 		}
  */
 (function(){	// Upgrading data to new version
-	var version=getItem('version_storage',0),css=getItem('cssList');
-	if(css&&css[0]&&css[0].css!=undefined) {
-		for(var i=0;i<css.length;i++){
-			var x=css[i];
-			css[i]={
-				name:x.name,
-				enabled:1,
-				data:[{inc:x.includes,css:x.css}]
-			};
-			do{css[i].id=Math.random();}while(map[css[i].id]);
-			map[css[i].id]=css[i];
-		}
-	}
-	if(version<0.2) {
-		css&&css.forEach(function(i){
-			var d=i.data;
-			i.data=[];
-			if(parseInt(i.id)>1) {
-				i.url='http://userstyles.org/styles/'+i.id;
-				i.metaUrl='http://userstyles.org/styles/'+i.id+'.json';
-			}
-			i.deprefix=i.deprefix||[];
-			i.updateUrl=i.url&&!i.options;
-			delete i.options;
-			d.forEach(function(d){
-				var r={
-					domains:[],
-					regexps:[],
-					urlPrefixes:[],
-					urls:[],
-					code:d.css
-				};
-				d.inc.forEach(function(i){
-					if(m=i.match(/^([^\*]*)\*$/)) r.urlPrefixes.push(m[1]);
-					else if(m=i.match(/^\*([^\/\?\*]+)\/\*$/)) r.domains.push(m[1].replace(/\\\./g,'.'));
-					else if(m=i.match(/^\/(.*?)\/$/)) r.regexps.push(m[1]);
-					else if(m=i.match(/^\/\^([^\*]+)\$\/$/)) r.urls.push(m[1].replace(/\\([\.\?])/g,'$1'));
-					else r.urls.push(i);
-				});
-				i.data.push(r);
-			});
-		});
-	}
+	var version=getItem('version_storage',0);
 	if(version<0.3){
 		widget.preferences.removeItem('cssList');
 		var ids=[];
