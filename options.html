@@ -10,6 +10,9 @@
 		<script type="text/javascript" src="lib/continuecomment.js"></script>
 		<script type="text/javascript" src="lib/css.js"></script>
 		<script type="text/javascript" src="lib/jszip.js"></script>
+		<script type="text/javascript" src="lib/jszip-deflate.js"></script>
+		<script type="text/javascript" src="lib/jszip-inflate.js"></script>
+		<script type="text/javascript" src="lib/jszip-load.js"></script>
 		<title class=i18n>Options - Stylish</title>
 	</head>
 	<body class=fill>
@@ -68,8 +71,8 @@
 					<textarea id=mCode></textarea>
 					<div class=left>
 						<label class=i18n>Remove prefixes while applying:</label>
-						<input type=checkbox id=mDeMoz><label for=mDeMoz class=em>-moz-</label>
-						<input type=checkbox id=mDeWebkit><label for=mDeWebkit class=em>-webkit-</label>
+						<label class=em><input type=checkbox id=mDeMoz>-moz-</label>
+						<label class=em><input type=checkbox id=mDeWebkit>-webkit-</label>
 					</div>
 					<div class=right>
 						<button id=mSave class=i18n>Save</button>
@@ -93,9 +96,13 @@
 		</div>
 		<div id=advanced class="float hide">
 			<h2 class=i18n>Advanced</h2>
-			<div><input type=checkbox id=cShow><label for=cShow class=i18n>Show button on toolbar</label></div>
-			<div><input type=checkbox id=cInstall><label for=cInstall class=i18n>Allow installing .user.css files</label></div>
-			<fieldset><legend class=i18n>Data</legend><button id=aExport class=i18n>Export to zip file</button></fieldset>
+			<label><input type=checkbox id=cShow><span class=i18n>Show button on toolbar</span></label>
+			<label><input type=checkbox id=cInstall><span class=i18n>Allow installing .user.css files</span></label>
+			<fieldset>
+				<legend class=i18n>Data</legend>
+				<button id=aExport class=i18n>Export to zip file</button><br>
+				<div id=dImport><button class=i18n>Import from zip file</button><input id=aImport type=file></div>
+			</fieldset>
 			<div class=right><button id=aClose class=i18n>Close</button></div>
 		</div>
 	</body>
