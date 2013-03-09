@@ -68,6 +68,7 @@ function saveIDs(){setItem('ids',ids);}
 function newStyle(c,save){
 	var r={
 		name:c?c.name:_('New Style'),
+		url:c&&c.url,
 		id:c&&c.id,
 		metaUrl:c&&c.metaUrl,
 		updated:c?c.updated:null,
@@ -187,7 +188,8 @@ function parseFirefoxCSS(e,d){
 }
 function fetchURL(url, cb){
 	var req=new XMLHttpRequest();
-	if(cb) req.onloadend=cb;
+	if(cb) req.onload=req.onerror=cb;
+	//if(cb) req.onloadend=cb;	// Not supported in Opera 11.64
 	if(url.length>2000) {
 		var parts=url.split('?');
 		req.open('POST',parts[0],true);
