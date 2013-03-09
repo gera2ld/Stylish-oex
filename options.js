@@ -280,7 +280,7 @@ editor.prototype={
 	isClean:function(){return this.clean&&this.editor.isClean();},
 	markClean:function(){this.clean=true;this.editor.markClean();},
 	getValue:function(){return this.editor.getValue();},
-	setValue:function(t){this.editor.setValue(t);},
+	setValue:function(t){this.editor.setValue(t);this.editor.getDoc&&this.editor.getDoc().clearHistory();},
 	getWrapperElement:function(e){e=this.editor;return e.getWrapperElement?e.getWrapperElement():e;},
 };
 var T=new editor($('mCode'),bg.getItem('editorType',0));
