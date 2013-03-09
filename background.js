@@ -56,7 +56,6 @@ function format(){
 		css&&css.forEach(function(i){setItem('us:'+i.id,i);ids.push(i.id);});
 		setItem('ids',ids);
 		setItem('version_storage',0.3);
-		if(opera.extension.tabs.getAll)	// Opera 12+ Only
 		opera.extension.tabs.getAll().forEach(function(i){
 			if(/^http:\/\/userstyles\.org\/styles\//.test(i.url)) i.refresh();
 		});
@@ -83,8 +82,6 @@ function newStyle(c,save){
 function saveStyle(s){
 	if(!map[s.id]) {ids.push(s.id);saveIDs();}
 	setItem('us:'+s.id,map[s.id]=s);
-	// Update Style: Opera 12+ Only
-	if(opera.extension.tabs.getAll)
 	opera.extension.tabs.getAll().forEach(function(t){
 		if(t.port) {
 			var d={};d[s.id]=testURL(t.url,s);
@@ -188,8 +185,7 @@ function parseFirefoxCSS(e,d){
 }
 function fetchURL(url, cb){
 	var req=new XMLHttpRequest();
-	if(cb) req.onload=req.onerror=cb;
-	//if(cb) req.onloadend=cb;	// Not supported in Opera 11.64
+	if(cb) req.onloadend=cb;
 	if(url.length>2000) {
 		var parts=url.split('?');
 		req.open('POST',parts[0],true);

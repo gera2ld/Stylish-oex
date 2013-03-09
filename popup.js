@@ -40,12 +40,10 @@ function alterStyle(i){
 }
 function load(e,data){
 	addItem(_('Manage styles'),true,{holder:pT,symbol:'➤',onclick:function(){
-		var t=bg.opera.extension.tabs.create({url:'/options.html'});
-		if(t.focus) t.focus();	// Opera 12+ Only
+		bg.opera.extension.tabs.create({url:'/options.html'}).focus();
 	}});
 	if(data) addItem(_('Find styles for this site'),true,{holder:pT,symbol:'➤',onclick:function(){
-		var t=bg.opera.extension.tabs.create({url:'http://userstyles.org/styles/search/'+encodeURIComponent(tab.url)});
-		if(t.focus) t.focus();	// Opera 12+ Only
+		bg.opera.extension.tabs.create({url:'http://userstyles.org/styles/search/'+encodeURIComponent(tab.url)}).focus();
 	}});
 	if(data&&data.astyles&&data.astyles.length) {
 		_title=data.cstyle||'';

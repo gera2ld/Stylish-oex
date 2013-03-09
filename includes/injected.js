@@ -95,8 +95,7 @@ function fixOpera(){
 	var id=getData('stylish-id-url'),metaUrl=id+'.json';
 	var req = new window.XMLHttpRequest();
 	req.open('GET', metaUrl, true);
-	//req.onloadend=function(){	// Not supported in Opera 11.64
-	req.onload=req.onerror=function(){
+	req.onloadend=function(){
 		if(this.status==200) try{updated=getTime(JSON.parse(req.responseText));} catch(e) {}
 		opera.extension.postMessage({topic:'CheckStyle',data:id});
 	};
