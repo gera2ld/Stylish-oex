@@ -263,6 +263,8 @@ editor.prototype={
 					matchBrackets:true,
 					mode:'text/css',
 					lineWrapping:true,
+					indentUnit:4,
+					indentWithTabs:true,
 					extraKeys:{"Enter":"newlineAndIndentContinueComment"}
 				});
 			else {
