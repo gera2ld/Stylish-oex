@@ -51,10 +51,6 @@ function format(){
 (function(){	// Upgrading data to new version
 	var version=getItem('version_storage',0);
 	if(version<0.3){
-		widget.preferences.removeItem('cssList');
-		var ids=[];
-		css&&css.forEach(function(i){setItem('us:'+i.id,i);ids.push(i.id);});
-		setItem('ids',ids);
 		setItem('version_storage',0.3);
 		opera.extension.tabs.getAll().forEach(function(i){
 			if(/^http:\/\/userstyles\.org\/styles\//.test(i.url)) i.refresh();
