@@ -19,16 +19,17 @@ a{color:dodgerblue;}
 fieldset{border-radius:5px;border:1px solid gray;padding:0;}
 legend{margin-left:10px;}
 textarea,input[type=text]{width:100%;border:none;margin:0;padding:0;}
-#cList{overflow-x:hidden;overflow-y:auto;margin:10px 0;}
-#cList>div{display:block;padding:10px;border-top:1px dashed gray;overflow:hidden;height:60px;position:relative;}
-#cList>div:last-child{border-bottom:1px dashed gray;}
-#cList .updated{margin-left:20px;color:gray;font-style:italic;}
-#cList .update{position:absolute;right:10px;top:10px;}
-#cList .message{color:gray;position:absolute;bottom:10px;left:10px;}
-#cList .disabled{color:gray;background:silver;}
-#cList .name{font-weight:bold;line-height:150%;display:inline-block;max-width:400px;}
-#cList .panel{position:absolute;bottom:10px;right:10px;}
-#cList .panel>button{width:80px;}
+#sList{overflow-x:hidden;overflow-y:auto;margin:10px 0;}
+#sList>div{display:block;padding:10px;border-top:1px dashed gray;overflow:hidden;height:60px;position:relative;}
+#sList>div:last-child{border-bottom:1px dashed gray;}
+#sList .updated{margin-left:20px;color:gray;font-style:italic;}
+#sList .update{position:absolute;right:10px;top:10px;}
+#sList .message{color:gray;position:absolute;bottom:10px;left:10px;}
+#sList .disabled{color:gray;background:silver;}
+#sList .disabled a{color:gray;}
+#sList .name{font-weight:bold;line-height:150%;display:inline-block;max-width:400px;}
+#sList .panel{position:absolute;bottom:10px;right:10px;}
+#sList .panel>button{width:80px;}
 #overlay{background:#000;position:fixed;top:0;bottom:0;left:0;right:0;transition:all .5s linear;opacity:0;}
 #overlay.overlay{opacity:0.6;}
 .float{position:fixed;background:lightgray;margin:0 auto;padding:10px;border-radius:10px;border-spacing:10px;}
@@ -39,6 +40,7 @@ textarea,input[type=text]{width:100%;border:none;margin:0;padding:0;}
 #mName{height:60px;}
 #advanced{padding:20px;}
 #advanced fieldset{padding:10px;margin:10px;}
+#advanced fieldset>*:not(:first-child){display:inline-block;}
 #advanced legend{margin:0;}
 .side{width:200px;}
 .list{background:white;overflow-x:hidden;overflow-y:auto;}
