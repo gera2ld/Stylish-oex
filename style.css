@@ -30,8 +30,7 @@ textarea,input[type=text]{width:100%;border:none;margin:0;padding:0;}
 #sList .name{font-weight:bold;line-height:150%;display:inline-block;max-width:400px;}
 #sList .panel{position:absolute;bottom:10px;right:10px;}
 #sList .panel>button{width:80px;}
-#overlay{background:#000;position:fixed;top:0;bottom:0;left:0;right:0;transition:all .5s linear;opacity:0;}
-#overlay.overlay{opacity:0.6;}
+#overlay{background:#000;position:fixed;top:0;bottom:0;left:0;right:0;opacity:0.6;}
 .float{position:fixed;background:lightgray;margin:0 auto;padding:10px;border-radius:10px;border-spacing:10px;}
 #editor{left:0;right:0;top:0;bottom:0;width:100%;border-radius:0;}
 #editor td{vertical-align:top;padding:0;}

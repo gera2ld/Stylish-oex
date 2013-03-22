@@ -48,15 +48,6 @@ function format(){
  * 				]
  * 		}
  */
-(function(){	// Upgrading data to new version
-	var version=getItem('version_storage',0);
-	if(version<0.3){
-		setItem('version_storage',0.3);
-		opera.extension.tabs.getAll().forEach(function(i){
-			if(/^http:\/\/userstyles\.org\/styles\//.test(i.url)) i.refresh();
-		});
-	}
-})();
 var ids=getItem('ids',[]),map={};
 ids.forEach(function(i){map[i]=getItem('us:'+i);});
 function saveIDs(){setItem('ids',ids);}
@@ -78,12 +69,6 @@ function newStyle(c,save){
 function saveStyle(s){
 	if(!map[s.id]) {ids.push(s.id);saveIDs();}
 	setItem('us:'+s.id,map[s.id]=s);
-	opera.extension.tabs.getAll().forEach(function(t){
-		if(t.port) {
-			var d={};d[s.id]=testURL(t.url,s);
-			t.postMessage({topic:'UpdateStyle',data:d});
-		}
-	});
 }
 function removeStyle(i){
 	i=ids.splice(i,1)[0];saveIDs();delete map[i];
@@ -255,8 +240,8 @@ function showButton(show){
 function updateIcon() {button.icon='images/icon18'+(isApplied?'':'w')+'.png';}
 function optionsUpdate(t,j,r){	// update loaded options pages
 	if(typeof j!='number') j=ids.indexOf(j.id);
-	if(j>=0&&options&&options.window)
-		try{options.window.updateItem(t,j,r);}catch(e){opera.postError(e);options={};}
+	if(j>=0&&optionsWindow)
+		try{optionsWindow.updateItem(t,j,r);}catch(e){opera.postError(e);options={};}
 }
 
 opera.extension.onmessage = onMessage;
@@ -267,13 +252,6 @@ var button = opera.contexts.toolbar.createItem({
 		width:222,
 		height:100
 	}
-    }),options={},optionsURL=new RegExp('^'+(location.protocol+'//'+location.host+'/options.html').replace(/\./g,'\\.'));
+}),optionsWindow=null;
 updateIcon();
 showButton(getItem('showButton',true));
-opera.extension.tabs.oncreate=function(e){
-	if(optionsURL.test(e.tab.url)) {
-		if(options.tab&&!options.tab.closed) {e.tab.close();options.tab.focus();}
-		else options={tab:e.tab};
-	}
-};
-opera.extension.tabs.onclose=function(e){if(options.tab===e.tab) options={};};
