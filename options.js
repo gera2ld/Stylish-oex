@@ -284,6 +284,10 @@ editor.prototype={
 	getValue:function(){return this.editor.getValue();},
 	setValue:function(t){this.editor.setValue(t);this.editor.getDoc&&this.editor.getDoc().clearHistory();},
 	getWrapperElement:function(e){e=this.editor;return e.getWrapperElement?e.getWrapperElement():e;},
+	setEnabled:function(t){
+		var e=this.editor;t=!t;
+		e.setOption?e.setOption('readOnly',t&&'nocursor'):(e.disabled=t);
+	},
 };
 var T=new editor($('mCode'),bg.getItem('editorType',0));
 (function (b){
@@ -354,7 +358,8 @@ function mSave(){
 }
 function mShow(){
 	var c=S.childNodes[S.cur];
-	rD.disabled=rR.disabled=rP.disabled=rU.disabled=T.getWrapperElement().disabled=!c;
+	rD.disabled=rR.disabled=rP.disabled=rU.disabled=!c;
+	T.setEnabled(c);
 	if(c) {
 		S.childNodes[S.cur].classList.add('selected');
 		rD.value=M.data[S.cur].domains.join('\n');
