@@ -166,7 +166,7 @@ function parseFirefoxCSS(e,d){
 }
 function fetchURL(url, cb){
 	var req=new XMLHttpRequest();
-	if(cb) req.onloadend=cb;
+	if(cb) req.onload=req.onerror=cb;
 	if(url.length>2000) {
 		var parts=url.split('?');
 		req.open('POST',parts[0],true);
