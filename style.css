@@ -1,26 +1,35 @@
 @import url(font.css);
 html,body{background:#eee;}
-h1{text-align:center;}
 h1,h2{text-shadow:#999 3px 3px 5px;}
 a{color:dodgerblue;}
-.fill{height:100%;margin:0;padding:0;overflow:hidden;}
+.center{text-align:center;}
+.float,.frame{position:fixed;background:lightgray;}
+.frame{left:0;right:0;top:0;bottom:0;height:100%;width:100%;table-layout:fixed;}
+.float{margin:0 auto;padding:10px;border-radius:10px;border-spacing:10px;}
+.fill{width:100%;height:100%;margin:0;padding:0;overflow:hidden;}
 .em{font-style:italic;}
 .new{color:red;}
-.main{width:800px;margin:0 auto;}
 .menu,.ellipsis{white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}
 .menu{overflow-y:auto;}
-#footer{text-align:center;}
 .left{float:left;}
 .right{float:right;}
 .tab{margin-left:20px;}
 .menu,.x{clear:both;margin:0;padding:0;}
 .hide{display:none;}
+tr.fill>td{height:100%;}
+tr{vertical-align:top;padding:0;height:1px;}
+tr.expand{height:auto;}
+.expandr{position:relative;}
+.expanda,#editor .CodeMirror{position:absolute;width:100%;height:100%;}
+.CodeMirror{background:white;}
+#main{background:transparent;width:800px;margin:0 auto;}
 #advanced label{display:block;}
-fieldset{border-radius:5px;border:1px solid gray;padding:0;}
+#main fieldset{position:relative;height:100%;padding:0;}
 legend{margin-left:10px;}
 textarea,input[type=text]{width:100%;border:none;margin:0;padding:0;}
-#sList{overflow-x:hidden;overflow-y:auto;margin:10px 0;}
-#sList>div{display:block;padding:10px;border-top:1px dashed gray;overflow:hidden;height:60px;position:relative;}
+fieldset{border-radius:5px;}
+#sList{overflow-x:hidden;overflow-y:auto;position:absolute;top:22px;left:0;right:0;bottom:10px;}
+#sList>div{display:block;padding:10px;overflow:hidden;height:60px;position:relative;border-top:1px dashed gray;}
 #sList>div:last-child{border-bottom:1px dashed gray;}
 #sList .updated{margin-left:20px;color:gray;font-style:italic;}
 #sList .update{position:absolute;right:10px;top:10px;}
@@ -32,14 +41,11 @@ textarea,input[type=text]{width:100%;border:none;margin:0;padding:0;}
 #sList .panel>button{width:80px;}
 #overlay{background:#000;position:fixed;top:0;bottom:0;left:0;right:0;transition:all .5s linear;opacity:0;}
 #overlay.overlay{opacity:0.6;}
-.float{position:fixed;background:lightgray;margin:0 auto;padding:10px;border-radius:10px;border-spacing:10px;}
-#editor{left:0;right:0;top:0;bottom:0;width:100%;border-radius:0;}
-#editor td{vertical-align:top;padding:0;}
-#editor .CodeMirror{background:white;height:100px;}
+#editor table{border-spacing:10px;}
+.rules{width:100%;}
 .rules textarea{height:100px;}
 #mName{height:60px;}
 #advanced{padding:20px;}
-#advanced fieldset{padding:10px;margin:10px;}
 #advanced fieldset>*:not(:first-child){display:inline-block;}
 #advanced legend{margin:0;}
 .side{width:200px;}

@@ -16,69 +16,76 @@
 		<title class=i18n>Options - Stylish</title>
 	</head>
 	<body class=fill>
-		<div id=main>
-			<div id=header class=main>
-				<h1 class=i18n>Options - Stylish</h1>
-				<div class=left>
-					<button id=bNew class=i18n>New</button>
-					<a href=http://userstyles.org target=_blank class=i18n>Get more styles from userstyles.org</a>
-				</div>
-				<div class=right>
-					<a id=bUpdate class=i18n href=#>Check all for updates</a>
-					<button id=bAdvanced class=i18n>Advanced</button>
-				</div>
-				<div class=x></div>
-			</div>
-			<fieldset class=main>
-				<legend class=i18n>Installed Styles</legend>
-				<div id=sList></div>
-			</fieldset>
-			<div id=footer class=main><span class=i18n>Stylish link</span> - <span class=i18n>Designed by Gerald</span> - 2013</div>
-		</div>
-		<div id=overlay class=hide></div>
-		<table id=editor class="float hide">
+		<table id=main class=frame>
+			<tr><td><h1 class="i18n center">Options - Stylish</h1></td></tr>
 			<tr>
-				<td class=side rowspan=3>
-					<h2 class=i18n>Style Editor</h2>
-					<label class=i18n>Name:</label>
-					<textarea id=mName></textarea>
-					<label class=i18n>Sections:</label>
-					<div id=mSection class=list></div>
-					<div><button id=mNew class=i18n>New</button> <button id=mDel class=i18n>Del</button></div>
-				</td>
-				<td class=rules>
-					<label class=i18n>Domains:</label> <span class="i18n em">(One per line)</span>
-					<textarea id=mDomain></textarea>
-				</td>
-				<td class=rules>
-					<label class=i18n>Regular Expressions:</label> <span class="i18n em">(One per line)</span>
-					<textarea id=mRegexp></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td class=rules>
-					<label class=i18n>URL prefixes:</label> <span class="i18n em">(One per line)</span>
-					<textarea id=mUrlPrefix></textarea>
-				</td>
-				<td class=rules>
-					<label class=i18n>URLs:</label> <span class="i18n em">(One per line)</span>
-					<textarea id=mUrl></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td class=content colspan=2>
-					<label class=i18n>Code:</label><button id=beditor></button>
-					<textarea id=mCode></textarea>
+				<td>
 					<div class=left>
-						<label class=i18n>Remove prefixes while applying:</label>
-						<label class=em><input type=checkbox id=mDeMoz>-moz-</label>
-						<label class=em><input type=checkbox id=mDeWebkit>-webkit-</label>
+						<button id=bNew class=i18n>New</button>
+						<a href=http://userstyles.org target=_blank class=i18n>Get more styles from userstyles.org</a>
 					</div>
 					<div class=right>
-						<button id=mSave class=i18n>Save</button>
-						<button id=mSaveClose class=i18n>Save and Close</button>
-						<button id=mClose class=i18n>Close</button>
+						<a id=bUpdate class=i18n href=#>Check all for updates</a>
+						<button id=bAdvanced class=i18n>Advanced</button>
 					</div>
+					<div class=x></div>
+				</td>
+			</tr>
+			<tr class="expand expandr">
+				<td class=expanda>
+					<fieldset>
+						<legend class=i18n>Installed Styles</legend>
+						<div id=sList></div>
+					</fieldset>
+				</td>
+			</tr>
+			<tr><td class=center><span class=i18n>Stylish link</span> - <span class=i18n>Designed by Gerald</span> - 2013</td></tr>
+		</table>
+		<div id=overlay class=hide></div>
+		<table id=editor class="frame hide">
+			<tr class=fill>
+				<td class=side>
+					<table class=fill>
+						<tr><td><h2 class=i18n>Style Editor</h2></td></tr>
+						<tr><td class=i18n>Name:</td></tr>
+						<tr><td><textarea id=mName></textarea></td></tr>
+						<tr><td class=i18n>Sections:</td></tr>
+						<tr class="expand expandr"><td id=mSection class="list expanda"></td></tr>
+						<tr><td><button id=mNew class=i18n>New</button> <button id=mDel class=i18n>Del</button></td></tr>
+					</table>
+				</td>
+				<td>
+					<table class=fill>
+						<tr><td><span class=i18n>Rules: </span><em class=i18n>(One per line)</em></td></tr>
+						<tr>
+							<td>
+								<table class=rules>
+									<tr>
+										<td><span class=i18n>Domains:</span><textarea id=mDomain></textarea></td>
+										<td><span class=i18n>Regular Expressions:</span><textarea id=mRegexp></textarea></td>
+										<td><span class=i18n>URL prefixes:</span><textarea id=mUrlPrefix></textarea></td>
+										<td><span class=i18n>URLs:</span><textarea id=mUrl></textarea></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr><td><label class=i18n>Code:</label><button id=beditor></button></td></tr>
+						<tr class=expand><td class=expandr><textarea id=mCode class=expanda></textarea></td></tr>
+						<tr>
+							<td>
+								<div class=left>
+									<label class=i18n>Remove prefixes while applying:</label>
+									<label class=em><input type=checkbox id=mDeMoz>-moz-</label>
+									<label class=em><input type=checkbox id=mDeWebkit>-webkit-</label>
+								</div>
+								<div class=right>
+									<button id=mSave class=i18n>Save</button>
+									<button id=mSaveClose class=i18n>Save and Close</button>
+									<button id=mClose class=i18n>Close</button>
+								</div>
+							</td>
+						</tr>
+					</table>
 				</td>
 			</tr>
 		</table>
@@ -89,6 +96,7 @@
 				<button id=bSelect class=i18n>All/None</button>
 			</div>
 			<div id=xList class=list></div>
+			<label class=left><input type=checkbox id=cCompress><span class=i18n>Compress</span></label>
 			<div class=right>
 				<button id=bExport class=i18n>Export</button>
 				<button id=bClose class=i18n>Close</button>
