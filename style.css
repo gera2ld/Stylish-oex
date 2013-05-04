@@ -25,7 +25,7 @@ tr.expand{height:auto;}
 #main{background:transparent;width:800px;margin:0 auto;}
 #advanced label{display:block;}
 #main fieldset{position:relative;height:100%;padding:0;}
-legend{margin-left:10px;}
+#main legend{margin-left:10px;}
 textarea,input[type=text]{width:100%;border:none;margin:0;padding:0;}
 fieldset{border-radius:5px;}
 #sList{overflow-x:hidden;overflow-y:auto;position:absolute;top:22px;left:0;right:0;bottom:10px;}

@@ -207,6 +207,12 @@ function parseCSS(e,data){
 	if(data.status!=200) {r.error=-1;r.message=_('Error fetching CSS code!');}
 	else try{
 		j=JSON.parse(data.code);
+	}catch(e){
+		opera.postError(e);
+		r.message=_('Error parsing CSS code!');
+		r.error=-1;
+	}
+	if(!r.error){
 		j.sections.forEach(function(i){
 			d.push({
 				domains:i.domains,
@@ -230,10 +236,6 @@ function parseCSS(e,data){
 		c.url=j.url;
 		c.updateUrl=j.updateUrl;
 		saveStyle(c);
-	}catch(e){
-		opera.postError(e);
-		r.message=_('Error parsing CSS code!');
-		r.error=-1;
 	}
 	if(e) e.source.postMessage({topic:'ParsedCSS',data:r});
 	if(c) optionsUpdate(t,ids.indexOf(c.id),_('Style updated.'));

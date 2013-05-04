@@ -220,7 +220,7 @@ function check(i){
 			d=getTime(JSON.parse(this.responseText));
 			if(!c.updated||c.updated<d) {
 				if(c.updateUrl) return update();
-				else m.innerHTML='<a class=new title="'+_('Please go to homepage for update since there are options for this style.')+'">'+_('New version found.')+'</a>';
+				else m.innerHTML='<span class=new title="'+_('Please go to homepage for update since there are options for this style.')+'">'+_('New version found.')+'</span>';
 			} else m.innerHTML=_('No update found.');
 		} catch(e) {
 			m.innerHTML=_('Failed fetching update information.');

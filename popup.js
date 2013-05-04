@@ -12,54 +12,57 @@ function loadItem(d,c){
 		d.classList.add('disabled');
 	}
 }
-function addItem(h,t,c){
-	var d=document.createElement('div'),s;
+function addItem(h,c){
+	var d=document.createElement('div');
 	d.innerHTML='<span></span>'+h;
-	if(t) {if(typeof t!='string') t=h;d.title=t;}
+	if('title' in c) {
+		d.title=typeof c.title=='string'?c.title:h;
+		delete c.title;
+	}
 	d.className='ellipsis';
 	c.holder.appendChild(d);
 	if('symbol' in c) d.firstChild.innerText=c.symbol;
 	else if('data' in c) c.symbol='✓';
-	for(s in c) d[s]=c[s];
+	for(h in c) d[h]=c[h];
 	if('data' in c) loadItem(d,c.data);
 	return d;
 }
 function menuStyle(i){
 	var n=i.name?i.name.replace(/&/g,'&amp;').replace(/</g,'&lt;'):'<em>'+_('Null name')+'</em>';
-	addItem(n,i.name,{holder:pB,data:i.enabled,onclick:function(){
+	addItem(n,{holder:pB,data:i.enabled,title:i.name,onclick:function(){
 		loadItem(this,i.enabled=!i.enabled);bg.saveStyle(i);bg.optionsUpdate('update',i);
 	}});
 }
 var cur=null,_title;
 function alterStyle(i){
-	var d=addItem(i,true,{holder:aB,data:i==_title,onclick:function(){
+	var d=addItem(i,{holder:aB,data:i==_title,title:true,onclick:function(){
 		if(cur) loadItem(cur,false);loadItem(cur=this,true);
 		try{tab.postMessage({topic:'AlterStyle',data:i});}catch(e){}
 	}});
 	if(i==_title) cur=d;
 }
 function load(e,data){
-	addItem(_('Manage styles'),true,{holder:pT,symbol:'➤',onclick:function(){
+	addItem(_('Manage styles'),{holder:pT,symbol:'➤',title:true,onclick:function(){
 		bg.opera.extension.tabs.create({url:'/options.html'}).focus();
 	}});
-	if(data) addItem(_('Find styles for this site'),true,{holder:pT,symbol:'➤',onclick:function(){
+	if(data) addItem(_('Find styles for this site'),{holder:pT,symbol:'➤',title:true,onclick:function(){
 		bg.opera.extension.tabs.create({url:'http://userstyles.org/styles/search/'+encodeURIComponent(tab.url)}).focus();
 	}});
 	if(data&&data.astyles&&data.astyles.length) {
 		_title=data.cstyle||'';
-		addItem(_('Back'),true,{holder:aT,symbol:'◄',onclick:function(){
+		addItem(_('Back'),{holder:aT,symbol:'◄',title:true,onclick:function(){
 			A.classList.add('hide');P.classList.remove('hide');
 			bg.button.popup.height=P.offsetHeight;
 		}});
 		aT.appendChild(document.createElement('hr'));
 		data.astyles.forEach(alterStyle);
-		addItem(_('Alter stylesheet...'),true,{holder:pT,symbol:'➤',onclick:function(){
+		addItem(_('Alter stylesheet...'),{holder:pT,symbol:'➤',title:true,onclick:function(){
 			P.classList.add('hide');A.classList.remove('hide');
 			bg.button.popup.height=A.offsetHeight;
 			setTimeout(function(){aB.style.pixelHeight=innerHeight-aB.offsetTop;},0);
 		}});
 	}
-	addItem(_('Enable styles'),true,{holder:pT,data:bg.isApplied,onclick:function(){
+	addItem(_('Enable styles'),{holder:pT,data:bg.isApplied,title:true,onclick:function(){
 		bg.setItem('isApplied',bg.isApplied=!bg.isApplied);bg.updateIcon();loadItem(this,bg.isApplied);
 		bg.opera.extension.broadcastMessage({topic:'LoadedStyle',data:{isApplied:bg.isApplied}});
 	}});
