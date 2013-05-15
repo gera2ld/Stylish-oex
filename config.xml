@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="https://addons.opera.com/extensions/details/stylish-for-opera/" version="1.3.91" href="https://addons.opera.com/extensions/details/stylish-for-opera/" defaultlocale="en">
+<widget xmlns="http://www.w3.org/ns/widgets" id="https://addons.opera.com/extensions/details/stylish-for-opera/" version="1.3.92" href="https://addons.opera.com/extensions/details/stylish-for-opera/" defaultlocale="en">
   <name>Stylish</name>
   <author href="http://my.opera.com/gera2ld" email="gera2ld@163.net">Gerald</author>
   <icon src="images/icon64.png"/>
@@ -7,13 +7,13 @@
   <access origin="http://userstyles.org"/>
   <update-description href="https://extension-updates.opera.com/api/w3c-wd1/update/49c35286-5d6b-4905-9c8d-36380a740fcc/"/>
 
-	<preference name="version_storage" value="0"/>
-	<preference name="isApplied" value="true"/>
-	<preference name="installFile" value="true"/>
-	<preference name="showButton" value="true"/>
-	<preference name="compress" value="true"/>
-	<preference name="firefoxCSS" value="false"/>
-	<preference name="editorType" value="0"/>
+  <preference name="version_storage" value="0"/>
+  <preference name="isApplied" value="true"/>
+  <preference name="installFile" value="true"/>
+  <preference name="showButton" value="true"/>
+  <preference name="compress" value="true"/>
+  <preference name="firefoxCSS" value="false"/>
+  <preference name="editorType" value="0"/>
 
   <description xml:lang="en">Stylish for Opera, allowing UserCSS for different URLs, userstyles.org supported.</description>
   <description xml:lang="zh">Stylish for Opera，根据地址来添加UserCSS，支持userstyles.org。</description>

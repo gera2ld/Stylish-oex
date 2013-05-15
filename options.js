@@ -38,7 +38,7 @@ function loadItem(d,n,r){
 	+'</div>';
 	d.className=n.enabled?'':'disabled';
 	loadName(d,n);
-	if(r) d.querySelector('.message').innerHTML=r.message;
+	if(r&&r.message) d.querySelector('.message').innerHTML=r.message;
 }
 function addItem(n){
 	var d=document.createElement('div');
@@ -112,7 +112,7 @@ function confirmCancel(dirty){
 window.addEventListener('DOMContentLoaded',function(){
 	var nodes=document.querySelectorAll('.i18n'),c,s,i,j;
 	for(i=0;i<nodes.length;i++)
-		nodes[i].innerHTML=opera.extension.bgProcess.getI18nString(nodes[i].innerHTML);
+		nodes[i].innerHTML=_(nodes[i].innerHTML);
 },true);
 
 // Advanced
@@ -198,7 +198,8 @@ $('bExport').onclick=function(){
 	for(i=0;i<bg.ids.length;i++) if(xL.childNodes[i].classList.contains('selected')) {
 		c=bg.map[bg.ids[i]];n=_n=c.name||'Noname';j=0;
 		while(names[n]) n=_n+(++j);names[n]=1;
-		z.file(n+'.json',xF.checked?getFirefoxCSS(c):JSON.stringify(c));
+		if(xF.checked) z.file(n+'.user.css',getFirefoxCSS(c));
+		else z.file(n+'.json',JSON.stringify(c));
 	}
 	c={};if(xC.checked) c.compression='DEFLATE';
 	n=z.generate(c);
