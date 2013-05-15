@@ -49,6 +49,7 @@ function format(){
  * 		deprefix:	List	['-moz-','-webkit-']
  * 		data:	List	[
  * 					{
+ * 					name:	String
  * 					domains:	List	[...]
  * 					regexps:	List	[...]
  * 					urlPrefixes:	List	[...]
@@ -59,7 +60,7 @@ function format(){
  * 		}
  */
 (function(){	// Upgrading data to new version
-	var version=getItem('version_storage',0);
+	var version=getItem('version_storage');
 	if(version<0.3){
 		setItem('version_storage',0.3);
 		opera.extension.tabs.getAll().forEach(function(i){
@@ -148,7 +149,7 @@ function loadStyle(e) {
 }
 function checkStyle(e,d){e.source.postMessage({topic:'CheckedStyle',data:map[d]});}
 function parseFirefoxCSS(e,d){
-	var c=null,i,p,m,r,code=d.code.replace(/\s+$/,''),data=[],t;
+	var c=null,i,p,m,r,code=d.code.replace(/\s+$/,''),data=[];
 	code.replace(/\/\*\s+@(\w+)\s+(.*?)\s+\*\//g,function(v,g1,g2){
 		if(d[g1]==undefined) {
 			d[g1]=g2;
@@ -175,19 +176,19 @@ function parseFirefoxCSS(e,d){
 		code=code.slice(i+1).replace(/^\s+/,'');
 		data.push(r);
 	}
-	r={error:0};
+	r={status:0,message:_('Style updated.')};
 	if(!code) {
 		c=map[d.id];
-		if(!c) {c=newStyle(d);t='add';}
-		else {for(i in d) c[i]=d[i];t='update';}
+		if(!c) {c=newStyle(d);r.status=1;}
+		else for(i in d) c[i]=d[i];
 		c.data=data;saveStyle(c);
 	} else {
-		r.error=-1;
+		r.status=-1;
 		r.message=_('Error parsing CSS code!');
 	}
 	if(e) e.source.postMessage({topic: 'ParsedCSS',data: r});
-	if(c) optionsUpdate(t,ids.indexOf(c.id),_('Style updated.'));
-	else return r.message;
+	if(c) {r.item=ids.indexOf(c.id);optionsUpdate(r);}
+	return r;
 }
 function fetchURL(url, cb){
 	var req=new XMLHttpRequest();
@@ -203,18 +204,19 @@ function fetchURL(url, cb){
 	}
 }
 function parseCSS(e,data){
-	var j,c=null,d=[],r={error:0},t;
-	if(data.status!=200) {r.error=-1;r.message=_('Error fetching CSS code!');}
+	var j,c=null,d=[],r={status:0,message:_('Style updated.')};
+	if(data.status!=200) {r.status=-1;r.message=_('Error fetching CSS code!');}
 	else try{
 		j=JSON.parse(data.code);
 	}catch(e){
 		opera.postError(e);
+		r.status=-1;
 		r.message=_('Error parsing CSS code!');
-		r.error=-1;
 	}
-	if(!r.error){
+	if(!r.status){
 		j.sections.forEach(function(i){
 			d.push({
+				name:i.name||'',
 				domains:i.domains,
 				regexps:i.regexps,
 				urlPrefixes:i.urlPrefixes,
@@ -227,19 +229,16 @@ function parseCSS(e,data){
 			data.name=j.name;
 			data.enabled=1;
 			c=newStyle(data);
-			t='add';
-		} else {
-			c.updated=data.updated;
-			t='update';
-		}
+			r.status=1;
+		} else c.updated=data.updated;
 		c.data=d;
 		c.url=j.url;
 		c.updateUrl=j.updateUrl;
 		saveStyle(c);
 	}
 	if(e) e.source.postMessage({topic:'ParsedCSS',data:r});
-	if(c) optionsUpdate(t,ids.indexOf(c.id),_('Style updated.'));
-	else return r.message;
+	if(c) {r.item=ids.indexOf(c.id);optionsUpdate(r);}
+	return r;
 }
 function installStyle(e,data){
 	if(data) fetchURL(data.url,function(){
@@ -247,31 +246,59 @@ function installStyle(e,data){
 	}); else if(installFile)
 		e.source.postMessage({topic:'ConfirmInstall',data:_('Do you want to install this style?')});
 }
-
-var messages={
-	'LoadStyle':loadStyle,
-	'ParseFirefoxCSS':parseFirefoxCSS,
-	'CheckStyle':checkStyle,
-	'InstallStyle':installStyle,
-};
-function onMessage(e) {
-	var message = e.data,c=messages[message.topic];
-	if(c) c(e,message.data);
+function parseJSON(e,data){
+	var r={status:0,message:_('Style updated.')},o,c;
+	try{
+		o=JSON.parse(data.code);
+		if(!map[o.id]) {
+			r.status=1;
+			r.message=_('Style installed.');
+		}
+		c=newStyle(o);
+		o.data.forEach(function(i){
+			c.data.push({
+				name:i.name||'',
+				domains:i.domains,
+				regexps:i.regexps,
+				urlPrefixes:i.urlPrefixes,
+				urls:i.urls,
+				code:i.code||'',
+			});
+		});
+		saveStyle(c);
+	}catch(e){
+		opera.postError(e);
+		r.status=-1;
+		r.message=_('Error parsing CSS code!');
+	}
+	if(e) e.source.postMessage({topic:'ParsedCSS',data:r});
+	if(c) {r.item=ids.indexOf(c.id);optionsUpdate(r);}
+	return r;
 }
 
-var isApplied=getItem('isApplied',true),installFile=getItem('installFile',true);
+var messages={
+	LoadStyle:loadStyle,
+	ParseFirefoxCSS:parseFirefoxCSS,
+	CheckStyle:checkStyle,
+	InstallStyle:installStyle,
+	ParseJSON:parseJSON,
+};
+
+var isApplied=getItem('isApplied'),installFile=getItem('installFile');
 function showButton(show){
 	if(show) opera.contexts.toolbar.addItem(button);
 	else opera.contexts.toolbar.removeItem(button);
 }
 function updateIcon() {button.icon='images/icon18'+(isApplied?'':'w')+'.png';}
-function optionsUpdate(t,j,r){	// update loaded options pages
-	if(typeof j!='number') j=ids.indexOf(j.id);
-	if(j>=0&&options&&options.window)
-		try{options.window.updateItem(t,j,r);}catch(e){opera.postError(e);options={};}
+function optionsUpdate(r){	// update loaded options pages
+	if(options&&options.window)
+		try{options.window.updateItem(r);}catch(e){opera.postError(e);options={};}
 }
 
-opera.extension.onmessage = onMessage;
+opera.extension.onmessage=function(e){
+	var message = e.data,c=messages[message.topic];
+	if(c) c(e,message.data);
+};
 var button = opera.contexts.toolbar.createItem({
 	title: "Stylish",
 	popup:{
@@ -281,7 +308,7 @@ var button = opera.contexts.toolbar.createItem({
 	}
     }),options={},optionsURL=new RegExp('^'+(location.protocol+'//'+location.host+'/options.html').replace(/\./g,'\\.'));
 updateIcon();
-showButton(getItem('showButton',true));
+showButton(getItem('showButton'));
 opera.extension.tabs.oncreate=function(e){
 	if(optionsURL.test(e.tab.url)) {
 		if(options.tab&&!options.tab.closed) {e.tab.close();options.tab.focus();}

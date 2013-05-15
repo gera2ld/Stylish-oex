@@ -51,7 +51,7 @@
 						<tr><td><textarea id=mName></textarea></td></tr>
 						<tr><td class=i18n>Sections:</td></tr>
 						<tr class="expand expandr"><td id=mSection class="list expanda"></td></tr>
-						<tr><td><button id=mNew class=i18n>New</button> <button id=mDel class=i18n>Del</button></td></tr>
+						<tr><td><button id=mNew class=i18n>New</button> <button id=mDel class=i18n>Delete</button> <button id=mRen class=i18n>Rename</button></td></tr>
 					</table>
 				</td>
 				<td>
@@ -92,8 +92,12 @@
 		<div id=export class="float hide">
 			<h2 class=i18n>Data Export</h2>
 			<label class=i18n>Installed Styles</label>
-			<div class=right>
-				<label><input type=checkbox id=cCompress><span class=i18n>Compress</span></label>
+			<div id=xOptions class=right>
+				<a class=i18n>Export Options</a>
+				<div>
+					<label><input type=checkbox id=cCompress><span class=i18n>Compress</span></label>
+					<label><input type=checkbox id=cFirefox><span class=i18n>Export to Firefox CSS files</span><span class=i18n>Firefox CSS hint</span></label>
+				</div>
 			</div>
 			<div id=xList class=list></div>
 			<div class=left><button id=bSelect class=i18n>All/None</button></div>
@@ -105,7 +109,7 @@
 		<div id=advanced class="float hide">
 			<h2 class=i18n>Advanced</h2>
 			<label><input type=checkbox id=cShow><span class=i18n>Show button on toolbar</span></label>
-			<label><input type=checkbox id=cInstall><span class=i18n>Allow installing .user.css files</span></label>
+			<label><input type=checkbox id=cInstall><span class=i18n>Allow installing style files</span></label>
 			<fieldset>
 				<legend class=i18n>Data</legend>
 				<button id=aExport class=i18n>Export to zip file</button>

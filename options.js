@@ -26,7 +26,7 @@ function loadName(d,n){
 	a.title=n.name;
 	a.innerHTML=getName(n);
 }
-function loadItem(d,n,m){
+function loadItem(d,n,r){
 	d.innerHTML='<a class="name ellipsis"></a>'
 	+'<span class=updated>'+(n.updated?_('Last updated: ')+getDate(n.updated):'')+'</span>'
 	+(n.metaUrl?'<a href=# data=update class=update>'+_('Check for updates')+'</a> ':'')
@@ -38,7 +38,7 @@ function loadItem(d,n,m){
 	+'</div>';
 	d.className=n.enabled?'':'disabled';
 	loadName(d,n);
-	if(m) d.querySelector('.message').innerHTML=m;
+	if(r) d.querySelector('.message').innerHTML=r.message;
 }
 function addItem(n){
 	var d=document.createElement('div');
@@ -118,9 +118,9 @@ window.addEventListener('DOMContentLoaded',function(){
 // Advanced
 var A=$('advanced');
 $('bAdvanced').onclick=function(){showDialog(A);};
-$('cShow').checked=bg.getItem('showButton',true);
+$('cShow').checked=bg.getItem('showButton');
 $('cShow').onchange=function(){bg.showButton(bg.setItem('showButton',this.checked));};
-$('cInstall').checked=bg.getItem('installFile',true);
+$('cInstall').checked=bg.getItem('installFile');
 $('cInstall').onchange=function(){bg.setItem('installFile',this.checked);};
 $('aExport').onclick=function(){showDialog(X);xLoad();};
 $('aImport').onchange=function(e){
@@ -137,21 +137,25 @@ A.close=$('aClose').onclick=closeDialog;
 function impo(b){
 	var z=new JSZip(),count=0;
 	try{z.load(b);}catch(e){alert(_('Error loading zip file.'));return;}
-	z.file(/\.user\.css/).forEach(function(o){
-		if(o.dir) return;
-		try{
-			var r=bg.parseFirefoxCSS(null,{code:o.asText()});
-			if(!r) count++;
-		}catch(e){opera.postError('Error importing data: '+o.name+'\n'+e);}
+	[[/\.json$/,bg.parseJSON],[/\.user\.css$/,bg.parseFirefoxCSS]].forEach(function(i){
+		z.file(i[0]).forEach(function(o){
+			if(o.dir) return;
+			try{
+				var r=i[1](null,{code:o.asText()});
+				if(r.status>=0) count++;
+			}catch(e){opera.postError('Error importing data: '+o.name+'\n'+e);}
+		});
 	});
 	alert(bg.format(_('$1 item(s) are imported.'),count));
+	location.reload();
 }
 
 // Export
-var X=$('export'),xL=$('xList'),xE=$('bExport'),xC=$('cCompress');
+var X=$('export'),xL=$('xList'),xE=$('bExport'),xC=$('cCompress'),xF=$('cFirefox');
 function xLoad() {
 	xL.innerHTML='';xE.disabled=false;xE.innerHTML=_('Export');
-	xC.checked=bg.getItem('compress',true);
+	xC.checked=bg.getItem('compress');
+	xF.checked=bg.getItem('firefoxCSS');
 	bg.ids.forEach(function(i){
 		var d=document.createElement('div');
 		d.className='ellipsis';
@@ -161,6 +165,7 @@ function xLoad() {
 	});
 }
 xC.onchange=function(){bg.setItem('compress',this.checked);};
+xF.onchange=function(){bg.setItem('firefoxCSS',this.checked);};
 xL.onclick=function(e){
 	var t=e.target;
 	if(t.parentNode!=this) return;
@@ -172,7 +177,7 @@ $('bSelect').onclick=function(){
 	v=i<c.length;
 	for(i=0;i<c.length;i++) if(v) c[i].classList.add('selected'); else c[i].classList.remove('selected');
 };
-function getCSS(c){
+function getFirefoxCSS(c){
 	var d=[];
 	['id','name','url','metaUrl','updateUrl','updated','enabled'].forEach(function(i){
 		if(c[i]!=undefined) d.push('/* @'+i+' '+String(c[i]).replace(/\*/g,'+')+' */');
@@ -193,7 +198,7 @@ $('bExport').onclick=function(){
 	for(i=0;i<bg.ids.length;i++) if(xL.childNodes[i].classList.contains('selected')) {
 		c=bg.map[bg.ids[i]];n=_n=c.name||'Noname';j=0;
 		while(names[n]) n=_n+(++j);names[n]=1;
-		z.file(n+'.user.css',getCSS(c));
+		z.file(n+'.json',xF.checked?getFirefoxCSS(c):JSON.stringify(c));
 	}
 	c={};if(xC.checked) c.compression='DEFLATE';
 	n=z.generate(c);
@@ -279,7 +284,7 @@ editor.prototype={
 		e.setOption?e.setOption('readOnly',t&&'nocursor'):(e.disabled=t);
 	},
 };
-var T=new editor($('mCode'),bg.getItem('editorType',0));
+var T=new editor($('mCode'),bg.getItem('editorType'));
 (function (b){
 	function switchCommand(){
 		b.innerHTML=T.type?_('Switch to normal editor'):_('Switch to advanced editor');
@@ -293,6 +298,7 @@ function cloneData(d){
 	var c=[];
 	d.forEach(function(i){
 		if(i.code) c.push({
+			name:i.name,
 			domains:i.domains.concat(),
 			regexps:i.regexps.concat(),
 			urlPrefixes:i.urlPrefixes.concat(),
@@ -309,7 +315,8 @@ function edit(i){
 	S.innerHTML='';S.cur=0;S.dirty=false;
 	eS.disabled=eSC.disabled=true;
 	I.value=M.css.name;
-	for(var i=0;i<M.data.length;i++) mAddItem(i+1);
+	if(M.data.length) for(var i=0;i<M.data.length;i++) mAddItem(M.data[i].name||i+1);
+	else addSection();
 	dM.checked=M.css.deprefix.indexOf('-moz-')>=0;
 	dW.checked=M.css.deprefix.indexOf('-webkit-')>=0;
 	mShow();
@@ -325,6 +332,7 @@ function mSection(r){
 	if(M.data[S.cur]){
 		if(S.dirty){
 			S.dirty=false;
+			M.data[S.cur].name=S.childNodes[S.cur].innerText;
 			M.data[S.cur].domains=split(rD.value);
 			M.data[S.cur].regexps=split(rR.value);
 			M.data[S.cur].urlPrefixes=split(rP.value);
@@ -372,23 +380,38 @@ bindChange([I,$('mDeMoz'),$('mDeWebkit')],M.markDirty);
 S.onclick=function(e){
 	var t=e.target;
 	if(t.parentNode!=this) return;
-	mSection(1);S.cur=Array.prototype.indexOf.call(S.childNodes,t);
-	if(!t.classList.contains('selected')) mShow();
+	if(!t.classList.contains('selected')) {
+		mSection(1);
+		S.cur=Array.prototype.indexOf.call(S.childNodes,t);
+		mShow();
+	} else renameSection(t);
 };
-$('mNew').onclick=function(){
-	var d={domains:[],regexps:[],urlPrefixes:[],urls:[],code:''};
+function addSection(){
+	var d={name:'',domains:[],regexps:[],urlPrefixes:[],urls:[],code:''};
 	mSection(1);
 	S.cur=M.data.length;
 	M.data.push(d);
 	mAddItem(M.data.length);
 	mShow();
-};
+}
+function renameSection(t){
+	if(!t) return;
+	var o=prompt(bg.format(_('Rename Section "$1" to:'),t.innerText));
+	if(o!=null) {t.innerText=o||S.cur+1;S.markDirty();}
+}
+$('mNew').onclick=addSection;
 $('mDel').onclick=function(){
 	if(S.cur) {
 		M.data.splice(S.cur,1);
 		S.removeChild(S.lastChild);
+		for(var i=S.cur;i<M.data.length;i++) {
+			S.childNodes[i].innerText=M.data[i].name||i+1;
+		}
 		M.markDirty();mShow();
 	}
+};
+$('mRen').onclick=function(){
+	renameSection(S.childNodes[S.cur]);
 };
 eS.onclick=function(){
 	if(mSave()) {M.css.data=cloneData(M.data);bg.saveStyle(M.css);}
@@ -405,11 +428,11 @@ function ruleBlur(e){e.target.parentNode.style.width='';}
 // Load at last
 L.innerHTML='';
 bg.ids.forEach(function(i){addItem(bg.map[i]);});
-function updateItem(t,i,r){
-	var p=L.childNodes[i],n=bg.map[bg.ids[i]];
-	switch(t){
-		case 'add':addItem(n);break;
-		case 'update':loadItem(p,n,r);break;
+function updateItem(r){
+	var n=bg.map[bg.ids[r.item]];
+	switch(r.status){
+		case 1:addItem(n);break;
+		default:loadItem(L.childNodes[i],n,r);
 	}
 };
 if(!bg.options.window) bg.options.window=window;

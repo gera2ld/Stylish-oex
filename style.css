@@ -48,11 +48,15 @@ fieldset{border-radius:5px;}
 #advanced{padding:20px;}
 #advanced fieldset>*:not(:first-child){display:inline-block;}
 #advanced legend{margin:0;}
-.side{width:200px;}
+.side{width:220px;}
 .list{background:white;overflow-x:hidden;overflow-y:auto;}
 .list>div{display:block;padding:2px 10px;cursor:pointer;border-bottom:1px dashed lightgray;}
 .list .selected{background:gray;color:white;}
 #export .list{width:400px;height:420px;}
+#xOptions{display:inline-block;position:relative;}
+#xOptions>div{display:none;position:absolute;padding:10px;background:silver;box-shadow:5px 10px 15px rgba(0,0,0,0.4);border:1px solid gray;}
+#xOptions>div>label{display:block;white-space:nowrap;}
+#xOptions:hover>div{display:block;}
 .menu>div{cursor:pointer;padding:5px;display:block;}
 .menu>div:hover{background:gray;color:gold;}
 .menu>div.disabled{color:gray;}

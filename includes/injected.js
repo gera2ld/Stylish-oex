@@ -18,16 +18,33 @@ opera.extension.addEventListener('message', function(event) {
 			else window.fireCustomEvent('styleAlreadyInstalledOpera');
 		} else window.fireCustomEvent('styleCanBeInstalledOpera');
 	} else if(message.topic=='ParsedCSS') {
-		if(!message.data.error) window.fireCustomEvent('styleInstalled');
-		else alert(message.data.message);
+		if(window.fireCustomEvent) {
+			if(message.data.status<0) alert(message.data.message);
+			else window.fireCustomEvent('styleInstalled');
+		} else showMessage(message.data.message);
 	} else if(message.topic=='ConfirmInstall') {
 		if(message.data&&confirm(message.data)) {
 			if(installCallback) installCallback();
-			else opera.extension.postMessage({topic:'ParseFirefoxCSS',data:{code:document.body.innerText}});
+			else {
+				var t='ParseFirefoxCSS';
+				if(/\.json$/.test(window.location.href)) t='ParseJSON';
+				opera.extension.postMessage({topic:t,data:{code:document.body.innerText}});
+			}
 		}
 	}
 }, false);
 opera.extension.postMessage({topic:'LoadStyle'});
+function showMessage(data){
+	var d=document.createElement('div');
+	d.style='position:fixed;border-radius:5px;background:orange;padding:20px;z-index:9999;box-shadow:5px 10px 15px rgba(0,0,0,0.4);transition:opacity 1s linear;opacity:0;text-align:left;';
+	document.body.appendChild(d);d.innerHTML=data;
+	d.style.top=(window.innerHeight-d.offsetHeight)/2+'px';
+	d.style.left=(window.innerWidth-d.offsetWidth)/2+'px';
+	function close(){document.body.removeChild(d);delete d;}
+	d.onclick=close;	// close immediately
+	setTimeout(function(){d.style.opacity=1;},1);	// fade in
+	setTimeout(function(){d.style.opacity=0;setTimeout(close,1000);},3000);	// fade out
+}
 
 // CSS applying
 function loadStyle(e){
@@ -123,7 +140,7 @@ function fixOpera(){
 	window.addCustomEventListener('stylishUpdate',update);
 }
 var installCallback=null;
-if(/\.user\.css$/.test(window.location.href)) (function(){
+if(/\.user\.css$|\.json$/.test(window.location.href)) (function(){
 	function install(){
 		if(document&&document.body&&!document.querySelector('title')) opera.extension.postMessage({topic:'InstallStyle'});
 	}
