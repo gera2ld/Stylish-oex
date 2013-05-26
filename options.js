@@ -1,5 +1,5 @@
-function $(i){return document.getElementById(i);}
-var bg=opera.extension.bgProcess,N=$('main'),L=$('sList'),O=$('overlay'),_=bg.getI18nString;
+var $=document.getElementById.bind(document),
+		bg=opera.extension.bgProcess,N=$('main'),L=$('sList'),O=$('overlay'),_=bg.getI18nString;
 function getDate(t){var d=new Date();d.setTime(t*1000);return d.toLocaleDateString();}
 function getTime(r){
 	var d=new Date(),z,m=r.updated.match(/(\d+)\/(\d+)\/(\d+)\s+(\d+):(\d+):(\d+)\s+(\+|-)(\d+)/);

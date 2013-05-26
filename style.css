@@ -46,7 +46,7 @@ fieldset{border-radius:5px;}
 .rules textarea{height:100px;}
 #mName{height:60px;}
 #advanced{padding:20px;}
-#advanced fieldset>*:not(:first-child){display:inline-block;}
+#advanced fieldset>*:not(legend){display:inline-block;}
 #advanced legend{margin:0;}
 .side{width:220px;}
 .list{background:white;overflow-x:hidden;overflow-y:auto;}
