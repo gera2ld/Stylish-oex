@@ -151,10 +151,10 @@ function impo(b){
 }
 
 // Export
-var X=$('export'),xL=$('xList'),xE=$('bExport'),xC=$('cCompress'),xF=$('cFirefox');
+var X=$('export'),xL=$('xList'),xE=$('bExport'),/*xC=$('cCompress'),*/xF=$('cFirefox');
 function xLoad() {
 	xL.innerHTML='';xE.disabled=false;xE.innerHTML=_('Export');
-	xC.checked=bg.getItem('compress');
+	//xC.checked=bg.getItem('compress');
 	xF.checked=bg.getItem('firefoxCSS');
 	bg.ids.forEach(function(i){
 		var d=document.createElement('div');
@@ -164,7 +164,7 @@ function xLoad() {
 		xL.appendChild(d);
 	});
 }
-xC.onchange=function(){bg.setItem('compress',this.checked);};
+//xC.onchange=function(){bg.setItem('compress',this.checked);};
 xF.onchange=function(){bg.setItem('firefoxCSS',this.checked);};
 xL.onclick=function(e){
 	var t=e.target;
@@ -201,7 +201,7 @@ $('bExport').onclick=function(){
 		if(xF.checked) z.file(n+'.user.css',getFirefoxCSS(c));
 		else z.file(n+'.json',JSON.stringify(c));
 	}
-	c={};if(xC.checked) c.compression='DEFLATE';
+	c={compression:'DEFLATE'};//if(xC.checked) c.compression='DEFLATE';
 	n=z.generate(c);
 	window.open('data:application/zip;base64,'+n);
 	X.close();

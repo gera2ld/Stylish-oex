@@ -3,16 +3,16 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html;charset=utf-8">
 		<link rel="stylesheet" type="text/css" href="style.css" />
-		<link rel="stylesheet" type="text/css" href="lib/codemirror.css" />
+		<link rel="stylesheet" type="text/css" href="lib/codemirror/codemirror.css" />
 		<link rel="shortcut icon" type="image/png" href="images/icon18.png" />
-		<script type="text/javascript" src="lib/codemirror.js"></script>
-		<script type="text/javascript" src="lib/css.js"></script>
-		<script type="text/javascript" src="lib/continuecomment.js"></script>
-		<script type="text/javascript" src="lib/matchbrackets.js"></script>
-		<script type="text/javascript" src="lib/jszip.js"></script>
-		<script type="text/javascript" src="lib/jszip-deflate.js"></script>
-		<script type="text/javascript" src="lib/jszip-inflate.js"></script>
-		<script type="text/javascript" src="lib/jszip-load.js"></script>
+		<script type="text/javascript" src="lib/codemirror/codemirror.js"></script>
+		<script type="text/javascript" src="lib/codemirror/css.js"></script>
+		<script type="text/javascript" src="lib/codemirror/continuecomment.js"></script>
+		<script type="text/javascript" src="lib/codemirror/matchbrackets.js"></script>
+		<script type="text/javascript" src="lib/jszip/jszip.js"></script>
+		<script type="text/javascript" src="lib/jszip/jszip-deflate.js"></script>
+		<script type="text/javascript" src="lib/jszip/jszip-inflate.js"></script>
+		<script type="text/javascript" src="lib/jszip/jszip-load.js"></script>
 		<title class=i18n>Options - Stylish</title>
 	</head>
 	<body class=fill>
@@ -61,10 +61,10 @@
 							<td>
 								<table class=rules>
 									<tr>
-										<td><span class=i18n>Domains</span><textarea id=mDomain></textarea></td>
-										<td><span class=i18n>Regular Expressions</span><textarea id=mRegexp></textarea></td>
-										<td><span class=i18n>URL prefixes</span><textarea id=mUrlPrefix></textarea></td>
-										<td><span class=i18n>URLs</span><textarea id=mUrl></textarea></td>
+										<td title="domain"><span class=i18n>Domains</span><textarea id=mDomain></textarea></td>
+										<td title="regexp"><span class=i18n>Regular Expressions</span><textarea id=mRegexp></textarea></td>
+										<td title="url-prefix"><span class=i18n>URL prefixes</span><textarea id=mUrlPrefix></textarea></td>
+										<td title="url"><span class=i18n>URLs</span><textarea id=mUrl></textarea></td>
 									</tr>
 								</table>
 							</td>
@@ -95,7 +95,7 @@
 			<div id=xOptions class=right>
 				<a class=i18n>Export Options</a>
 				<div>
-					<label><input type=checkbox id=cCompress><span class=i18n>Compress</span></label>
+					<!--<label><input type=checkbox id=cCompress><span class=i18n>Compress</span></label>-->
 					<label><input type=checkbox id=cFirefox><span class=i18n>Export to Firefox CSS files</span><span class=i18n>Firefox CSS hint</span></label>
 				</div>
 			</div>
