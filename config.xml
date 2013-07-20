@@ -11,7 +11,6 @@
   <preference name="isApplied" value="true"/>
   <preference name="installFile" value="true"/>
   <preference name="showButton" value="true"/>
-  <preference name="compress" value="true"/>
   <preference name="firefoxCSS" value="false"/>
   <preference name="editorType" value="0"/>
 

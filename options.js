@@ -431,7 +431,7 @@ function updateItem(r){
 	var n=bg.map[bg.ids[r.item]];
 	switch(r.status){
 		case 1:addItem(n);break;
-		default:loadItem(L.childNodes[i],n,r);
+		default:loadItem(L.childNodes[r.item],n,r);
 	}
 };
 if(!bg.options.window) bg.options.window=window;
