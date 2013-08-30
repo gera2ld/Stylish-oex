@@ -1,8 +1,8 @@
-function $(i){return document.getElementById(i);}
-var bg=opera.extension.bgProcess,P=$('popup'),A=$('astyles'),
+var $=document.getElementById.bind(document),P=$('popup'),A=$('astyles'),
     pT=P.querySelector('.top'),pB=P.querySelector('.bot'),
     aT=A.querySelector('.top'),aB=A.querySelector('.bot'),
-    _=bg.getI18nString,tab=bg.opera.extension.tabs.getFocused();
+    bg=opera.extension.bgProcess,_=bg.getI18nString,
+		tab=bg.opera.extension.tabs.getFocused(),ia=null;
 function loadItem(d,c){
 	if(c) {
 		d.firstChild.innerText=d.symbol;
@@ -12,7 +12,7 @@ function loadItem(d,c){
 		d.classList.add('disabled');
 	}
 }
-function addItem(h,c){
+function addItem(h,c,b){
 	var d=document.createElement('div');
 	d.innerHTML='<span></span>'+h;
 	if('title' in c) {
@@ -20,7 +20,7 @@ function addItem(h,c){
 		delete c.title;
 	}
 	d.className='ellipsis';
-	c.holder.appendChild(d);
+	c.holder.insertBefore(d,b);
 	if('symbol' in c) d.firstChild.innerText=c.symbol;
 	else if('data' in c) c.symbol='✓';
 	for(h in c) d[h]=c[h];
@@ -41,13 +41,20 @@ function alterStyle(i){
 	}});
 	if(i==_title) cur=d;
 }
-function load(e,data){
+function initMenu(){
 	addItem(_('Manage styles'),{holder:pT,symbol:'➤',title:true,onclick:function(){
 		bg.opera.extension.tabs.create({url:'/options.html'}).focus();
 	}});
-	if(data) addItem(_('Find styles for this site'),{holder:pT,symbol:'➤',title:true,onclick:function(){
-		bg.opera.extension.tabs.create({url:'http://userstyles.org/styles/search/'+encodeURIComponent(tab.url)}).focus();
+  if(/^https?:\/\//i.test(tab.url))
+		addItem(_('Find styles for this site'),{holder:pT,symbol:'➤',title:true,onclick:function(){
+			bg.opera.extension.tabs.create({url:'http://userstyles.org/styles/search/'+encodeURIComponent(tab.url)}).focus();
+		}});
+	ia=addItem(_('Enable styles'),{holder:pT,data:bg.isApplied,title:true,onclick:function(){
+		bg.setItem('isApplied',bg.isApplied=!bg.isApplied);bg.updateIcon();loadItem(this,bg.isApplied);
+		bg.opera.extension.broadcastMessage({topic:'LoadedStyle',data:{isApplied:bg.isApplied}});
 	}});
+}
+function load(e,data){
 	if(data&&data.astyles&&data.astyles.length) {
 		_title=data.cstyle||'';
 		addItem(_('Back'),{holder:aT,symbol:'◄',title:true,onclick:function(){
@@ -60,12 +67,8 @@ function load(e,data){
 			P.classList.add('hide');A.classList.remove('hide');
 			bg.button.popup.height=A.offsetHeight;
 			setTimeout(function(){aB.style.pixelHeight=innerHeight-aB.offsetTop;},0);
-		}});
+		}},ia);
 	}
-	addItem(_('Enable styles'),{holder:pT,data:bg.isApplied,title:true,onclick:function(){
-		bg.setItem('isApplied',bg.isApplied=!bg.isApplied);bg.updateIcon();loadItem(this,bg.isApplied);
-		bg.opera.extension.broadcastMessage({topic:'LoadedStyle',data:{isApplied:bg.isApplied}});
-	}});
 	if(data&&data.styles&&data.styles.length) {
 		pT.appendChild(document.createElement('hr'));
 		data.styles.forEach(function(i){menuStyle(bg.map[i]);});
@@ -73,5 +76,5 @@ function load(e,data){
 	bg.button.popup.height=P.offsetHeight;
 	setTimeout(function(){pB.style.pixelHeight=innerHeight-pB.offsetTop;},0);
 }
-bg.messages['GotPopup']=load;
+initMenu();bg.messages['GotPopup']=load;
 try{tab.postMessage({topic:'GetPopup'});}catch(e){load();}
