@@ -1,9 +1,8 @@
-var updated=0,style=null,styles={};
+var updated=0,css=null,styles={};
 // Message
 opera.extension.addEventListener('message', function(event) {
 	var message=event.data;
-	if(message.topic=='LoadedStyle') onCSS(message.data);
-	else if(message.topic=='UpdateStyle') updateStyle(message.data);
+	if(message.topic=='LoadedStyle') loadStyle(message.data);
 	else if(message.topic=='GetPopup') opera.extension.postMessage({
 		topic:'GotPopup',
 		data:{
@@ -47,27 +46,21 @@ function showMessage(data){
 }
 
 // CSS applying
-function loadStyle(e){
-	if(!style) {
-		style=document.createElement('style');
-		style.setAttribute('type', 'text/css');
-		document.documentElement.appendChild(style);
-	}
-	if(styles) {
-		var i,c=[];
-		for(i in styles) c.push(styles[i]);
-		style.innerHTML=c.join('');
-	}
-}
-function updateStyle(data) {
-	for(var i in data)
-		if(typeof data[i]=='string') styles[i]=data[i]; else delete styles[i];
-	loadStyle();
-}
-function onCSS(data) {
-	if(data.data) styles=data.data;
-	if(data.isApplied) loadStyle();
-	else if(style) {document.documentElement.removeChild(style);style=null;}
+function loadStyle(data) {
+	if(data.styles) for(var i in data.styles)
+		if(typeof data.styles[i]=='string') styles[i]=data.styles[i]; else delete styles[i];
+	if(data.isApplied) {
+		if(!css) {
+			css=document.createElement('style');
+			css.setAttribute('type', 'text/css');
+			document.documentElement.appendChild(css);
+		}
+		if(styles) {
+			var i,c=[];
+			for(i in styles) c.push(styles[i]);
+			css.innerHTML=c.join('');
+		}
+	} else if(css) {document.documentElement.removeChild(css);css=null;}
 }
 
 // Alternative style sheets

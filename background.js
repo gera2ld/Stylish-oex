@@ -92,7 +92,7 @@ function saveStyle(s){
 	opera.extension.tabs.getAll().forEach(function(t){
 		if(t.port) {
 			var d={};d[s.id]=testURL(t.url,s);
-			t.postMessage({topic:'UpdateStyle',data:d});
+			t.postMessage({topic:'LoadedStyle',data:{isApplied:isApplied,styles:d}});
 		}
 	});
 }
@@ -142,10 +142,7 @@ function loadStyle(e) {
 		var d=testURL(e.origin,map[i]);
 		if(typeof d=='string') c[i]=d;
 	});
-	e.source.postMessage({
-		topic: 'LoadedStyle',
-		data: {isApplied:isApplied,data:c}
-	});
+	e.source.postMessage({topic:'LoadedStyle',data:{isApplied:isApplied,styles:c}});
 }
 function checkStyle(e,d){e.source.postMessage({topic:'CheckedStyle',data:map[d]});}
 function parseFirefoxCSS(e,d){
