@@ -99,7 +99,7 @@ function saveStyle(s){
 function removeStyle(i){
 	i=ids.splice(i,1)[0];saveIDs();delete map[i];
 	var d={};d[i]=undefined;
-	opera.extension.broadcastMessage({topic:'UpdateStyle',data:d});
+	opera.extension.broadcastMessage({topic:'LoadedStyle',data:{isApplied:isApplied,styles:d}});
 }
 
 function str2RE(s){return s.replace(/(\.|\?|\/)/g,'\\$1').replace(/\*/g,'.*?');}
