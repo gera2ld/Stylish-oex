@@ -16,7 +16,7 @@ function initAce(callback,data){
 	});
 }
 
-function initCodeMirror(callback,data){
+/*function initCodeMirror(callback,data){
 	data=data||{};
 	addCSS([
 		{href:'lib/CodeMirror/lib/codemirror.css'},
@@ -49,6 +49,6 @@ function initCodeMirror(callback,data){
 			callback(T);
 		});
 	});
-}
+}*/
 
 var initEditor=initAce;
