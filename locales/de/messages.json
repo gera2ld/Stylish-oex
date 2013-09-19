@@ -1,1 +1,266 @@
-{"__translator":"Zinko <zinko_000@geekmail.de>","__lang":"de","New Style":"Neues Style","Style updated.":"Style aktualisiert.","Error parsing CSS code!":"Fehler beim analysieren des CSS code!","Error fetching CSS code!":"Fehler beim laden des CSS-code!","Do you want to install this style?":"M\u00f6chtest du dieses Style installieren ?","Style installed.":"Style installiert.","Null name":"Null name","Manage styles":"Styles verwalten","Find styles for this site":"Finde Styles f\u00fcr diese Seite","Back":"Zur\u00fcck","Alter stylesheet...":"\u00c4ndere stylesheet...","Enable styles":"Aktiviere Styles","Options - Stylish":"Optionen - Stylish","New":"Neu","Get more styles from userstyles.org":"Mehr Styles auf userstyles.org","Check all for updates":"Alle auf Update pr\u00fcfen","Advanced":"Erweitert","Installed Styles":"Installierte Styles","Stylish link":"<a href=https:\/\/github.com\/gera2ld\/Stylish-for-Opera\/wiki>Stylish<\/a>","Designed by Gerald":"Entwickelt von <a href=mailto:gera2ld@163.com>Gerald<\/a>","Style Editor":"Style Editor","Name:":"Name:","Sections:":"Abschnitte:","Delete":"L\u00f6schen","Rename":"Umbenennen","Rules: ":"Regeln:","(One per line)":"(Eine pro Zeile)","Domains":"Domains","Regular Expressions":"Regul\u00e4re Ausdr\u00fccke","URL prefixes":"URL Pr\u00e4fixen","URLs":"URLs","Code:":"Code:","Remove prefixes while applying:":"Entferne Pr\u00e4fix beim Speichern:","Save":"Speichern","Save and Close":"Speichern & Schlie\u00dfen","Close":"Schlie\u00dfen","Data Export":"Datenexport","Export Options":"Optionen","Compress":"Komprimieren","Export to Firefox CSS files":"Zu Firefox CSS-Dateien exportieren","Firefox CSS hint":"<a href=# title=\"Exportieren nach .user.css Dateien, von denen das Syntax nur von Firefox unterst\u00fctzt wird.\">(?)<\/a>","All\/None":"Alle\/Keine","Export":"Exportieren","Show button on toolbar":"Zeige Schaltfl\u00e4che auf der Symbolleiste","Allow installing style files":"Erlaube Opera die Installation von heruntergeladenen Styles","Data":"Daten","Export to zip file":"Zu ZIP-Datei exportieren","Import from zip file":"Von ZIP-Datei importieren","Last updated: ":"Letztes Update:","Check for updates":"Auf Update pr\u00fcfen","Edit":"Bearbeiten","Disable":"Deaktivieren","Enable":"Aktivieren","Remove":"Entfernen","Modifications are not saved!":"Modifikationen werden nicht gespeichert!\nKlicken Sie auf OK um zu schlie\u00dfen oder auf Abbrechen um zur\u00fcckzukehren.","Error loading zip file.":"Fehler beim laden der ZIP-Datei!","$1 item(s) are imported.":"$1 Datei(en) wurden importiert.","Exporting...":"Exportiere...","Checking for updates...":"Pr\u00fcfe auf Updates...","Updating...":"Aktualisiere...","Please go to homepage for update since there are options for this style.":"Bitte rufen Sie die Startseite f\u00fcr ein Update auf, da es f\u00fcr dieses Style verschiedene Optionen gibt.","New version found.":"Neue Version gefunden.","No update found.":"Kein Update gefunden.","Failed fetching update information.":"Laden von Update-Informationen fehlgeschlagen","Switch to normal editor":"Wechseln zu normalen Editor","Switch to advanced editor":"Wechseln zu erweiterten Editor","Rename Section \"$1\" to:":"Abschnitt \"$1\" umbenennen zu:"}
+{
+	"extName": {
+		"message": "Stylish", 
+		"description": "Name of this extension."
+	}, 
+	"extDescription": {
+		"message": "Stylish für Opera ermöglicht es UserCSS für unterschiedliche URLs von userstyles.org zu verwenden.", 
+		"description": "Description for this extension."
+	}, 
+	"extTranslator": {
+		"message": "Zinko <zinko_000@geekmail.de>", 
+		"description": "Information of the translator."
+	}, 
+	"labelNewStyle": {
+		"message": "Neues Style", 
+		"description": "Default name of a new style."
+	}, 
+	"msgConfirm": {
+		"message": "Möchtest du dieses Style installieren ?", 
+		"description": "Message shown before installing a style."
+	}, 
+	"msgUpdated": {
+		"message": "Style aktualisiert.", 
+		"description": "Message shown when a style is updated/reinstalled."
+	}, 
+	"msgErrorParsing": {
+		"message": "Fehler beim analysieren des CSS code!", 
+		"description": "Message shown when CSS code is invalid."
+	}, 
+	"msgErrorFetchingStyle": {
+		"message": "Fehler beim laden des CSS-code!", 
+		"description": "Message shown when Stylish fails fetching a new version of the style."
+	}, 
+	"msgInstalled": {
+		"message": "Style installiert.", 
+		"description": "Message shown when a style is installed."
+	}, 
+	"msgUpdating": {
+		"message": "Aktualisiere...", 
+		"description": "Message shown when a new version of style is being fetched."
+	}, 
+	"msgNewVersion": {
+		"message": "Neue Version gefunden.", 
+		"description": "Message shown when a new version of style is found by metaUrl, but no updateUrl is provided."
+	}, 
+	"msgCheckingForUpdate": {
+		"message": "Prüfe auf Updates...", 
+		"description": "Message shown when a style is being checked for updates."
+	}, 
+	"msgErrorFetchingUpdateInfo": {
+		"message": "Laden von Update-Informationen fehlgeschlagen", 
+		"description": "Message shown when Stylish fails fetching version data of the style."
+	}, 
+	"msgNoUpdate": {
+		"message": "Kein Update gefunden.", 
+		"description": "Message shown when there is no new version of a style."
+	}, 
+	"labelNoName": {
+		"message": "Null name", 
+		"description": "Text as the name of a style when name is empty."
+	}, 
+	"menuManageStyles": {
+		"message": "Styles verwalten", 
+		"description": "Menu item to manage styles, or to open the options page of the extension."
+	}, 
+	"menuFindStyles": {
+		"message": "Finde Styles für diese Seite", 
+		"description": "Menu item to find styles for a site."
+	}, 
+	"menuStylesEnabled": {
+		"message": "Aktiviere Styles", 
+		"description": "Menu item showing the status of Stylish, whether enabled."
+	}, 
+	"menuBack": {
+		"message": "Zurück", 
+		"description": "Menu item to go back to main menu from alternate stylesheets."
+	}, 
+	"menuAlterStylesheet": {
+		"message": "Ändere stylesheet...", 
+		"description": "Menu item to show alternate stylesheets of the current page."
+	}, 
+	"labelOptions": {
+		"message": "Optionen", 
+		"description": "Options of this extension."
+	}, 
+	"buttonNew": {
+		"message": "Neu", 
+		"description": "Button to create a new style."
+	}, 
+	"anchorGetMoreStyles": {
+		"message": "Mehr Styles auf userstyles.org", 
+		"description": "Link to get more styles."
+	}, 
+	"anchorUpdateAll": {
+		"message": "Alle auf Update prüfen", 
+		"description": "Check all styles for updates."
+	}, 
+	"buttonAdvanced": {
+		"message": "Erweitert", 
+		"description": "Button to show the advanced options."
+	}, 
+	"labelInstalledStyles": {
+		"message": "Installierte Styles", 
+		"description": "Label of the list of installed styles."
+	}, 
+	"anchorSupportPage": {
+		"message": "<a href=https://github.com/gera2ld/Stylish-oex/wiki>Stylish</a>", 
+		"description": "Link to the support page of Stylish."
+	}, 
+	"anchorAuthor": {
+		"message": "Entwickelt von <a href=mailto:gera2ld@163.com>Gerald</a>", 
+		"description": "Author shown in the footer of options page, translator information may be added."
+	}, 
+	"labelStyleEditor": {
+		"message": "Style Editor", 
+		"description": "Shown in the title of the style editing page."
+	}, 
+	"labelName": {
+		"message": "Name:", 
+		"description": "Label of style name."
+	}, 
+	"labelSections": {
+		"message": "Abschnitte:", 
+		"description": "Label of sections."
+	}, 
+	"buttonNewSection": {
+		"message": "Neu", 
+		"description": "Button to add a section."
+	}, 
+	"buttonDeleteSection": {
+		"message": "Löschen", 
+		"description": "Button to remove a section."
+	}, 
+	"buttonRenameSection": {
+		"message": "Umbenennen", 
+		"description": "Button to rename a section."
+	}, 
+	"labelRules": {
+		"message": "Regeln: <em>(Eine pro Zeile)</em>", 
+		"description": "Label of rules."
+	}, 
+	"labelDomains": {
+		"message": "Domains", 
+		"description": "Label of domain rules."
+	}, 
+	"labelRegExps": {
+		"message": "Reguläre Ausdrücke", 
+		"description": "Label of regular-expression rules."
+	}, 
+	"labelUrlPrefixes": {
+		"message": "URL Präfixen", 
+		"description": "Label of UrlPrefix rules."
+	}, 
+	"labelURLs": {
+		"message": "URLs", 
+		"description": "Label of URL rules."
+	}, 
+	"labelCode": {
+		"message": "Code:", 
+		"description": "Label of CSS code."
+	}, 
+	"Remove prefixes while applying:": {
+		"message": "Entferne Präfix beim Speichern:", 
+		"description": ""
+	}, 
+	"buttonSave": {
+		"message": "Speichern", 
+		"description": "Button to save modifications of a style."
+	}, 
+	"buttonSaveClose": {
+		"message": "Speichern & Schließen", 
+		"description": "Button to save modifications of a style and then close the editing page."
+	}, 
+	"buttonClose": {
+		"message": "Schließen", 
+		"description": "Button to close window."
+	}, 
+	"labelExport": {
+		"message": "Datenexport", 
+		"description": "Label shown in the title of export dialog."
+	}, 
+	"anchorExportOptions": {
+		"message": "Optionen", 
+		"description": "Options of export."
+	}, 
+	"labelFirefoxCSS": {
+		"message": "Zu Firefox CSS-Dateien exportieren", 
+		"description": "Option to export data as Firefox CSS files."
+	}, 
+	"hintFirefoxCSS": {
+		"message": "<a href=# title=\"Exportieren nach .user.css Dateien, von denen das Syntax nur von Firefox unterstützt wird.\">(?)</a>", 
+		"description": "Hint for option of FirefoxCSS."
+	}, 
+	"buttonAllNone": {
+		"message": "Alle/Keine", 
+		"description": "Button to select all styles or none."
+	}, 
+	"labelAdvanced": {
+		"message": "Erweitert", 
+		"description": "Label shown in the title of advanced dialog."
+	}, 
+	"labelShowButton": {
+		"message": "Zeige Schaltfläche auf der Symbolleiste", 
+		"description": "Option to show an icon of this extension in the toolbar."
+	}, 
+	"labelData": {
+		"message": "Daten", 
+		"description": "Label of extension data management."
+	}, 
+	"buttonExportData": {
+		"message": "Zu ZIP-Datei exportieren", 
+		"description": "Button to open the data export dialog."
+	}, 
+	"buttonImportData": {
+		"message": "Von ZIP-Datei importieren", 
+		"description": "Button to choose a file for data import."
+	}, 
+	"labelLastUpdated": {
+		"message": "Letztes Update:", 
+		"description": "Label of last updated timestamp of a style."
+	}, 
+	"anchorUpdate": {
+		"message": "Auf Update prüfen", 
+		"description": "Check a style for updates."
+	}, 
+	"buttonEdit": {
+		"message": "Bearbeiten", 
+		"description": "Button to edit a style."
+	}, 
+	"buttonDisable": {
+		"message": "Deaktivieren", 
+		"description": "Button to disable a style."
+	}, 
+	"buttonEnable": {
+		"message": "Aktivieren", 
+		"description": "Button to enable a style."
+	}, 
+	"buttonRemove": {
+		"message": "Entfernen", 
+		"description": "Button to remove a style."
+	}, 
+	"confirmNotSaved": {
+		"message": "Modifikationen werden nicht gespeichert!\nKlicken Sie auf OK um zu schließen oder auf Abbrechen um zurückzukehren.", 
+		"description": "Confirm message shown when there are unsaved style modifications."
+	}, 
+	"msgImported": {
+		"message": "$1 Datei(en) wurden importiert.", 
+		"description": "Message shown after import. There is an argument referring to the count of styles imported."
+	}, 
+	"msgErrorZip": {
+		"message": "Fehler beim laden der ZIP-Datei!", 
+		"description": "Message shown when Stylish fails to open the zip file."
+	}, 
+	"buttonExport": {
+		"message": "Exportieren", 
+		"description": "Button to confirm export."
+	}, 
+	"buttonExporting": {
+		"message": "Exportiere...", 
+		"description": "Message shown when data export is in progress."
+	}, 
+	"msgRename": {
+		"message": "Abschnitt \"$1\" umbenennen zu:", 
+		"description": "Message shown when a section is going to be renamed."
+	}
+}

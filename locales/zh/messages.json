@@ -1,1 +1,266 @@
-{"__translator":"Gerald <gera2ld@163.com>","__lang":"zh","New Style":"\u65b0\u6837\u5f0f","Style updated.":"\u6837\u5f0f\u5df2\u66f4\u65b0\u3002","Error parsing CSS code!":"\u89e3\u6790CSS\u4ee3\u7801\u53d1\u751f\u9519\u8bef\uff01","Error fetching CSS code!":"\u83b7\u53d6CSS\u4ee3\u7801\u53d1\u751f\u9519\u8bef\uff01","Do you want to install this style?":"\u786e\u5b9a\u5b89\u88c5\u6b64\u6837\u5f0f\uff1f","Style installed.":"\u6837\u5f0f\u5df2\u5b89\u88c5\u3002","Null name":"\u540d\u5b57\u4e3a\u7a7a","Manage styles":"\u7ba1\u7406\u6837\u5f0f","Find styles for this site":"\u4e3a\u6b64\u7ad9\u70b9\u67e5\u627e\u6837\u5f0f","Back":"\u8fd4\u56de","Alter stylesheet...":"\u5207\u6362\u6837\u5f0f...","Enable styles":"\u542f\u7528\u6837\u5f0f","Options - Stylish":"\u9009\u9879 - Stylish","New":"\u65b0\u5efa","Get more styles from userstyles.org":"\u4eceuserstyles.org\u83b7\u53d6\u66f4\u591a\u6837\u5f0f","Check all for updates":"\u5168\u90e8\u66f4\u65b0","Advanced":"\u9ad8\u7ea7\u9009\u9879","Installed Styles":"\u5df2\u5b89\u88c5\u7684\u6837\u5f0f","Stylish link":"<a href=https:\/\/github.com\/gera2ld\/Stylish-for-Opera\/wiki\/Stylish-for-Opera>Stylish<\/a>","Designed by Gerald":"<a href=mailto:gera2ld@163.com>Gerald<\/a> \u5236\u4f5c","Style Editor":"\u6837\u5f0f\u7f16\u8f91\u5668","Name:":"\u540d\u79f0\uff1a","Sections:":"\u5206\u8282\uff1a","Delete":"\u5220\u9664","Rename":"\u91cd\u547d\u540d","Rules: ":"\u89c4\u5219\uff1a","(One per line)":"\uff08\u6bcf\u884c\u4e00\u4e2a\uff09","Domains":"\u57df\u540d\u89c4\u5219","Regular Expressions":"\u6b63\u5219\u8868\u8fbe\u5f0f","URL prefixes":"\u5730\u5740\u524d\u7f00\u5339\u914d","URLs":"\u5730\u5740\u7cbe\u786e\u5339\u914d","Code:":"\u4ee3\u7801\uff1a","Remove prefixes while applying:":"\u5e94\u7528\u6837\u5f0f\u65f6\u81ea\u52a8\u79fb\u9664\u524d\u7f00\uff1a","Save":"\u4fdd\u5b58","Save and Close":"\u4fdd\u5b58\u5e76\u5173\u95ed","Close":"\u5173\u95ed","Data Export":"\u6570\u636e\u5bfc\u51fa","Export Options":"\u9009\u9879","Compress":"\u538b\u7f29","Export to Firefox CSS files":"\u5bfc\u51fa\u4e3aFirefox\u7684CSS\u6587\u4ef6","Firefox CSS hint":"<a href=# title=\"\u5bfc\u51fa\u4e3a.user.css\u6587\u4ef6\uff0c\u5176\u8bed\u6cd5\u4ec5\u88abFirefox\u652f\u6301\u3002\">(?)<\/a>","All\/None":"\u5168\u9009\/\u4e0d\u9009","Export":"\u5bfc\u51fa","Show button on toolbar":"\u5728\u5de5\u5177\u680f\u4e0a\u663e\u793a\u6309\u94ae","Allow installing style files":"\u5141\u8bb8\u5b89\u88c5Opera\u4e2d\u6253\u5f00\u7684\u6837\u5f0f\u6587\u4ef6","Data":"\u6570\u636e","Export to zip file":"\u5bfc\u51fa\u4e3azip\u6587\u4ef6","Import from zip file":"\u5bfc\u5165\u81eazip\u6587\u4ef6","Last updated: ":"\u6700\u8fd1\u66f4\u65b0\uff1a","Check for updates":"\u67e5\u627e\u66f4\u65b0","Edit":"\u7f16\u8f91","Disable":"\u7981\u7528","Enable":"\u542f\u7528","Remove":"\u79fb\u9664","Modifications are not saved!":"\u4fee\u6539\u5c1a\u672a\u4fdd\u5b58\uff01\n\u70b9\u51fb\u786e\u5b9a\u653e\u5f03\u4fee\u6539\u6216\u70b9\u51fb\u53d6\u6d88\u505c\u7559\u6b64\u9875\u9762\u3002","Error loading zip file.":"\u6253\u5f00zip\u6587\u4ef6\u53d1\u751f\u9519\u8bef\u3002","$1 item(s) are imported.":"\u5df2\u5bfc\u5165$1\u4e2a\u6837\u5f0f\u3002","Exporting...":"\u6b63\u5728\u5bfc\u51fa...","Checking for updates...":"\u6b63\u5728\u68c0\u67e5\u66f4\u65b0...","Updating...":"\u6b63\u5728\u66f4\u65b0...","Please go to homepage for update since there are options for this style.":"\u6b64\u6837\u5f0f\u6709\u9009\u9879\uff0c\u8bf7\u5230\u4e3b\u9875\u624b\u52a8\u66f4\u65b0\u3002","New version found.":"\u53d1\u73b0\u65b0\u7248\u672c\u3002","No update found.":"\u672a\u53d1\u73b0\u65b0\u7248\u672c\u3002","Failed fetching update information.":"\u83b7\u53d6\u66f4\u65b0\u4fe1\u606f\u5931\u8d25\u3002","Switch to normal editor":"\u5207\u6362\u5230\u666e\u901a\u7f16\u8f91\u5668","Switch to advanced editor":"\u5207\u6362\u5230\u9ad8\u7ea7\u7f16\u8f91\u5668","Rename Section \"$1\" to:":"\u91cd\u547d\u540d\u5206\u8282\u201c$1\u201d\u4e3a\uff1a"}
+{
+	"extName": {
+		"message": "Stylish", 
+		"description": "Name of this extension."
+	}, 
+	"extDescription": {
+		"message": "Stylish for Opera支持对不同地址自定义样式。", 
+		"description": "Description for this extension."
+	}, 
+	"extTranslator": {
+		"message": "Gerald <gera2ld@163.com>", 
+		"description": "Information of the translator."
+	}, 
+	"labelNewStyle": {
+		"message": "新样式", 
+		"description": "Default name of a new style."
+	}, 
+	"msgConfirm": {
+		"message": "确定安装此样式？", 
+		"description": "Message shown before installing a style."
+	}, 
+	"msgUpdated": {
+		"message": "样式已更新。", 
+		"description": "Message shown when a style is updated/reinstalled."
+	}, 
+	"msgErrorParsing": {
+		"message": "解析CSS代码发生错误！", 
+		"description": "Message shown when CSS code is invalid."
+	}, 
+	"msgErrorFetchingStyle": {
+		"message": "获取CSS代码发生错误！", 
+		"description": "Message shown when Stylish fails fetching a new version of the style."
+	}, 
+	"msgInstalled": {
+		"message": "样式已安装。", 
+		"description": "Message shown when a style is installed."
+	}, 
+	"msgUpdating": {
+		"message": "正在更新...", 
+		"description": "Message shown when a new version of style is being fetched."
+	}, 
+	"msgNewVersion": {
+		"message": "发现新版本。", 
+		"description": "Message shown when a new version of style is found by metaUrl, but no updateUrl is provided."
+	}, 
+	"msgCheckingForUpdate": {
+		"message": "正在检查更新...", 
+		"description": "Message shown when a style is being checked for updates."
+	}, 
+	"msgErrorFetchingUpdateInfo": {
+		"message": "获取更新信息失败。", 
+		"description": "Message shown when Stylish fails fetching version data of the style."
+	}, 
+	"msgNoUpdate": {
+		"message": "未发现新版本。", 
+		"description": "Message shown when there is no new version of a style."
+	}, 
+	"labelNoName": {
+		"message": "名字为空", 
+		"description": "Text as the name of a style when name is empty."
+	}, 
+	"menuManageStyles": {
+		"message": "管理样式", 
+		"description": "Menu item to manage styles, or to open the options page of the extension."
+	}, 
+	"menuFindStyles": {
+		"message": "为此站点查找样式", 
+		"description": "Menu item to find styles for a site."
+	}, 
+	"menuStylesEnabled": {
+		"message": "启用样式", 
+		"description": "Menu item showing the status of Stylish, whether enabled."
+	}, 
+	"menuBack": {
+		"message": "返回", 
+		"description": "Menu item to go back to main menu from alternate stylesheets."
+	}, 
+	"menuAlterStylesheet": {
+		"message": "切换样式...", 
+		"description": "Menu item to show alternate stylesheets of the current page."
+	}, 
+	"labelOptions": {
+		"message": "选项", 
+		"description": "Options of this extension."
+	}, 
+	"buttonNew": {
+		"message": "新建", 
+		"description": "Button to create a new style."
+	}, 
+	"anchorGetMoreStyles": {
+		"message": "从userstyles.org获取更多样式", 
+		"description": "Link to get more styles."
+	}, 
+	"anchorUpdateAll": {
+		"message": "全部更新", 
+		"description": "Check all styles for updates."
+	}, 
+	"buttonAdvanced": {
+		"message": "高级", 
+		"description": "Button to show the advanced options."
+	}, 
+	"labelInstalledStyles": {
+		"message": "已安装的样式", 
+		"description": "Label of the list of installed styles."
+	}, 
+	"anchorSupportPage": {
+		"message": "<a href=https://github.com/gera2ld/Stylish-oex/wiki/Stylish-for-Opera>Stylish</a>", 
+		"description": "Link to the support page of Stylish."
+	}, 
+	"anchorAuthor": {
+		"message": "<a href=mailto:gera2ld@163.com>Gerald</a> 制作", 
+		"description": "Author shown in the footer of options page, translator information may be added."
+	}, 
+	"labelStyleEditor": {
+		"message": "样式编辑器", 
+		"description": "Shown in the title of the style editing page."
+	}, 
+	"labelName": {
+		"message": "名称：", 
+		"description": "Label of style name."
+	}, 
+	"labelSections": {
+		"message": "分节：", 
+		"description": "Label of sections."
+	}, 
+	"buttonNewSection": {
+		"message": "新建", 
+		"description": "Button to add a section."
+	}, 
+	"buttonDeleteSection": {
+		"message": "删除", 
+		"description": "Button to remove a section."
+	}, 
+	"buttonRenameSection": {
+		"message": "重命名", 
+		"description": "Button to rename a section."
+	}, 
+	"labelRules": {
+		"message": "规则：<em>（每行一个）</em>", 
+		"description": "Label of rules."
+	}, 
+	"labelDomains": {
+		"message": "域名规则", 
+		"description": "Label of domain rules."
+	}, 
+	"labelRegExps": {
+		"message": "正则表达式", 
+		"description": "Label of regular-expression rules."
+	}, 
+	"labelUrlPrefixes": {
+		"message": "地址前缀匹配", 
+		"description": "Label of UrlPrefix rules."
+	}, 
+	"labelURLs": {
+		"message": "地址精确匹配", 
+		"description": "Label of URL rules."
+	}, 
+	"labelCode": {
+		"message": "代码：", 
+		"description": "Label of CSS code."
+	}, 
+	"Remove prefixes while applying:": {
+		"message": "应用样式时自动移除前缀：", 
+		"description": ""
+	}, 
+	"buttonSave": {
+		"message": "保存", 
+		"description": "Button to save modifications of a style."
+	}, 
+	"buttonSaveClose": {
+		"message": "保存并关闭", 
+		"description": "Button to save modifications of a style and then close the editing page."
+	}, 
+	"buttonClose": {
+		"message": "关闭", 
+		"description": "Button to close window."
+	}, 
+	"labelExport": {
+		"message": "数据导出", 
+		"description": "Label shown in the title of export dialog."
+	}, 
+	"anchorExportOptions": {
+		"message": "选项", 
+		"description": "Options of export."
+	}, 
+	"labelFirefoxCSS": {
+		"message": "导出为Firefox的CSS文件", 
+		"description": "Option to export data as Firefox CSS files."
+	}, 
+	"hintFirefoxCSS": {
+		"message": "<a href=# title=\"导出为.user.css文件，其语法仅被Firefox支持。\">(?)</a>", 
+		"description": "Hint for option of FirefoxCSS."
+	}, 
+	"buttonAllNone": {
+		"message": "全选/不选", 
+		"description": "Button to select all styles or none."
+	}, 
+	"labelAdvanced": {
+		"message": "高级选项", 
+		"description": "Label shown in the title of advanced dialog."
+	}, 
+	"labelShowButton": {
+		"message": "在工具栏上显示按钮", 
+		"description": "Option to show an icon of this extension in the toolbar."
+	}, 
+	"labelData": {
+		"message": "数据", 
+		"description": "Label of extension data management."
+	}, 
+	"buttonExportData": {
+		"message": "导出为zip文件", 
+		"description": "Button to open the data export dialog."
+	}, 
+	"buttonImportData": {
+		"message": "导入自zip文件", 
+		"description": "Button to choose a file for data import."
+	}, 
+	"labelLastUpdated": {
+		"message": "最近更新：", 
+		"description": "Label of last updated timestamp of a style."
+	}, 
+	"anchorUpdate": {
+		"message": "查找更新", 
+		"description": "Check a style for updates."
+	}, 
+	"buttonEdit": {
+		"message": "编辑", 
+		"description": "Button to edit a style."
+	}, 
+	"buttonDisable": {
+		"message": "禁用", 
+		"description": "Button to disable a style."
+	}, 
+	"buttonEnable": {
+		"message": "启用", 
+		"description": "Button to enable a style."
+	}, 
+	"buttonRemove": {
+		"message": "移除", 
+		"description": "Button to remove a style."
+	}, 
+	"confirmNotSaved": {
+		"message": "修改尚未保存！\n点击确定放弃修改或点击取消停留此页面。", 
+		"description": "Confirm message shown when there are unsaved style modifications."
+	}, 
+	"msgImported": {
+		"message": "已导入$1个样式。", 
+		"description": "Message shown after import. There is an argument referring to the count of styles imported."
+	}, 
+	"msgErrorZip": {
+		"message": "打开zip文件发生错误。", 
+		"description": "Message shown when Stylish fails to open the zip file."
+	}, 
+	"buttonExport": {
+		"message": "导出", 
+		"description": "Button to confirm export."
+	}, 
+	"buttonExporting": {
+		"message": "正在导出...", 
+		"description": "Message shown when data export is in progress."
+	}, 
+	"msgRename": {
+		"message": "重命名分节“$1”为：", 
+		"description": "Message shown when a section is going to be renamed."
+	}
+}
