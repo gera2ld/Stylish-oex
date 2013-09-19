@@ -12,8 +12,7 @@ function initMessages(callback){
 		var args=arguments,k=args[0],r;
 		r=data[k];if(r) r=r.message;
 		if(r) return r.replace(/\$(?:\{(\d+)\}|(\d+))/g,function(v,g1,g2){return args[g1||g2]||'';});
-		else return k;	// TODO
-		//else return '';
+		else return '';
 	};
 }
 
@@ -79,15 +78,33 @@ function initDatabase(callback){
 		executeSql();
 	});
 }
-function upgradeData(callback){	// TODO: Upgrading data to new version
-	var version=getOption('version_storage',0);
-	if(version<0.3){
-		setItem('version_storage',0.3);
-		opera.extension.tabs.getAll().forEach(function(i){
+function upgradeData(callback){
+	function finish(){
+		setOption('version_storage',0.4);
+		if(!version) opera.extension.tabs.getAll().forEach(function(i){
 			if(/^http:\/\/userstyles\.org\/styles\//.test(i.url)) i.refresh();
 		});
+		if(callback) callback();
 	}
-	if(callback) callback();
+	function upgradeItem(){
+		var k,v;
+		while(k=widget.preferences.key(i)) {
+			if(k in settings) {i++;continue;}
+			v=widget.preferences.getItem(k);
+			widget.preferences.removeItem(k);
+			if(/^us:/.test(k)) {
+				o=JSON.parse(v);
+				if(/^https?:/.test(o.id)&&!o.url) o.url=o.id;
+				delete o.id;
+				saveStyle(o,upgradeItem);
+				return;
+			}
+		}
+		if(!k) finish();
+	}
+	var version=getOption('version_storage',0),i=0;
+	if(version<0.4) upgradeItem();
+	else if(callback) callback();
 }
 function getMeta(o){
 	return {
@@ -185,7 +202,7 @@ function saveStyle(o,callback){
 		d.push(o.updated||0);
 		d.push(o.enabled);
 		t.executeSql('REPLACE INTO metas(id,name,url,metaUrl,updateUrl,updated,enabled) VALUES(?,?,?,?,?,?,?)',d,function(t,r){
-			if(!o.id) o.id=r.insertId;
+			o.id=r.insertId;
 			if(!(o.id in metas)) ids.push(o.id);
 			metas[o.id]=o;
 			if(o.data) t.executeSql('DELETE FROM styles WHERE metaId=?',[o.id],function(t,r){
@@ -555,8 +572,8 @@ else initMessages(function(){
 	initSettings();
 	initIcon();
 	initDatabase(function(){
-		upgradeData(function(){
-			initStyles(function(){
+		initStyles(function(){
+			upgradeData(function(){
 				opera.extension.onmessage=function(e){
 					var m=e.data,c=maps[m.topic];
 					if(c) try{c(e,m.data);}catch(e){opera.postError(e);}
