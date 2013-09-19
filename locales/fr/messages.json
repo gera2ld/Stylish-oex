@@ -88,7 +88,7 @@
 		"description": "Button to create a new style."
 	}, 
 	"anchorGetMoreStyles": {
-		"message": "Plus de styles &agrave; partir de userstyles.org", 
+		"message": "<a href=http://userstyles.org target=_blank>Plus de styles &agrave; partir de userstyles.org</a>", 
 		"description": "Link to get more styles."
 	}, 
 	"anchorUpdateAll": {
