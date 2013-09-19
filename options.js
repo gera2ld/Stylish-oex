@@ -136,6 +136,10 @@ function impo(b){
 			}
 		});
 	});
+	var f=z.file('Stylish');
+	if(f) try{f=JSON.parse(f.asText());}catch(e){f={};opera.postError('Error parsing Stylish configuration.');}
+	if(f.settings) for(z in f.settings)
+		if(z in bg.settings) bg.setOption(z,f.settings[z]);
 }
 
 // Export
@@ -190,10 +194,11 @@ $('bExport').onclick=function(){
 			if(xF.checked) z.file(n+'.user.css',getFirefoxCSS(c));
 			else z.file(n+'.json',JSON.stringify(c));
 		});
+		z.file('Stylish',JSON.stringify({settings:bg.settings}));
 		i={compression:'DEFLATE'};
 		o=z.generate(i);
-		window.open('data:application/zip;base64,'+o);
 		X.close();
+		bg.opera.extension.tabs.create({url:'data:application/zip;base64,'+o}).focus();
 	});
 };
 X.close=$('bClose').onclick=closeDialog;

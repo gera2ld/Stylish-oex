@@ -16,29 +16,6 @@ function initMessages(callback){
 	};
 }
 
-/* ===============Data format 0.3==================
- * ids	List [id]
- * us:id Item	{
- * 		id:	url||random
- * 		name:	String(stylish-description)
- * 		url:	String		// Homepage
- * 		metaUrl:	String	// for update checking
- * 		updateUrl:	String	// for update
- * 		updated:	Int
- * 		enabled:	Boolean
- * 		deprefix:	List	['-moz-','-webkit-']
- * 		data:	List	[
- * 					{
- * 					name:	String
- * 					domains:	List	[...]
- * 					regexps:	List	[...]
- * 					urlPrefixes:	List	[...]
- * 					urls:		List	[...]
- * 					code:		String
- * 					}
- * 				]
- * 		}
- */
 /* ===============Data format 0.4==================
  * Database: Stylish
  * metas: {
@@ -80,7 +57,7 @@ function initDatabase(callback){
 }
 function upgradeData(callback){
 	function finish(){
-		setOption('version_storage',0.4);
+		delete settings.version_storage;	// avoid import and export
 		if(!version) opera.extension.tabs.getAll().forEach(function(i){
 			if(/^http:\/\/userstyles\.org\/styles\//.test(i.url)) i.refresh();
 		});
@@ -100,11 +77,14 @@ function upgradeData(callback){
 				return;
 			}
 		}
-		if(!k) finish();
+		if(!k) {
+			setOption('version_storage',0.4);
+			finish();
+		}
 	}
 	var version=getOption('version_storage',0),i=0;
 	if(version<0.4) upgradeItem();
-	else if(callback) callback();
+	else finish();
 }
 function getMeta(o){
 	return {
