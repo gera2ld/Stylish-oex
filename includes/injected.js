@@ -48,8 +48,14 @@ function showMessage(data){
 
 // CSS applying
 function loadStyle(data) {
-	if(data.styles) for(var i in data.styles)
-		if(typeof data.styles[i]=='string') styles[i]=data.styles[i]; else delete styles[i];
+	var i,c;
+	if(data.styles) for(i in data.styles) {
+		c=data.styles[i];
+		if(c==null) delete styles[i];		// deleted
+		else if(c==false) {
+			if(i in styles) styles[i]='';		// disabled
+		} else if(typeof c=='string') styles[i]=c;
+	}
 	if(data.isApplied) {
 		if(!css) {
 			css=document.createElement('style');
@@ -57,7 +63,7 @@ function loadStyle(data) {
 			document.documentElement.appendChild(css);
 		}
 		if(styles) {
-			var i,c=[];
+			c=[];
 			for(i in styles) c.push(styles[i]);
 			css.innerHTML=c.join('');
 		}

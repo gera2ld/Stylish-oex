@@ -142,7 +142,7 @@ function refreshAll(id,o){
 				i=testURL(t.url,i);
 				if(i!=null) c.push(i);
 			});
-			if(c.length) d[id]=c.join('\n');
+			d[id]=c.length?(metas[id].enabled?c.join('\n'):''):null;
 			t.postMessage({topic:'LoadedStyle',data:{isApplied:settings.isApplied,styles:d}});
 		}
 	});
@@ -158,7 +158,10 @@ function enableStyle(id,v,callback){
 					var d=[];
 					if(r.rows.length) for(i=0;i<r.rows.length;i++) d.push(getSection(r.rows.item(i)));
 					refreshAll(id,d);
-				}); else refreshAll(id,[]);
+				}); else {
+					var d=[];d[id]=false;
+					opera.extension.broadcastMessage({topic:'LoadedStyle',data:{isApplied:settings.isApplied,styles:d}});
+				}
 				if(callback) callback();
 			}
 		},dbError);
