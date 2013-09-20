@@ -140,9 +140,9 @@ function refreshAll(id,o){
 			var c=[],d={};
 			o.forEach(function(i){
 				i=testURL(t.url,i);
-				if(i) c.push(i);
+				if(i!=null) c.push(i);
 			});
-			d[id]=c.join('\n');
+			if(c.length) d[id]=c.join('\n');
 			t.postMessage({topic:'LoadedStyle',data:{isApplied:settings.isApplied,styles:d}});
 		}
 	});

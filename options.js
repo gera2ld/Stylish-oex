@@ -206,7 +206,7 @@ X.close=$('bClose').onclick=closeDialog;
 // Style Editor
 var M=$('editor'),S=$('mSection'),I=$('mName'),T,
     rD=$('mDomain'),rR=$('mRegexp'),rP=$('mUrlPrefix'),rU=$('mUrl'),
-    dM=$('mDeMoz'),dW=$('mDeWebkit'),eS=$('mSave'),eSC=$('mSaveClose');
+    /*dM=$('mDeMoz'),dW=$('mDeWebkit'),*/eS=$('mSave'),eSC=$('mSaveClose');
 function edit(o){
 	switchTo(M);M.css=o;M.data=o.data;
 	S.innerHTML='';S.cur=0;S.dirty=false;
@@ -243,8 +243,8 @@ function mSave(){
 		M.css.name=I.value;
 		mSection();
 		var d=M.css.deprefix=[];
-		if(dM.checked) d.push('-moz-');
-		if(dW.checked) d.push('-webkit-');
+		//if(dM.checked) d.push('-moz-');
+		//if(dW.checked) d.push('-webkit-');
 		eS.disabled=eSC.disabled=true;
 		return true;
 	} else return false;
