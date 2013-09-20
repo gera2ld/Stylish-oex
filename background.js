@@ -492,12 +492,12 @@ function checkUpdateAll(){
 }
 
 function getOption(k,def){
-	var v=widget.preferences.getItem(k);
+	var v=widget.preferences.getItem(k)||'';
 	try{
 		v=JSON.parse(v);
 	}catch(e){
 		v=def;
-		if(v!=undefined) setOption(k,v);
+		if(v!=undefined) return setOption(k,v);
 	}
 	settings[k]=v;
 	return v;
