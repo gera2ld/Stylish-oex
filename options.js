@@ -118,7 +118,7 @@ A.close=$('aClose').onclick=closeDialog;
 function impo(b){
 	function finish(){
 		if(!--count) {
-			alert(_('msgImported',n));
+			alert(_('msgImported',[n]));
 			location.reload();
 		}
 	}
@@ -290,7 +290,7 @@ function addSection(){
 }
 function renameSection(t){
 	if(!t) return;
-	var o=prompt(_('msgRename',t.innerText));
+	var o=prompt(_('msgRename',[t.innerText]));
 	if(o!=null) {
 		M.data[S.cur].name=o;
 		t.innerText=o||S.cur+1;
