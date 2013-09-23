@@ -156,6 +156,7 @@ function xLoad() {
 	});
 }
 xF.onchange=function(){bg.setOption('firefoxCSS',this.checked);};
+xF.parentNode.title=_('hintFirefoxCSS');
 xL.onclick=function(e){
 	var t=e.target;
 	if(t.parentNode!=this) return;

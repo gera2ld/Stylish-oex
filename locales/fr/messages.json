@@ -188,7 +188,7 @@
 		"description": "Option to export data as Firefox CSS files."
 	}, 
 	"hintFirefoxCSS": {
-		"message": "<a href=# title=\"Export to .user.css files, of which the syntax is only supported by Firefox.\">(?)</a>", 
+		"message": "Export to .user.css files, of which the syntax is only supported by Firefox.", 
 		"description": "Hint for option of FirefoxCSS."
 	}, 
 	"buttonAllNone": {

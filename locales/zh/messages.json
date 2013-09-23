@@ -188,7 +188,7 @@
 		"description": "Option to export data as Firefox CSS files."
 	}, 
 	"hintFirefoxCSS": {
-		"message": "<a href=# title=\"导出为.user.css文件，其语法仅被Firefox支持。\">(?)</a>", 
+		"message": "导出为.user.css文件，其语法仅被Firefox支持。", 
 		"description": "Hint for option of FirefoxCSS."
 	}, 
 	"buttonAllNone": {
