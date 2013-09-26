@@ -64,7 +64,7 @@ L.onclick=function(e){
 			break;
 	}
 };
-$('bNew').onclick=function(){var d=bg.newStyle();addItem(d);};
+$('bNew').onclick=function(){edit(bg.newStyle());};
 $('bUpdate').onclick=bg.checkUpdateAll;
 var panel=N;
 function switchTo(D){
@@ -246,9 +246,12 @@ function mSave(){
 		var d=M.css.deprefix=[];
 		//if(dM.checked) d.push('-moz-');
 		//if(dW.checked) d.push('-webkit-');
+		var r={status:M.css.id?0:1};
+		bg.saveStyle(M.css,function(){
+			r.id=M.css.id;bg.updateItem(r);
+		});
 		eS.disabled=eSC.disabled=true;
-		return true;
-	} else return false;
+	}
 }
 function mShow(){
 	var c=S.childNodes[S.cur];S.dirty=true;
@@ -313,13 +316,8 @@ $('mDel').onclick=function(){
 $('mRen').onclick=function(){
 	renameSection(S.childNodes[S.cur]);
 };
-eS.onclick=function(){
-	if(mSave()) bg.saveStyle(M.css);
-};
-eSC.onclick=function(){
-	if(mSave()) {M.css.data=M.data;bg.saveStyle(M.css);}
-	mClose();
-};
+eS.onclick=mSave;
+eSC.onclick=function(){mSave();mClose();};
 M.close=$('mClose').onclick=function(){if(confirmCancel(!eS.disabled)) mClose();};
 function ruleFocus(e){e.target.parentNode.style.width='50%';}
 function ruleBlur(e){e.target.parentNode.style.width='';}
