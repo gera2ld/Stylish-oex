@@ -7,18 +7,12 @@ function getName(n){
 }
 
 // Main options
-function loadName(d,n){
-	var a=d.firstChild;
-	if(n.url) a.href=n.url;
-	a.title=n.name;
-	a.innerHTML=getName(n);
-}
 function modifyItem(d,r){
 	if(r) {
 		if(r.message) d.querySelector('.message').innerHTML=r.message;
-		with(d.querySelector('.update'))
-			if(r.hideUpdate) classList.add('hide');
-			else classList.remove('hide');
+		var u=d.querySelector('.update');
+		if(r.hideUpdate) u.classList.add('hide');
+		else u.classList.remove('hide');
 	}
 }
 function loadItem(n,r){
@@ -33,8 +27,11 @@ function loadItem(n,r){
 		+'<button data=remove>'+_('buttonRemove')+'</button>'
 	+'</div>';
 	d.className=n.enabled?'':'disabled';
-	loadName(d,n);
-	modifyItem(d,r);
+	var a=d.firstChild;
+	if(n.url) a.href=n.url;
+	a.title=n.name;
+	a.innerHTML=getName(n);
+	setTimeout(function(){modifyItem(d,r);},0);
 }
 function addItem(o){
 	var d=divs[o.id]=document.createElement('div');
@@ -246,10 +243,7 @@ function mSave(){
 		var d=M.css.deprefix=[];
 		//if(dM.checked) d.push('-moz-');
 		//if(dW.checked) d.push('-webkit-');
-		var r={status:M.css.id?0:1};
-		bg.saveStyle(M.css,function(){
-			r.id=M.css.id;bg.updateItem(r);
-		});
+		bg.saveStyle(M.css,{status:M.css.id?0:1});
 		eS.disabled=eSC.disabled=true;
 	}
 }
@@ -265,11 +259,7 @@ function mShow(){
 	} else T.setValueAndFocus(rD.value=rR.value=rP.value=rU.value='');
 	T.clearHistory();S.dirty=false;
 }
-function mClose(){
-	switchTo(N);
-	loadName(divs[M.css.id],M.css);
-	M.css=null;
-}
+function mClose(){switchTo(N);M.css=null;}
 function bindChange(e,f){e.forEach(function(i){i.onchange=f;});}
 M.markDirty=function(){eS.disabled=eSC.disabled=false;};
 S.markDirty=function(){if(S.dirty) return;S.dirty=true;M.markDirty();};

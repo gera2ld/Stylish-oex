@@ -72,7 +72,7 @@ function upgradeData(callback){
 				o=JSON.parse(v);
 				if(/^https?:/.test(o.id)&&!o.url) o.url=o.id;
 				delete o.id;
-				saveStyle(o,upgradeItem);
+				saveStyle(o,null,upgradeItem);
 				return;
 			}
 		}
@@ -158,7 +158,7 @@ function enableStyle(id,v,callback){
 					if(r.rows.length) for(i=0;i<r.rows.length;i++) d.push(getSection(r.rows.item(i)));
 					refreshAll(id,d);
 				}); else {
-					var d=[];d[id]=false;
+					var d={};d[id]=false;
 					opera.extension.broadcastMessage({topic:'LoadedStyle',data:{isApplied:settings.isApplied,styles:d}});
 				}
 				if(callback) callback();
@@ -166,12 +166,13 @@ function enableStyle(id,v,callback){
 		},dbError);
 	});
 }
-function saveStyle(o,callback){
+function saveStyle(o,r,callback){
 	function finish(){
 		if(o.data) {
 			refreshAll(o.id,o.data);
 			delete o.data;
 		}
+		if(r) {r.id=o.id;updateItem(r);}
 		if(callback) callback(o);
 	}
 	db.transaction(function(t){
@@ -358,9 +359,7 @@ function parseFirefoxCSS(e,d,callback){
 		if(!c) {c=newStyle(d);r.status=1;}
 		else for(i in d) c[i]=d[i];
 		c.data=data;
-		saveStyle(c,function(){
-			r.id=c.id;updateItem(r);finish();
-		});
+		saveStyle(c,r,finish);
 	} else {
 		r.status=-1;
 		r.message=_('msgErrorParsing');
@@ -401,9 +400,7 @@ function parseCSS(e,data,callback){
 		} else c.updated=data.updated;
 		c.data=d;
 		c.updateUrl=j.updateUrl;
-		saveStyle(c,function(){
-			r.id=c.id;updateItem(r);finish();
-		});
+		saveStyle(c,r,finish);
 	} else finish();
 }
 function parseJSON(e,data,callback){
@@ -429,9 +426,7 @@ function parseJSON(e,data,callback){
 				code:i.code||'',
 			});
 		});
-		saveStyle(c,function(){
-			r.id=c.id;updateItem(r);finish();
-		});
+		saveStyle(c,r,finish);
 	}catch(e){
 		opera.postError(e);
 		r.status=-1;
@@ -526,6 +521,7 @@ function updateItem(r){	// update loaded options pages
 			i++;
 		}catch(e){
 			_updateItem.splice(i,1);
+			opera.postError(e);
 		}
 }
 function initIcon(){
