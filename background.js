@@ -91,7 +91,7 @@ function getMeta(o){
 		name:o.name,
 		url:o.url,
 		metaUrl:o.metaUrl,
-		updateURL:o.updateURL,
+		updateUrl:o.updateUrl,
 		updated:o.updated,
 		enabled:o.enabled,
 	};
@@ -308,7 +308,7 @@ function fetchURL(url, cb){
 }
 function checkStyle(e,d){
 	db.readTransaction(function(t){
-		t.executeSql('SELECT id,updated FROM metas WHERE url=?',[d],function(t,r){
+		t.executeSql('SELECT * FROM metas WHERE url=?',[d],function(t,r){
 			var o=null;
 			if(r.rows.length) o=getMeta(r.rows.item(0));
 			e.source.postMessage({topic:'CheckedStyle',data:o});
@@ -453,27 +453,23 @@ function checkUpdateO(o){
 	if(_update[o.id]) return;_update[o.id]=1;
 	function finish(){delete _update[o.id];}
 	var r={id:o.id,hideUpdate:1,status:2};
-	function update(){
-		if(o.updateUrl) {
-			r.message=_('msgUpdating');
-			fetchURL(o.updateUrl,function(){
-				parseCSS(null,{status:this.status,id:c.id,updated:d,code:this.responseText});
-			});
-		} else r.message='<span class=new>'+_('msgNewVersion')+'</span>';
-		updateItem(r);finish();
-	}
 	if(o.metaUrl) {
 		r.message=_('msgCheckingForUpdate');updateItem(r);
 		fetchURL(o.metaUrl,function(){
 			r.message=_('msgErrorFetchingUpdateInfo');
+			delete r.hideUpdate;
 			if(this.status==200) try{
 				d=getTime(JSON.parse(this.responseText));
 				if(!o.updated||o.updated<d) {
-					if(o.updateUrl) return update();
-					r.message=_('msgNoUpdate');
+					if(o.updateUrl) {
+						r.message=_('msgUpdating');
+						r.hideUpdate=1;
+						fetchURL(o.updateUrl,function(){
+							parseCSS(null,{status:this.status,id:c.id,updated:d,code:this.responseText});
+						});
+					} else r.message='<span class=new>'+_('msgNewVersion')+'</span>';
 				} else r.message=_('msgNoUpdate');
 			} catch(e) {opera.postError(e);}
-			delete r.hideUpdate;
 			updateItem(r);finish();
 		});
 	} else finish();
