@@ -210,11 +210,12 @@ function edit(o){
 	S.innerHTML='';S.cur=0;S.dirty=false;
 	eS.disabled=eSC.disabled=true;
 	I.value=o.name;
-	if(M.data.length) for(var i=0;i<M.data.length;i++) mAddItem(M.data[i].name);
-	else addSection();
+	if(M.data.length) {
+		for(var i=0;i<M.data.length;i++) mAddItem(M.data[i].name);
+		mShow();
+	} else addSection();
 	//dM.checked=M.css.deprefix.indexOf('-moz-')>=0;
 	//dW.checked=M.css.deprefix.indexOf('-webkit-')>=0;
-	mShow();
 }
 function mAddItem(n){
 	var d=document.createElement('div');
