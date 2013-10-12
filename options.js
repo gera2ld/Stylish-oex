@@ -27,11 +27,13 @@ function loadItem(n,r){
 		+'<button data=remove>'+_('buttonRemove')+'</button>'
 	+'</div>';
 	d.className=n.enabled?'':'disabled';
-	var a=d.firstChild;
-	if(n.url) a.href=n.url;
-	a.title=n.name;
-	a.innerHTML=getName(n);
-	setTimeout(function(){modifyItem(d,r);},0);
+	setTimeout(function(){
+		var a=d.firstChild;
+		if(n.url) a.href=n.url;
+		a.title=n.name;
+		a.innerHTML=getName(n);
+		modifyItem(d,r);
+	},0);
 }
 function addItem(o){
 	var d=divs[o.id]=document.createElement('div');
