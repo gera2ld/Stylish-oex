@@ -35,14 +35,6 @@
 		"message": "Style installed.", 
 		"description": "Message shown when a style is installed."
 	}, 
-	"msgUpdating": {
-		"message": "Updating...", 
-		"description": "Message shown when a new version of style is being fetched."
-	}, 
-	"msgNewVersion": {
-		"message": "New version found.", 
-		"description": "Message shown when a new version of style is found by metaUrl, but no updateUrl is provided."
-	}, 
 	"msgCheckingForUpdate": {
 		"message": "Checking for updates...", 
 		"description": "Message shown when a style is being checked for updates."
@@ -50,6 +42,14 @@
 	"msgErrorFetchingUpdateInfo": {
 		"message": "Failed fetching update information.", 
 		"description": "Message shown when Stylish fails fetching version data of the style."
+	}, 
+	"msgUpdating": {
+		"message": "Updating...", 
+		"description": "Message shown when a new version of style is being fetched."
+	}, 
+	"msgNewVersion": {
+		"message": "New version found.", 
+		"description": "Message shown when a new version of style is found by metaUrl, but no updateUrl is provided."
 	}, 
 	"msgNoUpdate": {
 		"message": "No update found.", 
@@ -187,10 +187,6 @@
 		"message": "Export to Firefox CSS files", 
 		"description": "Option to export data as Firefox CSS files."
 	}, 
-	"hintFirefoxCSS": {
-		"message": "Export to .user.css files, of which the syntax is only supported by Firefox.", 
-		"description": "Hint for option of FirefoxCSS."
-	}, 
 	"buttonAllNone": {
 		"message": "All/None", 
 		"description": "Button to select all styles or none."
@@ -255,6 +251,10 @@
 		"message": "Export", 
 		"description": "Button to confirm export."
 	}, 
+	"hintFirefoxCSS": {
+		"message": "Export to .user.css files, of which the syntax is only supported by Firefox.", 
+		"description": "Hint for option of FirefoxCSS."
+	}, 
 	"buttonExporting": {
 		"message": "Exporting...", 
 		"description": "Message shown when data export is in progress."
@@ -262,5 +262,21 @@
 	"msgRename": {
 		"message": "Rename Section \"$1\" to:", 
 		"description": "Message shown when a section is going to be renamed."
+	}, 
+	"labelSearch": {
+		"message": "Search for: ", 
+		"description": "Label for search input in search box."
+	}, 
+	"labelReplace": {
+		"message": "Replace with: ", 
+		"description": "Label for replace input in search box."
+	}, 
+	"buttonReplace": {
+		"message": "Replace", 
+		"description": "Button to replace the current match."
+	}, 
+	"buttonReplaceAll": {
+		"message": "All", 
+		"description": "Button to replace all matches."
 	}
 }

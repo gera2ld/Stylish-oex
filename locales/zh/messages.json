@@ -35,14 +35,6 @@
 		"message": "样式已安装。", 
 		"description": "Message shown when a style is installed."
 	}, 
-	"msgUpdating": {
-		"message": "正在更新...", 
-		"description": "Message shown when a new version of style is being fetched."
-	}, 
-	"msgNewVersion": {
-		"message": "发现新版本。", 
-		"description": "Message shown when a new version of style is found by metaUrl, but no updateUrl is provided."
-	}, 
 	"msgCheckingForUpdate": {
 		"message": "正在检查更新...", 
 		"description": "Message shown when a style is being checked for updates."
@@ -50,6 +42,14 @@
 	"msgErrorFetchingUpdateInfo": {
 		"message": "获取更新信息失败。", 
 		"description": "Message shown when Stylish fails fetching version data of the style."
+	}, 
+	"msgUpdating": {
+		"message": "正在更新...", 
+		"description": "Message shown when a new version of style is being fetched."
+	}, 
+	"msgNewVersion": {
+		"message": "发现新版本。", 
+		"description": "Message shown when a new version of style is found by metaUrl, but no updateUrl is provided."
 	}, 
 	"msgNoUpdate": {
 		"message": "未发现新版本。", 
@@ -187,10 +187,6 @@
 		"message": "导出为Firefox的CSS文件", 
 		"description": "Option to export data as Firefox CSS files."
 	}, 
-	"hintFirefoxCSS": {
-		"message": "导出为.user.css文件，其语法仅被Firefox支持。", 
-		"description": "Hint for option of FirefoxCSS."
-	}, 
 	"buttonAllNone": {
 		"message": "全选/不选", 
 		"description": "Button to select all styles or none."
@@ -255,6 +251,10 @@
 		"message": "导出", 
 		"description": "Button to confirm export."
 	}, 
+	"hintFirefoxCSS": {
+		"message": "导出为.user.css文件，其语法仅被Firefox支持。", 
+		"description": "Hint for option of FirefoxCSS."
+	}, 
 	"buttonExporting": {
 		"message": "正在导出...", 
 		"description": "Message shown when data export is in progress."
@@ -262,5 +262,21 @@
 	"msgRename": {
 		"message": "重命名分节“$1”为：", 
 		"description": "Message shown when a section is going to be renamed."
+	}, 
+	"labelSearch": {
+		"message": "查找：", 
+		"description": "Label for search input in search box."
+	}, 
+	"labelReplace": {
+		"message": "替换：", 
+		"description": "Label for replace input in search box."
+	}, 
+	"buttonReplace": {
+		"message": "替换", 
+		"description": "Button to replace the current match."
+	}, 
+	"buttonReplaceAll": {
+		"message": "所有", 
+		"description": "Button to replace all matches."
 	}
 }

@@ -35,14 +35,6 @@
 		"message": "Style installiert.", 
 		"description": "Message shown when a style is installed."
 	}, 
-	"msgUpdating": {
-		"message": "Aktualisiere...", 
-		"description": "Message shown when a new version of style is being fetched."
-	}, 
-	"msgNewVersion": {
-		"message": "Neue Version gefunden.", 
-		"description": "Message shown when a new version of style is found by metaUrl, but no updateUrl is provided."
-	}, 
 	"msgCheckingForUpdate": {
 		"message": "Prüfe auf Updates...", 
 		"description": "Message shown when a style is being checked for updates."
@@ -50,6 +42,14 @@
 	"msgErrorFetchingUpdateInfo": {
 		"message": "Laden von Update-Informationen fehlgeschlagen", 
 		"description": "Message shown when Stylish fails fetching version data of the style."
+	}, 
+	"msgUpdating": {
+		"message": "Aktualisiere...", 
+		"description": "Message shown when a new version of style is being fetched."
+	}, 
+	"msgNewVersion": {
+		"message": "Neue Version gefunden.", 
+		"description": "Message shown when a new version of style is found by metaUrl, but no updateUrl is provided."
 	}, 
 	"msgNoUpdate": {
 		"message": "Kein Update gefunden.", 
@@ -187,10 +187,6 @@
 		"message": "Zu Firefox CSS-Dateien exportieren", 
 		"description": "Option to export data as Firefox CSS files."
 	}, 
-	"hintFirefoxCSS": {
-		"message": "Exportieren nach .user.css Dateien, von denen das Syntax nur von Firefox unterstützt wird.", 
-		"description": "Hint for option of FirefoxCSS."
-	}, 
 	"buttonAllNone": {
 		"message": "Alle/Keine", 
 		"description": "Button to select all styles or none."
@@ -255,6 +251,10 @@
 		"message": "Exportieren", 
 		"description": "Button to confirm export."
 	}, 
+	"hintFirefoxCSS": {
+		"message": "Exportieren nach .user.css Dateien, von denen das Syntax nur von Firefox unterstützt wird.", 
+		"description": "Hint for option of FirefoxCSS."
+	}, 
 	"buttonExporting": {
 		"message": "Exportiere...", 
 		"description": "Message shown when data export is in progress."
@@ -262,5 +262,21 @@
 	"msgRename": {
 		"message": "Abschnitt \"$1\" umbenennen zu:", 
 		"description": "Message shown when a section is going to be renamed."
+	}, 
+	"labelSearch": {
+		"message": "Search for: ", 
+		"description": "Label for search input in search box."
+	}, 
+	"labelReplace": {
+		"message": "Replace with: ", 
+		"description": "Label for replace input in search box."
+	}, 
+	"buttonReplace": {
+		"message": "Replace", 
+		"description": "Button to replace the current match."
+	}, 
+	"buttonReplaceAll": {
+		"message": "All", 
+		"description": "Button to replace all matches."
 	}
 }

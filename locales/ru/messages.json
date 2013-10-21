@@ -35,14 +35,6 @@
 		"message": "Стиль установлен.", 
 		"description": "Message shown when a style is installed."
 	}, 
-	"msgUpdating": {
-		"message": "Обновление...", 
-		"description": "Message shown when a new version of style is being fetched."
-	}, 
-	"msgNewVersion": {
-		"message": "Найдена новая версия.", 
-		"description": "Message shown when a new version of style is found by metaUrl, but no updateUrl is provided."
-	}, 
 	"msgCheckingForUpdate": {
 		"message": "Поиск обновлений...", 
 		"description": "Message shown when a style is being checked for updates."
@@ -50,6 +42,14 @@
 	"msgErrorFetchingUpdateInfo": {
 		"message": "Не удалось получить сведения об обновлениях.", 
 		"description": "Message shown when Stylish fails fetching version data of the style."
+	}, 
+	"msgUpdating": {
+		"message": "Обновление...", 
+		"description": "Message shown when a new version of style is being fetched."
+	}, 
+	"msgNewVersion": {
+		"message": "Найдена новая версия.", 
+		"description": "Message shown when a new version of style is found by metaUrl, but no updateUrl is provided."
 	}, 
 	"msgNoUpdate": {
 		"message": "Обновление не найдено.", 
@@ -187,10 +187,6 @@
 		"message": "Экспорт в Firefox CSS файлы", 
 		"description": "Option to export data as Firefox CSS files."
 	}, 
-	"hintFirefoxCSS": {
-		"message": "Export to .user.css files, of which the syntax is only supported by Firefox.", 
-		"description": "Hint for option of FirefoxCSS."
-	}, 
 	"buttonAllNone": {
 		"message": "Все/Ничего", 
 		"description": "Button to select all styles or none."
@@ -255,6 +251,10 @@
 		"message": "Экспорт", 
 		"description": "Button to confirm export."
 	}, 
+	"hintFirefoxCSS": {
+		"message": "Export to .user.css files, of which the syntax is only supported by Firefox.", 
+		"description": "Hint for option of FirefoxCSS."
+	}, 
 	"buttonExporting": {
 		"message": "Экспорт...", 
 		"description": "Message shown when data export is in progress."
@@ -262,5 +262,21 @@
 	"msgRename": {
 		"message": "Переименовать раздел \"$1\" на:", 
 		"description": "Message shown when a section is going to be renamed."
+	}, 
+	"labelSearch": {
+		"message": "Search for: ", 
+		"description": "Label for search input in search box."
+	}, 
+	"labelReplace": {
+		"message": "Replace with: ", 
+		"description": "Label for replace input in search box."
+	}, 
+	"buttonReplace": {
+		"message": "Replace", 
+		"description": "Button to replace the current match."
+	}, 
+	"buttonReplaceAll": {
+		"message": "All", 
+		"description": "Button to replace all matches."
 	}
 }
