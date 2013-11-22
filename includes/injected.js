@@ -90,20 +90,6 @@ window.addEventListener('DOMContentLoaded',function(){
 
 // Stylish fix
 var data=null,ping=null;
-function getTime(r){
-	var d=new Date(),z,m=r.updated.match(/(\d+)\/(\d+)\/(\d+)\s+(\d+):(\d+):(\d+)\s+(\+|-)(\d+)/);
-	d.setUTCFullYear(parseInt(m[1],10));
-	d.setUTCMonth(parseInt(m[2],10)-1);
-	d.setUTCDate(parseInt(m[3],10));
-	d.setUTCHours(parseInt(m[4],10));
-	d.setUTCMinutes(parseInt(m[5],10));
-	d.setUTCSeconds(parseInt(m[6],10));
-	d.setUTCMilliseconds(0);
-	d=d.getTime()/1000;
-	z=parseInt(m[8].substr(0,2),10)*60+parseInt(m[8].substr(2),10);z*=60;
-	if(m[7]!='-') z=-z;d+=z;
-	return d;
-}
 function getData(k){
 	var s=document.querySelector('link[rel='+k+']');
 	if(s) return s.getAttribute('href');
@@ -116,7 +102,7 @@ function fixOpera(){
 	req.open('GET', metaUrl, true);
 	req.onloadend=function(){
 		if(this.status==200) try{
-			data.updated=getTime(JSON.parse(req.responseText));
+			data.updated=new Date(JSON.parse(req.responseText).updated).getTime();
 		} catch(e) {}
 		opera.extension.postMessage({topic:'CheckStyle',data:url});
 	};

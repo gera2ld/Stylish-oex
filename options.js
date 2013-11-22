@@ -1,7 +1,7 @@
 var $=document.getElementById.bind(document),
 		N=$('main'),L=$('sList'),O=$('overlay'),
 		bg=opera.extension.bgProcess,_=bg._,divs={};
-function getDate(t){var d=new Date();d.setTime(t*1000);return d.toLocaleDateString();}
+function getDate(t){var d=new Date();d.setTime(t);return d.toLocaleDateString();}
 function getName(n){
 	return n.name?n.name.replace(/&/g,'&amp;').replace(/</g,'&lt;'):'<em>'+_('labelNoName')+'</em>';
 }

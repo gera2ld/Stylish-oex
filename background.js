@@ -62,7 +62,7 @@ function upgradeData(callback){
 		});
 		if(callback) callback();
 	}
-	function upgradeItem(){
+	function upgrade04(){
 		var k,v;
 		while(k=widget.preferences.key(i)) {
 			if(k in settings) {i++;continue;}
@@ -76,14 +76,33 @@ function upgradeData(callback){
 				return;
 			}
 		}
-		if(!k) {
-			setOption('version_storage',0.4);
-			finish();
-		}
+		if(!k) upgrade05();
+	}
+	function upgrade05(){
+		db.transaction(function(t){
+			t.executeSql('SELECT * FROM metas',[],function(t,r){
+				function update(t,r){
+					var i=d.shift();
+					if(!i) {
+						setOption('version_storage',0.5);
+						finish();
+					} else
+						t.executeSql('UPDATE metas SET updated=? WHERE id=?',[i[1]*1000,i[0]],update,dbError);
+				}
+				var i,o,d=[];
+				for(i=0;i<r.rows.length;i++) {
+					o=r.rows.item(i);
+					d.push([o.id,o.updated]);
+				}
+				update(t,r);
+			});
+		});
 	}
 	var version=getOption('version_storage',0),i=0;
-	if(version<0.4) upgradeItem();
-	else finish();
+	if(version<0.5) {
+		if(version<0.4) upgrade04();
+		else upgrade05();
+	} else finish();
 }
 function getMeta(o){
 	return {
@@ -435,20 +454,6 @@ function parseJSON(e,data,callback){
 	}
 }
 var _update={};
-function getTime(r){
-	var d=new Date(),z,m=r.updated.match(/(\d+)\/(\d+)\/(\d+)\s+(\d+):(\d+):(\d+)\s+(\+|-)(\d+)/);
-	d.setUTCFullYear(parseInt(m[1],10));
-	d.setUTCMonth(parseInt(m[2],10)-1);
-	d.setUTCDate(parseInt(m[3],10));
-	d.setUTCHours(parseInt(m[4],10));
-	d.setUTCMinutes(parseInt(m[5],10));
-	d.setUTCSeconds(parseInt(m[6],10));
-	d.setUTCMilliseconds(0);
-	d=d.getTime()/1000;
-	z=parseInt(m[8].substr(0,2),10)*60+parseInt(m[8].substr(2),10);z*=60;
-	if(m[7]!='-') z=-z;d+=z;
-	return d;
-}
 function checkUpdateO(o){
 	if(_update[o.id]) return;_update[o.id]=1;
 	function finish(){delete _update[o.id];}
@@ -459,7 +464,7 @@ function checkUpdateO(o){
 			r.message=_('msgErrorFetchingUpdateInfo');
 			delete r.hideUpdate;
 			if(this.status==200) try{
-				d=getTime(JSON.parse(this.responseText));
+				d=new Date(JSON.parse(this.responseText).updated).getTime();
 				if(!o.updated||o.updated<d) {
 					if(o.updateUrl) {
 						r.message=_('msgUpdating');
