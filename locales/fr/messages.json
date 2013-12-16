@@ -1,282 +1,278 @@
 {
 	"extName": {
-		"message": "Stylish", 
+		"message": "Stylish",
 		"description": "Name of this extension."
-	}, 
+	},
 	"extDescription": {
-		"message": "Stylish for Opera allows custom styles for different URLs.", 
+		"message": "Stylish for Opera allows custom styles for different URLs.",
 		"description": "Description for this extension."
-	}, 
+	},
 	"extTranslator": {
-		"message": "10ours", 
+		"message": "10ours",
 		"description": "Information of the translator."
-	}, 
+	},
 	"labelNewStyle": {
-		"message": "Nouveau Style", 
+		"message": "Nouveau Style",
 		"description": "Default name of a new style."
-	}, 
+	},
 	"msgConfirm": {
-		"message": "Voulez-vous installer ce style ?", 
+		"message": "Voulez-vous installer ce style ?",
 		"description": "Message shown before installing a style."
-	}, 
+	},
 	"msgUpdated": {
-		"message": "Style mis &agrave; jour.", 
+		"message": "Style mis &agrave; jour.",
 		"description": "Message shown when a style is updated/reinstalled."
-	}, 
+	},
 	"msgErrorParsing": {
-		"message": "Erreur de lecture du script !", 
+		"message": "Erreur de lecture du script !",
 		"description": "Message shown when CSS code is invalid."
-	}, 
+	},
 	"msgErrorFetchingStyle": {
-		"message": "Erreur de lecture du script !", 
+		"message": "Erreur de lecture du script !",
 		"description": "Message shown when Stylish fails fetching a new version of the style."
-	}, 
+	},
 	"msgInstalled": {
-		"message": "Style installed.", 
+		"message": "Style installed.",
 		"description": "Message shown when a style is installed."
-	}, 
+	},
 	"msgCheckingForUpdate": {
-		"message": "V&eacute;rification des mises &agrave; jour...", 
+		"message": "V&eacute;rification des mises &agrave; jour...",
 		"description": "Message shown when a style is being checked for updates."
-	}, 
+	},
 	"msgErrorFetchingUpdateInfo": {
-		"message": "Impossible de trouver des mises &agrave; jour.", 
+		"message": "Impossible de trouver des mises &agrave; jour.",
 		"description": "Message shown when Stylish fails fetching version data of the style."
-	}, 
+	},
 	"msgUpdating": {
-		"message": "Mise &agrave; jour...", 
+		"message": "Mise &agrave; jour...",
 		"description": "Message shown when a new version of style is being fetched."
-	}, 
+	},
 	"msgNewVersion": {
-		"message": "Nouvelle version disponible.", 
+		"message": "Nouvelle version disponible.",
 		"description": "Message shown when a new version of style is found by metaUrl, but no updateUrl is provided."
-	}, 
+	},
 	"msgNoUpdate": {
-		"message": "Aucune mise &agrave; jour trouv&eacute;e !", 
+		"message": "Aucune mise &agrave; jour trouv&eacute;e !",
 		"description": "Message shown when there is no new version of a style."
-	}, 
+	},
 	"labelNoName": {
-		"message": "Sans Nom", 
+		"message": "Sans Nom",
 		"description": "Text as the name of a style when name is empty."
-	}, 
+	},
 	"menuManageStyles": {
-		"message": "G&eacute;rer les styles", 
+		"message": "G&eacute;rer les styles",
 		"description": "Menu item to manage styles, or to open the options page of the extension."
-	}, 
+	},
 	"menuFindStyles": {
-		"message": "Trouver des styles pour ce site", 
+		"message": "Trouver des styles pour ce site",
 		"description": "Menu item to find styles for a site."
-	}, 
+	},
 	"menuStylesEnabled": {
-		"message": "Styles activ&eacute;s", 
+		"message": "Styles activ&eacute;s",
 		"description": "Menu item showing the status of Stylish, whether enabled."
-	}, 
+	},
 	"menuBack": {
-		"message": "Retour", 
+		"message": "Retour",
 		"description": "Menu item to go back to main menu from alternate stylesheets."
-	}, 
+	},
 	"menuAlterStylesheet": {
-		"message": "Modifier la feuille de style...", 
+		"message": "Modifier la feuille de style...",
 		"description": "Menu item to show alternate stylesheets of the current page."
-	}, 
+	},
 	"labelOptions": {
-		"message": "Options", 
+		"message": "Options",
 		"description": "Options of this extension."
-	}, 
+	},
 	"buttonNew": {
-		"message": "Nouveau", 
+		"message": "Nouveau",
 		"description": "Button to create a new style."
-	}, 
+	},
 	"anchorGetMoreStyles": {
-		"message": "<a href=http://userstyles.org target=_blank>Plus de styles &agrave; partir de userstyles.org</a>", 
+		"message": "<a href=http://userstyles.org target=_blank>Plus de styles &agrave; partir de userstyles.org</a>",
 		"description": "Link to get more styles."
-	}, 
+	},
 	"anchorUpdateAll": {
-		"message": "V&eacute;rifier les mises &agrave; jour pour tous", 
+		"message": "V&eacute;rifier les mises &agrave; jour pour tous",
 		"description": "Check all styles for updates."
-	}, 
+	},
 	"buttonAdvanced": {
-		"message": "Avanc&eacute;", 
+		"message": "Avanc&eacute;",
 		"description": "Button to show the advanced options."
-	}, 
+	},
 	"labelInstalledStyles": {
-		"message": "Styles install&eacute;s", 
+		"message": "Styles install&eacute;s",
 		"description": "Label of the list of installed styles."
-	}, 
+	},
 	"anchorSupportPage": {
-		"message": "<a href=https://github.com/gera2ld/Stylish-oex/wiki>Stylish</a>", 
+		"message": "<a href=https://github.com/gera2ld/Stylish-oex/wiki>Stylish</a>",
 		"description": "Link to the support page of Stylish."
-	}, 
+	},
 	"anchorAuthor": {
-		"message": "Programm&eacute; par <a href=mailto:gera2ld@163.com>Gerald</a> et traduit par 10ours", 
+		"message": "Programm&eacute; par <a href=mailto:gera2ld@163.com>Gerald</a> et traduit par 10ours",
 		"description": "Author shown in the footer of options page, translator information may be added."
-	}, 
+	},
 	"labelStyleEditor": {
-		"message": "Editeur de script", 
+		"message": "Editeur de script",
 		"description": "Shown in the title of the style editing page."
-	}, 
+	},
 	"labelName": {
-		"message": "Nom :", 
+		"message": "Nom :",
 		"description": "Label of style name."
-	}, 
+	},
 	"labelSections": {
-		"message": "Sections :", 
+		"message": "Sections :",
 		"description": "Label of sections."
-	}, 
+	},
 	"buttonNewSection": {
-		"message": "Nouveau", 
+		"message": "Nouveau",
 		"description": "Button to add a section."
-	}, 
+	},
 	"buttonDeleteSection": {
-		"message": "Supprimer", 
+		"message": "Supprimer",
 		"description": "Button to remove a section."
-	}, 
+	},
 	"buttonRenameSection": {
-		"message": "Rename", 
+		"message": "Rename",
 		"description": "Button to rename a section."
-	}, 
+	},
 	"labelRules": {
-		"message": "Rules: <em>(Un par ligne)</em>", 
+		"message": "Rules: <em>(Un par ligne)</em>",
 		"description": "Label of rules."
-	}, 
+	},
 	"labelDomains": {
-		"message": "Domaines", 
+		"message": "Domaines",
 		"description": "Label of domain rules."
-	}, 
+	},
 	"labelRegExps": {
-		"message": "Expressions r&eacute;guli&egrave;res", 
+		"message": "Expressions r&eacute;guli&egrave;res",
 		"description": "Label of regular-expression rules."
-	}, 
+	},
 	"labelUrlPrefixes": {
-		"message": "Pr&eacute;fixes URL", 
+		"message": "Pr&eacute;fixes URL",
 		"description": "Label of UrlPrefix rules."
-	}, 
+	},
 	"labelURLs": {
-		"message": "URLs", 
+		"message": "URLs",
 		"description": "Label of URL rules."
-	}, 
+	},
 	"labelCode": {
-		"message": "Code :", 
+		"message": "Code :",
 		"description": "Label of CSS code."
-	}, 
-	"Remove prefixes while applying:": {
-		"message": "Remove prefixes while applying:", 
-		"description": ""
-	}, 
+	},
 	"buttonSave": {
-		"message": "Enregistrer", 
+		"message": "Enregistrer",
 		"description": "Button to save modifications of a style."
-	}, 
+	},
 	"buttonSaveClose": {
-		"message": "Enregistrer & Fermer", 
+		"message": "Enregistrer & Fermer",
 		"description": "Button to save modifications of a style and then close the editing page."
-	}, 
+	},
 	"buttonClose": {
-		"message": "Fermer", 
+		"message": "Fermer",
 		"description": "Button to close window."
-	}, 
+	},
 	"labelExport": {
-		"message": "Exporter les donn&eacute;es", 
+		"message": "Exporter les donn&eacute;es",
 		"description": "Label shown in the title of export dialog."
-	}, 
+	},
 	"anchorExportOptions": {
-		"message": "Options", 
+		"message": "Options",
 		"description": "Options of export."
-	}, 
+	},
 	"labelFirefoxCSS": {
-		"message": "Export to Firefox CSS files", 
+		"message": "Export to Firefox CSS files",
 		"description": "Option to export data as Firefox CSS files."
-	}, 
+	},
 	"buttonAllNone": {
-		"message": "Toutes/Aucune", 
+		"message": "Toutes/Aucune",
 		"description": "Button to select all styles or none."
-	}, 
+	},
 	"labelAdvanced": {
-		"message": "Avanc&eacute;", 
+		"message": "Avanc&eacute;",
 		"description": "Label shown in the title of advanced dialog."
-	}, 
+	},
 	"labelShowButton": {
-		"message": "Show button on toolbar", 
+		"message": "Show button on toolbar",
 		"description": "Option to show an icon of this extension in the toolbar."
-	}, 
+	},
 	"labelData": {
-		"message": "Donn&eacute;es", 
+		"message": "Donn&eacute;es",
 		"description": "Label of extension data management."
-	}, 
+	},
 	"buttonExportData": {
-		"message": "Exporter en fichier zip", 
+		"message": "Exporter en fichier zip",
 		"description": "Button to open the data export dialog."
-	}, 
+	},
 	"buttonImportData": {
-		"message": "Import from zip file", 
+		"message": "Import from zip file",
 		"description": "Button to choose a file for data import."
-	}, 
+	},
 	"labelLastUpdated": {
-		"message": "Derni&egrave;re mise &agrave; jour : ", 
+		"message": "Derni&egrave;re mise &agrave; jour : ",
 		"description": "Label of last updated timestamp of a style."
-	}, 
+	},
 	"anchorUpdate": {
-		"message": "V&eacute;rifier les mises &agrave; jour", 
+		"message": "V&eacute;rifier les mises &agrave; jour",
 		"description": "Check a style for updates."
-	}, 
+	},
 	"buttonEdit": {
-		"message": "Editer", 
+		"message": "Editer",
 		"description": "Button to edit a style."
-	}, 
+	},
 	"buttonDisable": {
-		"message": "D&eacute;sactiver", 
+		"message": "D&eacute;sactiver",
 		"description": "Button to disable a style."
-	}, 
+	},
 	"buttonEnable": {
-		"message": "Activer", 
+		"message": "Activer",
 		"description": "Button to enable a style."
-	}, 
+	},
 	"buttonRemove": {
-		"message": "Supprimer", 
+		"message": "Supprimer",
 		"description": "Button to remove a style."
-	}, 
+	},
 	"confirmNotSaved": {
-		"message": "Les modifications ne sont pas enregistr&eacute;es !\nOK pour continuer ou annuler pour revenir.", 
+		"message": "Les modifications ne sont pas enregistr&eacute;es !\nOK pour continuer ou annuler pour revenir.",
 		"description": "Confirm message shown when there are unsaved style modifications."
-	}, 
+	},
 	"msgImported": {
-		"message": "$1 item(s) are imported.", 
+		"message": "$1 item(s) are imported.",
 		"description": "Message shown after import. There is an argument referring to the count of styles imported."
-	}, 
+	},
 	"msgErrorZip": {
-		"message": "Error loading zip file.", 
+		"message": "Error loading zip file.",
 		"description": "Message shown when Stylish fails to open the zip file."
-	}, 
+	},
 	"buttonExport": {
-		"message": "Exporter", 
+		"message": "Exporter",
 		"description": "Button to confirm export."
-	}, 
+	},
 	"hintFirefoxCSS": {
-		"message": "Export to .user.css files, of which the syntax is only supported by Firefox.", 
+		"message": "Export to .user.css files, of which the syntax is only supported by Firefox.",
 		"description": "Hint for option of FirefoxCSS."
-	}, 
+	},
 	"buttonExporting": {
-		"message": "Exportation...", 
+		"message": "Exportation...",
 		"description": "Message shown when data export is in progress."
-	}, 
+	},
 	"msgRename": {
-		"message": "Rename Section \"$1\" to:", 
+		"message": "Rename Section \"$1\" to:",
 		"description": "Message shown when a section is going to be renamed."
-	}, 
+	},
 	"labelSearch": {
-		"message": "Search for: ", 
+		"message": "Search for: ",
 		"description": "Label for search input in search box."
-	}, 
+	},
 	"labelReplace": {
-		"message": "Replace with: ", 
+		"message": "Replace with: ",
 		"description": "Label for replace input in search box."
-	}, 
+	},
 	"buttonReplace": {
-		"message": "Replace", 
+		"message": "Replace",
 		"description": "Button to replace the current match."
-	}, 
+	},
 	"buttonReplaceAll": {
-		"message": "All", 
+		"message": "All",
 		"description": "Button to replace all matches."
 	}
 }

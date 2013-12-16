@@ -62,22 +62,6 @@ function upgradeData(callback){
 		});
 		if(callback) callback();
 	}
-	function upgrade04(){
-		var k,v;
-		while(k=widget.preferences.key(i)) {
-			if(k in settings) {i++;continue;}
-			v=widget.preferences.getItem(k);
-			widget.preferences.removeItem(k);
-			if(/^us:/.test(k)) {
-				o=JSON.parse(v);
-				if(/^https?:/.test(o.id)&&!o.url) o.url=o.id;
-				delete o.id;
-				saveStyle(o,null,upgradeItem);
-				return;
-			}
-		}
-		if(!k) upgrade05();
-	}
 	function upgrade05(){
 		db.transaction(function(t){
 			t.executeSql('SELECT * FROM metas',[],function(t,r){
@@ -99,10 +83,8 @@ function upgradeData(callback){
 		});
 	}
 	var version=getOption('version_storage',0),i=0;
-	if(version<0.5) {
-		if(version<0.4) upgrade04();
-		else upgrade05();
-	} else finish();
+	if(version<0.5) upgrade05();
+	else finish();
 }
 function getMeta(o){
 	return {

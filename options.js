@@ -319,8 +319,8 @@ initEditor(function(o){T=o;},{onchange:S.markDirty});
 
 // Load at last
 (function(nodes){
-	for(var i=0;i<nodes.length;i++) nodes[i].innerHTML=_(nodes[i].innerHTML);
-})(document.querySelectorAll('.i18n'));
+	for(var i=0;i<nodes.length;i++) nodes[i].innerHTML=_(nodes[i].getAttribute('data-i18n'));
+})(document.querySelectorAll('*[data-i18n]'));
 L.innerHTML='';
 bg.ids.forEach(function(i){addItem(bg.metas[i]);});
 function updateItem(r){

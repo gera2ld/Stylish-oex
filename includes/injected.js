@@ -95,9 +95,6 @@ function getData(k){
 	if(s) return s.getAttribute('href');
 }
 function fixOpera(){
-	if(!window.fireCustomEvent) return;
-	window.removeEventListener('DOMNodeInserted',fixOpera,false);
-
 	var url=getData('stylish-id-url'),metaUrl=url+'.json',req=new window.XMLHttpRequest();
 	req.open('GET', metaUrl, true);
 	req.onloadend=function(){
@@ -127,11 +124,11 @@ function fixOpera(){
 	document.addEventListener('stylishInstallOpera',install);
 	document.addEventListener('stylishUpdateOpera',update);
 }
-if(/\.user\.css$|\.json$/.test(window.location.href)) (function(){
-	function install(){
+if(/\.user\.css$|\.json$/.test(window.location.href)) {
+	function rawInstall(){
 		if(document&&document.body&&!document.querySelector('title')) opera.extension.postMessage({topic:'InstallStyle'});
 	}
-	if(document.readyState!='complete') window.addEventListener('load',install,false);
-	else install();
-})(); else if(/^http:\/\/userstyles\.org\/styles\//.test(window.location.href))
-	window.addEventListener('DOMNodeInserted',fixOpera,false);
+	if(document.readyState!='complete') window.addEventListener('load',rawInstall,false);
+	else rawInstall();
+} else if(/^http:\/\/userstyles\.org\/styles\//.test(window.location.href))
+	window.addEventListener('DOMContentLoaded',fixOpera,false);
