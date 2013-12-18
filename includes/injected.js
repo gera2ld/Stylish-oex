@@ -1,5 +1,9 @@
-var css=null,styles={};
 // Message
+function fireEvent(t){
+	var e=document.createEvent('Events');
+	e.initEvent(t,false,false);
+	document.dispatchEvent(e);
+}
 opera.extension.addEventListener('message', function(event) {
 	var message=event.data;
 	if(message.topic=='LoadedStyle') loadStyle(message.data);
@@ -13,14 +17,14 @@ opera.extension.addEventListener('message', function(event) {
 	}); else if(message.topic=='AlterStyle') alterStyle(message.data);
 	else if(message.topic=='CheckedStyle') {
 		if(message.data) {
-			if(!message.data.updated||message.data.updated<data.updated) window.fireCustomEvent('styleCanBeUpdatedOpera');
-			else window.fireCustomEvent('styleAlreadyInstalledOpera');
+			if(!message.data.updated||message.data.updated<data.updated) fireEvent('styleCanBeUpdatedOpera');
+			else fireEvent('styleAlreadyInstalledOpera');
 			data.id=message.data.id;
-		} else window.fireCustomEvent('styleCanBeInstalledOpera');
+		} else fireEvent('styleCanBeInstalledOpera');
 	} else if(message.topic=='ParsedCSS') {
-		if(window.fireCustomEvent) {
+		if(fireEvent) {
 			if(message.data.status<0) alert(message.data.message);
-			else window.fireCustomEvent('styleInstalled');
+			else fireEvent('styleInstalled');
 		} else showMessage(message.data.message);
 	} else if(message.topic=='ConfirmInstall') {
 		if(message.data&&confirm(message.data)) {
@@ -49,6 +53,7 @@ function showMessage(data){
 }
 
 // CSS applying
+var css=null,styles={};
 function loadStyle(data) {
 	var i,c;
 	if(data.styles) for(i in data.styles) {
