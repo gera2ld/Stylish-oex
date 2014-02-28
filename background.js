@@ -448,7 +448,7 @@ function checkUpdateO(o){
 			r.message=_('msgErrorFetchingUpdateInfo');
 			delete r.hideUpdate;
 			if(this.status==200) try{
-				d=new Date(JSON.parse(this.responseText).updated).getTime();
+				var d=new Date(JSON.parse(this.responseText).updated).getTime();
 				if(!o.updated||o.updated<d) {
 					if(o.updateUrl) {
 						r.message=_('msgUpdating');
