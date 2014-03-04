@@ -17,7 +17,7 @@ function modifyItem(d,r){
 }
 function loadItem(n,r){
 	var d=divs[n.id];
-	d.innerHTML='<a class="name ellipsis"></a>'
+	d.innerHTML='<a class="name ellipsis">'+getName(n)+'</a>'
 	+'<span class=updated>'+(n.updated?_('labelLastUpdated')+getDate(n.updated):'')+'</span>'
 	+(n.metaUrl?'<a href=# data=update class=update>'+_('anchorUpdate')+'</a> ':'')
 	+'<span class=message></span>'
@@ -31,7 +31,6 @@ function loadItem(n,r){
 		var a=d.firstChild;
 		if(n.url) a.href=n.url;
 		a.title=n.name;
-		a.innerHTML=getName(n);
 		modifyItem(d,r);
 	},0);
 }

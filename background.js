@@ -454,7 +454,7 @@ function checkUpdateO(o){
 						r.message=_('msgUpdating');
 						r.hideUpdate=1;
 						fetchURL(o.updateUrl,function(){
-							parseCSS(null,{status:this.status,id:c.id,updated:d,code:this.responseText});
+							parseCSS(null,{status:this.status,id:o.id,updated:d,code:this.responseText});
 						});
 					} else r.message='<span class=new>'+_('msgNewVersion')+'</span>';
 				} else r.message=_('msgNoUpdate');
