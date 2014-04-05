@@ -79,37 +79,97 @@
 		"message": "Изменить стиль...",
 		"description": "Menu item to show alternate stylesheets of the current page."
 	},
-	"labelOptions": {
-		"message": "Опции",
-		"description": "Options of this extension."
+	"anchorGetMoreStyles": {
+		"message": "<a href=http://userstyles.org target=_blank>Получить больше стилей</a>",
+		"description": "Link to get more styles."
+	},
+	"sideMenuInstalled": {
+		"message": "Установленные стили",
+		"description": "Label of the list of installed styles."
+	},
+	"sideMenuSettings": {
+		"message": "Settings",
+		"description": "Side menu: Settings"
+	},
+	"sideMenuAbout": {
+		"message": "About",
+		"description": "Side menu: About"
 	},
 	"buttonNew": {
 		"message": "Новый",
 		"description": "Button to create a new style."
 	},
-	"anchorGetMoreStyles": {
-		"message": "<a href=http://userstyles.org target=_blank>Получить больше стилей от userstyles.org</a>",
-		"description": "Link to get more styles."
-	},
 	"anchorUpdateAll": {
 		"message": "Проверка всех обновлений",
 		"description": "Check all styles for updates."
 	},
-	"buttonAdvanced": {
-		"message": "Дополнительно",
-		"description": "Button to show the advanced options."
+	"msgLoading": {
+		"message": "Loading...",
+		"description": "Message shown while loading."
 	},
-	"labelInstalledStyles": {
-		"message": "Установленные стили",
-		"description": "Label of the list of installed styles."
+	"labelSettings": {
+		"message": "Settings",
+		"description": "Label shown on the top of settings page"
+	},
+	"labelShowButton": {
+		"message": "Show button on toolbar",
+		"description": "Option to show an icon of this extension in the toolbar."
+	},
+	"labelDataImport": {
+		"message": "Data Import",
+		"description": "Section title of data import."
+	},
+	"buttonImportData": {
+		"message": "Импорт из ZIP-файла",
+		"description": "Button to choose a file for data import."
+	},
+	"labelDataExport": {
+		"message": "Data Export",
+		"description": "Section title of data export."
+	},
+	"labelStylesToExport": {
+		"message": "Styles to export",
+		"description": "Label shown on top of the style list for export."
+	},
+	"labelFirefoxCSS": {
+		"message": "Экспорт в Firefox CSS файлы",
+		"description": "Option to export data as Firefox CSS files."
+	},
+	"buttonAllNone": {
+		"message": "Все/Ничего",
+		"description": "Button to select all styles or none."
+	},
+	"buttonExportData": {
+		"message": "Экспорт в ZIP файл",
+		"description": "Button to open the data export dialog."
+	},
+	"labelAbout": {
+		"message": "About Stylish for Opera",
+		"description": "Label shown on top of the about page."
+	},
+	"labelSupportPage": {
+		"message": "Support page: ",
+		"description": "Label of support page."
 	},
 	"anchorSupportPage": {
 		"message": "<a href=https://github.com/gera2ld/Stylish-oex/wiki>Stylish</a>",
 		"description": "Link to the support page of Stylish."
 	},
+	"labelAuthor": {
+		"message": "Author: ",
+		"description": "Label of author."
+	},
 	"anchorAuthor": {
-		"message": "Дизайн от <a href=mailto:gera2ld@163.com>Gerald</a>",
-		"description": "Author shown in the footer of options page, translator information may be added."
+		"message": "<a href=mailto:gera2ld@163.com>Gerald</a>",
+		"description": "Information of the author."
+	},
+	"labelTranslator": {
+		"message": "Translator: ",
+		"description": "Label of translator."
+	},
+	"anchorTranslator": {
+		"message": "Wald",
+		"description": "Information of the translator."
 	},
 	"labelStyleEditor": {
 		"message": "Редактор стилей",
@@ -171,49 +231,9 @@
 		"message": "Закрыть",
 		"description": "Button to close window."
 	},
-	"labelExport": {
-		"message": "Экспорт данных",
-		"description": "Label shown in the title of export dialog."
-	},
-	"anchorExportOptions": {
-		"message": "Опции",
-		"description": "Options of export."
-	},
-	"labelFirefoxCSS": {
-		"message": "Экспорт в Firefox CSS файлы",
-		"description": "Option to export data as Firefox CSS files."
-	},
-	"buttonAllNone": {
-		"message": "Все/Ничего",
-		"description": "Button to select all styles or none."
-	},
-	"labelAdvanced": {
-		"message": "Дополнительно",
-		"description": "Label shown in the title of advanced dialog."
-	},
-	"labelShowButton": {
-		"message": "Show button on toolbar",
-		"description": "Option to show an icon of this extension in the toolbar."
-	},
-	"labelData": {
-		"message": "Данные",
-		"description": "Label of extension data management."
-	},
-	"buttonExportData": {
-		"message": "Экспорт в ZIP файл",
-		"description": "Button to open the data export dialog."
-	},
-	"buttonImportData": {
-		"message": "Импорт из ZIP-файла",
-		"description": "Button to choose a file for data import."
-	},
 	"labelLastUpdated": {
 		"message": "Последнее обновление: ",
 		"description": "Label of last updated timestamp of a style."
-	},
-	"anchorUpdate": {
-		"message": "Проверка обновлений",
-		"description": "Check a style for updates."
 	},
 	"buttonEdit": {
 		"message": "Изменить",
@@ -231,6 +251,10 @@
 		"message": "Удалить",
 		"description": "Button to remove a style."
 	},
+	"anchorUpdate": {
+		"message": "Проверка обновлений",
+		"description": "Check a style for updates."
+	},
 	"confirmNotSaved": {
 		"message": "Изменения не сохранены!\nНажмите кнопку ОК, чтобы отменить их или Отмена, чтобы остаться.",
 		"description": "Confirm message shown when there are unsaved style modifications."
@@ -242,10 +266,6 @@
 	"msgErrorZip": {
 		"message": "Ошибка загрузки zip-файла.",
 		"description": "Message shown when Stylish fails to open the zip file."
-	},
-	"buttonExport": {
-		"message": "Экспорт",
-		"description": "Button to confirm export."
 	},
 	"hintFirefoxCSS": {
 		"message": "Export to .user.css files, of which the syntax is only supported by Firefox.",

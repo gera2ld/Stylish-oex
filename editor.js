@@ -38,7 +38,7 @@ function initCodeMirror(callback,data){
 			{src:'lib/CodeMirror/addon/selection/active-line.js'},
 			{src:'mylib/CodeMirror/search.js'},
 		],function(){
-			var T=CodeMirror($('mCode'),{
+			var T=CodeMirror(document.getElementById('mCode'),{
 				continueComments:true,
 				matchBrackets:true,
 				autoCloseBrackets:true,

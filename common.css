@@ -1,0 +1,7 @@
+html,body{background:#eee;font:menu;height:100%;margin:0;padding:0;}
+.hide{display:none !important;}
+tr{vertical-align:top;padding:0;height:1px;}
+tr.expand{height:auto;}
+.expandr{position:relative;}
+.expanda,.expandr .CodeMirror{position:absolute;width:100%;height:100%;}
+.ellipsis{white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}

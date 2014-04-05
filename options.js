@@ -1,5 +1,4 @@
-var $=document.getElementById.bind(document),
-		N=$('main'),L=$('sList'),O=$('overlay'),
+var $=document.querySelector.bind(document),L=$('#sList'),cur=null,C=$('.content'),
 		bg=opera.extension.bgProcess,_=bg._,divs={};
 function getDate(t){var d=new Date();d.setTime(t);return d.toLocaleDateString();}
 function getName(n){
@@ -10,27 +9,27 @@ function getName(n){
 function modifyItem(d,r){
 	if(r) {
 		if(r.message) d.querySelector('.message').innerHTML=r.message;
-		var u=d.querySelector('.update');
-		if(r.hideUpdate) u.classList.add('hide');
-		else u.classList.remove('hide');
+		d=d.querySelector('.update');
+		if(d) d.classList[r.hideUpdate?'add':'remove']('hide');
 	}
 }
 function loadItem(n,r){
 	var d=divs[n.id];
-	d.innerHTML='<a class="name ellipsis">'+getName(n)+'</a>'
+	d.innerHTML='<h3><a class="name ellipsis"></a></h3>'
 	+'<span class=updated>'+(n.updated?_('labelLastUpdated')+getDate(n.updated):'')+'</span>'
-	+(n.metaUrl?'<a href=# data=update class=update>'+_('anchorUpdate')+'</a> ':'')
-	+'<span class=message></span>'
 	+'<div class=panel>'
 		+'<button data=edit>'+_('buttonEdit')+'</button> '
 		+'<button data=enable>'+(n.enabled?_('buttonDisable'):_('buttonEnable'))+'</button> '
-		+'<button data=remove>'+_('buttonRemove')+'</button>'
+		+'<button data=remove>'+_('buttonRemove')+'</button> '
+		+(n.metaUrl?'<button data=update class=update>'+_('anchorUpdate')+'</button> ':'')
+		+'<span class=message></span>'
 	+'</div>';
 	d.className=n.enabled?'':'disabled';
 	setTimeout(function(){
-		var a=d.firstChild;
+		var a=d.querySelector('.name');if(!a) return;
 		if(n.url) a.href=n.url;
 		a.title=n.name;
+		a.innerHTML=getName(n);
 		modifyItem(d,r);
 	},0);
 }
@@ -62,47 +61,33 @@ L.onclick=function(e){
 			break;
 	}
 };
-$('bNew').onclick=function(){edit(bg.newStyle());};
-$('bUpdate').onclick=bg.checkUpdateAll;
-var panel=N;
-function switchTo(D){
-	panel.classList.add('hide');D.classList.remove('hide');panel=D;
-}
-var dialogs=[];
-function showDialog(D,z){
-	if(!dialogs.length) {
-		O.classList.remove('hide');
-		setTimeout(function(){O.classList.add('overlay');},1);
+$('#bNew').onclick=function(){edit(bg.newStyle());};
+$('#bUpdate').onclick=bg.checkUpdateAll;
+function switchTab(e){
+	var t=e.target,i=t.id.slice(2),o=C.querySelector('#tab'+i);
+	if(!o) return;
+	if(cur) {
+		if(cur.tab==o) return;
+		cur.menu.classList.remove('selected');
+		cur.tab.classList.add('hide');
 	}
-	if(!z) z=dialogs.length?dialogs[dialogs.length-1].zIndex+1:1;
-	dialogs.push(D);
-	O.style.zIndex=D.style.zIndex=D.zIndex=z;
-	D.classList.remove('hide');
-	D.style.top=(window.innerHeight-D.offsetHeight)/2+'px';
-	D.style.left=(window.innerWidth-D.offsetWidth)/2+'px';
-}
-function closeDialog(){
-	dialogs.pop().classList.add('hide');
-	if(dialogs.length) O.style.zIndex=dialogs.length>1?dialogs[dialogs.length-1]:1;
-	else {
-		O.classList.remove('overlay');
-		setTimeout(function(){O.classList.add('hide');},500);
+	cur={menu:t,tab:o};
+	t.classList.add('selected');
+	o.classList.remove('hide');
+	switch(i) {	// init
+		case 'Settings':xLoad();break;
 	}
 }
-O.onclick=function(){
-	if(dialogs.length) (dialogs[dialogs.length-1].close||closeDialog)();
-};
+$('.sidemenu').onclick=switchTab;
+switchTab({target:$('#smInstalled')});
 function confirmCancel(dirty){
 	return !dirty||confirm(_('confirmNotSaved'));
 }
 
 // Advanced
-var A=$('advanced');
-$('bAdvanced').onclick=function(){showDialog(A);};
-$('cShow').checked=bg.settings.showButton;
-$('cShow').onchange=function(){bg.showButton(bg.setOption('showButton',this.checked));};
-$('aExport').onclick=function(){showDialog(X);xLoad();};
-$('aImport').onchange=function(e){
+$('#cShow').checked=bg.settings.showButton;
+$('#cShow').onchange=function(){bg.showButton(bg.setOption('showButton',this.checked));};
+$('#aImport').onchange=function(e){
 	var i,f,files=e.target.files;
 	for(i=0;f=files[i];i++) {
 		var r=new FileReader();
@@ -110,9 +95,6 @@ $('aImport').onchange=function(e){
 		r.readAsBinaryString(f);
 	}
 };
-A.close=$('aClose').onclick=closeDialog;
-
-// Import
 function impo(b){
 	function finish(){
 		if(!--count) {
@@ -141,9 +123,9 @@ function impo(b){
 }
 
 // Export
-var X=$('export'),xL=$('xList'),xE=$('bExport'),xF=$('cFirefox');
+var xL=$('#xList'),xE=$('#bExport'),xF=$('#cFirefox');
 function xLoad() {
-	xL.innerHTML='';xE.disabled=false;xE.innerHTML=_('buttonExport');
+	xL.innerHTML='';xE.disabled=false;
 	xF.checked=bg.settings.firefoxCSS;
 	bg.ids.forEach(function(i){
 		var d=document.createElement('div');
@@ -153,14 +135,14 @@ function xLoad() {
 		xL.appendChild(d);
 	});
 }
-xF.onchange=function(){bg.setOption('firefoxCSS',this.checked);};
 xF.parentNode.title=_('hintFirefoxCSS');
+xF.onchange=function(){bg.setOption('firefoxCSS',this.checked);};
 xL.onclick=function(e){
 	var t=e.target;
 	if(t.parentNode!=this) return;
 	t.classList.toggle('selected');
 };
-$('bSelect').onclick=function(){
+$('#bSelect').onclick=function(){
 	var c=xL.childNodes,v,i;
 	for(i=0;i<c.length;i++) if(!c[i].classList.contains('selected')) break;
 	v=i<c.length;
@@ -181,7 +163,7 @@ function getFirefoxCSS(c){
 	});
 	return d.join('\n');
 }
-$('bExport').onclick=function(){
+xE.onclick=function(){
 	this.disabled=true;this.innerHTML=_('buttonExporting');
 	var i,ids=[];
 	for(i=0;i<bg.ids.length;i++) if(xL.childNodes[i].classList.contains('selected')) ids.push(bg.ids[i]);
@@ -200,14 +182,14 @@ $('bExport').onclick=function(){
 		bg.opera.extension.tabs.create({url:'data:application/zip;base64,'+o}).focus();
 	});
 };
-X.close=$('bClose').onclick=closeDialog;
 
 // Style Editor
-var M=$('editor'),S=$('mSection'),I=$('mName'),T,
-    rD=$('mDomain'),rR=$('mRegexp'),rP=$('mUrlPrefix'),rU=$('mUrl'),
-    /*dM=$('mDeMoz'),dW=$('mDeWebkit'),*/eS=$('mSave'),eSC=$('mSaveClose');
+var M=$('#wndEditor'),S=$('#mSection'),I=$('#mName'),
+    rD=$('#mDomain'),rR=$('#mRegexp'),rP=$('#mUrlPrefix'),rU=$('#mUrl'),
+    eS=$('#mSave'),eSC=$('#mSaveClose'),T;
 function edit(o){
-	switchTo(M);M.css=o;M.data=o.data;
+	M.classList.remove('hide');
+	M.css=o;M.data=o.data;
 	S.innerHTML='';S.cur=0;S.dirty=false;
 	eS.disabled=eSC.disabled=true;
 	I.value=o.name;
@@ -215,8 +197,6 @@ function edit(o){
 		for(var i=0;i<M.data.length;i++) mAddItem(M.data[i].name);
 		mShow();
 	} else addSection();
-	//dM.checked=M.css.deprefix.indexOf('-moz-')>=0;
-	//dW.checked=M.css.deprefix.indexOf('-webkit-')>=0;
 }
 function mAddItem(n){
 	var d=document.createElement('div');
@@ -239,15 +219,10 @@ function mSection(r){
 	}
 }
 function mSave(){
-	if(!eS.disabled){
-		M.css.name=I.value;
-		mSection();
-		var d=M.css.deprefix=[];
-		//if(dM.checked) d.push('-moz-');
-		//if(dW.checked) d.push('-webkit-');
-		bg.saveStyle(M.css,{status:M.css.id?0:1});
-		eS.disabled=eSC.disabled=true;
-	}
+	M.css.name=I.value;
+	mSection();
+	eS.disabled=eSC.disabled=true;
+	bg.saveStyle(M.css,{status:M.css.id?0:1});
 }
 function mShow(){
 	var c=S.childNodes[S.cur];S.dirty=true;
@@ -261,12 +236,12 @@ function mShow(){
 	} else T.setValueAndFocus(rD.value=rR.value=rP.value=rU.value='');
 	T.clearHistory();S.dirty=false;
 }
-function mClose(){switchTo(N);M.css=null;}
+function mClose(){M.classList.add('hide');M.css=null;}
 function bindChange(e,f){e.forEach(function(i){i.onchange=f;});}
 M.markDirty=function(){eS.disabled=eSC.disabled=false;};
 S.markDirty=function(){if(S.dirty) return;S.dirty=true;M.markDirty();};
 bindChange([rD,rR,rP,rU],S.markDirty);
-bindChange([I/*,$('mDeMoz'),$('mDeWebkit')*/],M.markDirty);
+bindChange([I],M.markDirty);
 S.onclick=function(e){
 	var t=e.target;
 	if(t.parentNode!=this) return;
@@ -293,8 +268,8 @@ function renameSection(t){
 		M.markDirty();
 	}
 }
-$('mNew').onclick=addSection;
-$('mDel').onclick=function(){
+$('#mNew').onclick=addSection;
+$('#mDel').onclick=function(){
 	if(M.data.length>1) {
 		M.data.splice(S.cur,1);
 		S.removeChild(S.lastChild);
@@ -305,12 +280,12 @@ $('mDel').onclick=function(){
 		M.markDirty();mShow();
 	}
 };
-$('mRen').onclick=function(){
+$('#mRen').onclick=function(){
 	renameSection(S.childNodes[S.cur]);
 };
 eS.onclick=mSave;
 eSC.onclick=function(){mSave();mClose();};
-M.close=$('mClose').onclick=function(){if(confirmCancel(!eS.disabled)) mClose();};
+M.close=$('#mClose').onclick=function(){if(confirmCancel(!eS.disabled)) mClose();};
 function ruleFocus(e){e.target.parentNode.style.width='50%';}
 function ruleBlur(e){e.target.parentNode.style.width='';}
 [rD,rR,rP,rU].forEach(function(i){i.onfocus=ruleFocus;i.onblur=ruleBlur;});

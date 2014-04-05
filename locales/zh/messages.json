@@ -79,37 +79,97 @@
 		"message": "切换样式...",
 		"description": "Menu item to show alternate stylesheets of the current page."
 	},
-	"labelOptions": {
-		"message": "选项",
-		"description": "Options of this extension."
+	"anchorGetMoreStyles": {
+		"message": "<a href=http://userstyles.org target=_blank>获取更多样式</a>",
+		"description": "Link to get more styles."
+	},
+	"sideMenuInstalled": {
+		"message": "已安装的样式",
+		"description": "Label of the list of installed styles."
+	},
+	"sideMenuSettings": {
+		"message": "设置",
+		"description": "Side menu: Settings"
+	},
+	"sideMenuAbout": {
+		"message": "关于",
+		"description": "Side menu: About"
 	},
 	"buttonNew": {
 		"message": "新建",
 		"description": "Button to create a new style."
 	},
-	"anchorGetMoreStyles": {
-		"message": "<a href=http://userstyles.org target=_blank>从userstyles.org获取更多样式</a>",
-		"description": "Link to get more styles."
-	},
 	"anchorUpdateAll": {
 		"message": "全部更新",
 		"description": "Check all styles for updates."
 	},
-	"buttonAdvanced": {
-		"message": "高级",
-		"description": "Button to show the advanced options."
+	"msgLoading": {
+		"message": "加载中...",
+		"description": "Message shown while loading."
 	},
-	"labelInstalledStyles": {
-		"message": "已安装的样式",
-		"description": "Label of the list of installed styles."
+	"labelSettings": {
+		"message": "选项",
+		"description": "Label shown on the top of settings page"
+	},
+	"labelShowButton": {
+		"message": "在工具栏上显示按钮",
+		"description": "Option to show an icon of this extension in the toolbar."
+	},
+	"labelDataImport": {
+		"message": "数据导入",
+		"description": "Section title of data import."
+	},
+	"buttonImportData": {
+		"message": "导入自zip文件",
+		"description": "Button to choose a file for data import."
+	},
+	"labelDataExport": {
+		"message": "数据导出",
+		"description": "Section title of data export."
+	},
+	"labelStylesToExport": {
+		"message": "要导出的样式",
+		"description": "Label shown on top of the style list for export."
+	},
+	"labelFirefoxCSS": {
+		"message": "导出为Firefox的CSS文件",
+		"description": "Option to export data as Firefox CSS files."
+	},
+	"buttonAllNone": {
+		"message": "全选/不选",
+		"description": "Button to select all styles or none."
+	},
+	"buttonExportData": {
+		"message": "导出为zip文件",
+		"description": "Button to open the data export dialog."
+	},
+	"labelAbout": {
+		"message": "关于 Stylish for Opera",
+		"description": "Label shown on top of the about page."
+	},
+	"labelSupportPage": {
+		"message": "支持页面：",
+		"description": "Label of support page."
 	},
 	"anchorSupportPage": {
 		"message": "<a href=https://github.com/gera2ld/Stylish-oex/wiki/Stylish>Stylish</a>",
 		"description": "Link to the support page of Stylish."
 	},
+	"labelAuthor": {
+		"message": "作者：",
+		"description": "Label of author."
+	},
 	"anchorAuthor": {
-		"message": "<a href=mailto:gera2ld@163.com>Gerald</a> 制作",
-		"description": "Author shown in the footer of options page, translator information may be added."
+		"message": "<a href=mailto:gera2ld@163.com>Gerald</a>",
+		"description": "Information of the author."
+	},
+	"labelTranslator": {
+		"message": "翻译者：",
+		"description": "Label of translator."
+	},
+	"anchorTranslator": {
+		"message": "<a href=mailto:gera2ld@163.com>Gerald</a>",
+		"description": "Information of the translator."
 	},
 	"labelStyleEditor": {
 		"message": "样式编辑器",
@@ -171,49 +231,9 @@
 		"message": "关闭",
 		"description": "Button to close window."
 	},
-	"labelExport": {
-		"message": "数据导出",
-		"description": "Label shown in the title of export dialog."
-	},
-	"anchorExportOptions": {
-		"message": "选项",
-		"description": "Options of export."
-	},
-	"labelFirefoxCSS": {
-		"message": "导出为Firefox的CSS文件",
-		"description": "Option to export data as Firefox CSS files."
-	},
-	"buttonAllNone": {
-		"message": "全选/不选",
-		"description": "Button to select all styles or none."
-	},
-	"labelAdvanced": {
-		"message": "高级选项",
-		"description": "Label shown in the title of advanced dialog."
-	},
-	"labelShowButton": {
-		"message": "在工具栏上显示按钮",
-		"description": "Option to show an icon of this extension in the toolbar."
-	},
-	"labelData": {
-		"message": "数据",
-		"description": "Label of extension data management."
-	},
-	"buttonExportData": {
-		"message": "导出为zip文件",
-		"description": "Button to open the data export dialog."
-	},
-	"buttonImportData": {
-		"message": "导入自zip文件",
-		"description": "Button to choose a file for data import."
-	},
 	"labelLastUpdated": {
 		"message": "最近更新：",
 		"description": "Label of last updated timestamp of a style."
-	},
-	"anchorUpdate": {
-		"message": "查找更新",
-		"description": "Check a style for updates."
 	},
 	"buttonEdit": {
 		"message": "编辑",
@@ -231,6 +251,10 @@
 		"message": "移除",
 		"description": "Button to remove a style."
 	},
+	"anchorUpdate": {
+		"message": "查找更新",
+		"description": "Check a style for updates."
+	},
 	"confirmNotSaved": {
 		"message": "修改尚未保存！\n点击确定放弃修改或点击取消停留此页面。",
 		"description": "Confirm message shown when there are unsaved style modifications."
@@ -242,10 +266,6 @@
 	"msgErrorZip": {
 		"message": "打开zip文件发生错误。",
 		"description": "Message shown when Stylish fails to open the zip file."
-	},
-	"buttonExport": {
-		"message": "导出",
-		"description": "Button to confirm export."
 	},
 	"hintFirefoxCSS": {
 		"message": "导出为.user.css文件，其语法仅被Firefox支持。",
