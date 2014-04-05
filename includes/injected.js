@@ -4,6 +4,17 @@ function fireEvent(t){
 	e.initEvent(t,false,false);
 	document.dispatchEvent(e);
 }
+function showMessage(data){
+	var d=document.createElement('div');
+	d.style='position:fixed;border-radius:5px;background:orange;padding:20px;z-index:9999;box-shadow:5px 10px 15px rgba(0,0,0,0.4);transition:opacity 1s linear;opacity:0;text-align:left;';
+	document.body.appendChild(d);d.innerHTML=data;
+	d.style.top=(window.innerHeight-d.offsetHeight)/2+'px';
+	d.style.left=(window.innerWidth-d.offsetWidth)/2+'px';
+	function close(){document.body.removeChild(d);delete d;}
+	d.onclick=close;	// close immediately
+	setTimeout(function(){d.style.opacity=1;},1);	// fade in
+	setTimeout(function(){d.style.opacity=0;setTimeout(close,1000);},3000);	// fade out
+}
 opera.extension.addEventListener('message', function(event) {
 	var message=event.data;
 	if(message.topic=='LoadedStyle') loadStyle(message.data);
@@ -22,7 +33,7 @@ opera.extension.addEventListener('message', function(event) {
 			data.id=message.data.id;
 		} else fireEvent('styleCanBeInstalledOpera');
 	} else if(message.topic=='ParsedCSS') {
-		if(fireEvent) {
+		if(data) {
 			if(message.data.status<0) alert(message.data.message);
 			else fireEvent('styleInstalled');
 		} else showMessage(message.data.message);
@@ -40,16 +51,10 @@ opera.extension.addEventListener('message', function(event) {
 	}
 }, false);
 opera.extension.postMessage({topic:'LoadStyle'});
-function showMessage(data){
-	var d=document.createElement('div');
-	d.style='position:fixed;border-radius:5px;background:orange;padding:20px;z-index:9999;box-shadow:5px 10px 15px rgba(0,0,0,0.4);transition:opacity 1s linear;opacity:0;text-align:left;';
-	document.body.appendChild(d);d.innerHTML=data;
-	d.style.top=(window.innerHeight-d.offsetHeight)/2+'px';
-	d.style.left=(window.innerWidth-d.offsetWidth)/2+'px';
-	function close(){document.body.removeChild(d);delete d;}
-	d.onclick=close;	// close immediately
-	setTimeout(function(){d.style.opacity=1;},1);	// fade in
-	setTimeout(function(){d.style.opacity=0;setTimeout(close,1000);},3000);	// fade out
+function addScript(url){
+	var s=document.createElement('script');s.src=url;
+	document.body.appendChild(s);
+	document.body.removeChild(s);
 }
 
 // CSS applying
@@ -119,11 +124,7 @@ function fixOpera(){
 		opera.extension.postMessage({topic:'InstallStyle'});
 	}
 	function install(){
-		ping=function(){
-			var req=new window.XMLHttpRequest();
-			req.open('GET', getData('stylish-install-ping-url-opera'), true);
-			req.send();
-		};
+		ping=function(){addScript(getData('stylish-install-ping-url-opera'));};
 		update();
 	}
 	document.addEventListener('stylishInstallOpera',install);

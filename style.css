@@ -1,5 +1,4 @@
-@import url(font.css);
-html,body{background:#eee;}
+html,body{background:#eee;font:menu;}
 h1,h2{text-shadow:#999 3px 3px 5px;}
 a{color:dodgerblue;}
 .center{text-align:center;}
@@ -26,8 +25,8 @@ tr.expand{height:auto;}
 #advanced label{display:block;}
 #main fieldset{position:relative;height:100%;padding:0;}
 #main legend{margin-left:10px;}
-textarea,input[type=text]{width:100%;border:none;margin:0;padding:0;}
-fieldset{border-radius:5px;}
+textarea,input[type=text]{box-sizing:border-box;width:100%;}
+fieldset{border-radius:5px;box-sizing:border-box;}
 #sList{overflow-x:hidden;overflow-y:auto;position:absolute;top:22px;left:0;right:0;bottom:10px;}
 #sList>div{display:block;padding:10px;overflow:hidden;height:60px;position:relative;border-top:1px dashed gray;}
 #sList>div:last-child{border-bottom:1px dashed gray;}
