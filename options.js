@@ -1,8 +1,9 @@
 var $=document.querySelector.bind(document),L=$('#sList'),cur=null,C=$('.content'),
 		bg=opera.extension.bgProcess,_=bg._,divs={};
 function getDate(t){var d=new Date();d.setTime(t);return d.toLocaleDateString();}
-function getName(n){
-	return n.name?n.name.replace(/&/g,'&amp;').replace(/</g,'&lt;'):'<em>'+_('labelNoName')+'</em>';
+function getName(d,n){
+	d.title=n||'';
+	d.innerHTML=n?n.replace(/&/g,'&amp;').replace(/</g,'&lt;'):'<em>'+_('labelNoName')+'</em>';
 }
 
 // Main options
@@ -14,8 +15,7 @@ function modifyItem(r){
 	if(a) a.classList[r.hideUpdate?'add':'remove']('hide');
 	a=d.querySelector('.name');
 	if(n.url) a.href=n.url;
-	a.title=n.name;
-	a.innerHTML=getName(n);
+	getName(a,n.name);
 	a=d.querySelector('.enable');
 	a.innerHTML=n.enabled?_('buttonDisable'):_('buttonEnable');
 }
@@ -129,8 +129,7 @@ function xLoad() {
 	bg.ids.forEach(function(i){
 		var d=document.createElement('div');
 		d.className='ellipsis';
-		d.title=bg.metas[i].name;
-		d.innerHTML=getName(bg.metas[i]);
+		getName(d,bg.metas[i].name);
 		xL.appendChild(d);
 	});
 }
