@@ -155,7 +155,7 @@ function enableStyle(id,v,callback){
 	db.transaction(function(t){
 		t.executeSql('UPDATE metas SET enabled=? WHERE id=?',[s.enabled,id],function(t,r){
 			if(r.rowsAffected) {
-				updateItem({id:id,status:0});
+				updateItem({id:id,status:2});
 				if(s.enabled) t.executeSql('SELECT * FROM styles WHERE metaId=?',[id],function(t,r){
 					var d=[];
 					if(r.rows.length) for(i=0;i<r.rows.length;i++) d.push(getSection(r.rows.item(i)));

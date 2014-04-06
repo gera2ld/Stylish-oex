@@ -3,6 +3,7 @@ a{color:dodgerblue;}
 textarea,input[type=text]{box-sizing:border-box;width:100%;}
 .main{max-width:900px;height:100%;margin:0 auto;}
 .sidebar{position:fixed;background:#fafafa;width:200px;margin-top:30px;box-sizing:border-box;border:1px solid darkgray;border-radius:10px 0 0 10px;border-right:none;padding:20px 10px 10px;text-align:right;}
+.sidebar>hr{border:none;border-top:1px solid darkgray;}
 .sidemenu>div{cursor:pointer;line-height:2em;}
 .sidemenu>div.selected,.sidemenu>div:hover{text-shadow:blue 1px 1px 2px;}
 .content{background:white;margin-left:200px;box-sizing:border-box;border-left:1px solid darkgray;border-right:1px solid darkgray;height:100%;overflow-y:auto;position:relative;}
@@ -20,6 +21,8 @@ textarea,input[type=text]{box-sizing:border-box;width:100%;}
 #sList{height:auto;overflow-y:auto;padding:0 10px 10px;border-top:1px solid darkgray;}
 #sList h3{display:inline-block;margin-right:10px;}
 #sList>div{border-bottom:1px dashed silver;padding-bottom:10px;}
+#sList>div.disabled{background:lightgray;color:gray;}
+#sList>div.disabled .name{color:blueviolet;}
 
 /* Editor */
 #wndEditor{position:fixed;background:lightgray;top:0;bottom:0;left:0;right:0;z-index:1;}

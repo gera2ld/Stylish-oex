@@ -6,32 +6,31 @@ function getName(n){
 }
 
 // Main options
-function modifyItem(d,r){
-	if(r) {
-		if(r.message) d.querySelector('.message').innerHTML=r.message;
-		d=d.querySelector('.update');
-		if(d) d.classList[r.hideUpdate?'add':'remove']('hide');
-	}
+function modifyItem(r){
+	var d=divs[r.id],n=bg.metas[r.id];
+	if(r.message) d.querySelector('.message').innerHTML=r.message;
+	d.className=n.enabled?'':'disabled';
+	var a=d.querySelector('.update');
+	if(a) a.classList[r.hideUpdate?'add':'remove']('hide');
+	a=d.querySelector('.name');
+	if(n.url) a.href=n.url;
+	a.title=n.name;
+	a.innerHTML=getName(n);
+	a=d.querySelector('.enable');
+	a.innerHTML=n.enabled?_('buttonDisable'):_('buttonEnable');
 }
 function loadItem(n,r){
-	var d=divs[n.id];
+	var d=divs[n.id];if(!r) r={id:n.id};
 	d.innerHTML='<h3><a class="name ellipsis"></a></h3>'
 	+'<span class=updated>'+(n.updated?_('labelLastUpdated')+getDate(n.updated):'')+'</span>'
 	+'<div class=panel>'
 		+'<button data=edit>'+_('buttonEdit')+'</button> '
-		+'<button data=enable>'+(n.enabled?_('buttonDisable'):_('buttonEnable'))+'</button> '
+		+'<button data=enable class=enable></button> '
 		+'<button data=remove>'+_('buttonRemove')+'</button> '
 		+(n.metaUrl?'<button data=update class=update>'+_('anchorUpdate')+'</button> ':'')
 		+'<span class=message></span>'
 	+'</div>';
-	d.className=n.enabled?'':'disabled';
-	setTimeout(function(){
-		var a=d.querySelector('.name');if(!a) return;
-		if(n.url) a.href=n.url;
-		a.title=n.name;
-		a.innerHTML=getName(n);
-		modifyItem(d,r);
-	},0);
+	setTimeout(function(){modifyItem(r);},0);
 }
 function addItem(o){
 	var d=divs[o.id]=document.createElement('div');
@@ -303,7 +302,7 @@ function updateItem(r){
 	switch(r.status){
 		case 0:loadItem(m,r);break;
 		case 1:addItem(m);break;
-		default:modifyItem(divs[r.id],r);
+		default:modifyItem(r);
 	}
 }
 bg._updateItem.push(updateItem);
