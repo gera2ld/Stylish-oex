@@ -441,18 +441,18 @@ var _update={};
 function checkUpdateO(o){
 	if(_update[o.id]) return;_update[o.id]=1;
 	function finish(){delete _update[o.id];}
-	var r={id:o.id,hideUpdate:1,status:2};
+	var r={id:o.id,updating:1,status:2};
 	if(o.metaUrl) {
 		r.message=_('msgCheckingForUpdate');updateItem(r);
 		fetchURL(o.metaUrl,function(){
 			r.message=_('msgErrorFetchingUpdateInfo');
-			delete r.hideUpdate;
+			delete r.updating;
 			if(this.status==200) try{
 				var d=new Date(JSON.parse(this.responseText).updated).getTime();
 				if(!o.updated||o.updated<d) {
 					if(o.updateUrl) {
 						r.message=_('msgUpdating');
-						r.hideUpdate=1;
+						r.updating=1;
 						fetchURL(o.updateUrl,function(){
 							parseCSS(null,{status:this.status,id:o.id,updated:d,code:this.responseText});
 						});

@@ -85,7 +85,7 @@
 	},
 	"sideMenuInstalled": {
 		"message": "已安装的样式",
-		"description": "Label of the list of installed styles."
+		"description": "Side menu: Installed scripts"
 	},
 	"sideMenuSettings": {
 		"message": "设置",
@@ -231,14 +231,6 @@
 		"message": "关闭",
 		"description": "Button to close window."
 	},
-	"labelLastUpdated": {
-		"message": "最近更新：",
-		"description": "Label of last updated timestamp of a style."
-	},
-	"buttonEdit": {
-		"message": "编辑",
-		"description": "Button to edit a style."
-	},
 	"buttonDisable": {
 		"message": "禁用",
 		"description": "Button to disable a style."
@@ -246,6 +238,14 @@
 	"buttonEnable": {
 		"message": "启用",
 		"description": "Button to enable a style."
+	},
+	"labelLastUpdated": {
+		"message": "最近更新：",
+		"description": "Label of last updated timestamp of a style."
+	},
+	"buttonEdit": {
+		"message": "编辑",
+		"description": "Button to edit a style."
 	},
 	"buttonRemove": {
 		"message": "移除",

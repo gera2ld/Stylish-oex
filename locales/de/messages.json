@@ -85,7 +85,7 @@
 	},
 	"sideMenuInstalled": {
 		"message": "Installierte Styles",
-		"description": "Label of the list of installed styles."
+		"description": "Side menu: Installed scripts"
 	},
 	"sideMenuSettings": {
 		"message": "Settings",
@@ -231,14 +231,6 @@
 		"message": "Schließen",
 		"description": "Button to close window."
 	},
-	"labelLastUpdated": {
-		"message": "Letztes Update:",
-		"description": "Label of last updated timestamp of a style."
-	},
-	"buttonEdit": {
-		"message": "Bearbeiten",
-		"description": "Button to edit a style."
-	},
 	"buttonDisable": {
 		"message": "Deaktivieren",
 		"description": "Button to disable a style."
@@ -246,6 +238,14 @@
 	"buttonEnable": {
 		"message": "Aktivieren",
 		"description": "Button to enable a style."
+	},
+	"labelLastUpdated": {
+		"message": "Letztes Update:",
+		"description": "Label of last updated timestamp of a style."
+	},
+	"buttonEdit": {
+		"message": "Bearbeiten",
+		"description": "Button to edit a style."
 	},
 	"buttonRemove": {
 		"message": "Entfernen",

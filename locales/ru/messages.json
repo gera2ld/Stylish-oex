@@ -85,7 +85,7 @@
 	},
 	"sideMenuInstalled": {
 		"message": "Установленные стили",
-		"description": "Label of the list of installed styles."
+		"description": "Side menu: Installed scripts"
 	},
 	"sideMenuSettings": {
 		"message": "Settings",
@@ -231,14 +231,6 @@
 		"message": "Закрыть",
 		"description": "Button to close window."
 	},
-	"labelLastUpdated": {
-		"message": "Последнее обновление: ",
-		"description": "Label of last updated timestamp of a style."
-	},
-	"buttonEdit": {
-		"message": "Изменить",
-		"description": "Button to edit a style."
-	},
 	"buttonDisable": {
 		"message": "Отключить",
 		"description": "Button to disable a style."
@@ -246,6 +238,14 @@
 	"buttonEnable": {
 		"message": "Включить",
 		"description": "Button to enable a style."
+	},
+	"labelLastUpdated": {
+		"message": "Последнее обновление: ",
+		"description": "Label of last updated timestamp of a style."
+	},
+	"buttonEdit": {
+		"message": "Изменить",
+		"description": "Button to edit a style."
 	},
 	"buttonRemove": {
 		"message": "Удалить",

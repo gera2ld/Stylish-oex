@@ -12,7 +12,7 @@ function modifyItem(r){
 	if(r.message) d.querySelector('.message').innerHTML=r.message;
 	d.className=n.enabled?'':'disabled';
 	var a=d.querySelector('.update');
-	if(a) a.classList[r.hideUpdate?'add':'remove']('hide');
+	if(a) a.disabled=r.updating;
 	a=d.querySelector('.name');
 	if(n.url) a.href=n.url;
 	getName(a,n.name);
@@ -21,7 +21,7 @@ function modifyItem(r){
 }
 function loadItem(n,r){
 	var d=divs[n.id];if(!r) r={id:n.id};
-	d.innerHTML='<h3><a class="name ellipsis"></a></h3>'
+	d.innerHTML='<a class="name ellipsis"></a>'
 	+'<span class=updated>'+(n.updated?_('labelLastUpdated')+getDate(n.updated):'')+'</span>'
 	+'<div class=panel>'
 		+'<button data=edit>'+_('buttonEdit')+'</button> '
