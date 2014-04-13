@@ -176,7 +176,6 @@ xE.onclick=function(){
 		z.file('Stylish',JSON.stringify({settings:bg.settings}));
 		i={compression:'DEFLATE'};
 		o=z.generate(i);
-		X.close();
 		bg.opera.extension.tabs.create({url:'data:application/zip;base64,'+o}).focus();
 	});
 };
