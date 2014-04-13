@@ -271,10 +271,6 @@
 		"message": "Exportieren nach .user.css Dateien, von denen das Syntax nur von Firefox unterstützt wird.",
 		"description": "Hint for option of FirefoxCSS."
 	},
-	"buttonExporting": {
-		"message": "Exportiere...",
-		"description": "Message shown when data export is in progress."
-	},
 	"msgRename": {
 		"message": "Abschnitt \"$1\" umbenennen zu:",
 		"description": "Message shown when a section is going to be renamed."

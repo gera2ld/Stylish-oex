@@ -162,7 +162,7 @@ function getFirefoxCSS(c){
 	return d.join('\n');
 }
 xE.onclick=function(){
-	this.disabled=true;this.innerHTML=_('buttonExporting');
+	xE.disabled=true;
 	var i,ids=[];
 	for(i=0;i<bg.ids.length;i++) if(xL.childNodes[i].classList.contains('selected')) ids.push(bg.ids[i]);
 	bg.getStyles(ids,function(o){
@@ -177,6 +177,7 @@ xE.onclick=function(){
 		i={compression:'DEFLATE'};
 		o=z.generate(i);
 		bg.opera.extension.tabs.create({url:'data:application/zip;base64,'+o}).focus();
+		xE.disabled=false;
 	});
 };
 

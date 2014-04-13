@@ -271,10 +271,6 @@
 		"message": "导出为.user.css文件，其语法仅被Firefox支持。",
 		"description": "Hint for option of FirefoxCSS."
 	},
-	"buttonExporting": {
-		"message": "正在导出...",
-		"description": "Message shown when data export is in progress."
-	},
 	"msgRename": {
 		"message": "重命名分节“$1”为：",
 		"description": "Message shown when a section is going to be renamed."
