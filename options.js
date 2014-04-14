@@ -124,7 +124,7 @@ function impo(b){
 // Export
 var xL=$('#xList'),xE=$('#bExport'),xF=$('#cFirefox');
 function xLoad() {
-	xL.innerHTML='';xE.disabled=false;
+	xL.innerHTML='';
 	xF.checked=bg.settings.firefoxCSS;
 	bg.ids.forEach(function(i){
 		var d=document.createElement('div');
