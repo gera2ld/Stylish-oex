@@ -4,8 +4,8 @@ textarea,input[type=text]{box-sizing:border-box;width:100%;}
 .main{max-width:900px;height:100%;margin:0 auto;}
 .sidebar{position:fixed;background:#fafafa;width:200px;margin-top:30px;box-sizing:border-box;border:1px solid darkgray;border-radius:10px 0 0 10px;border-right:none;padding:20px 10px 10px;text-align:right;}
 .sidebar>hr{border:none;border-top:1px solid darkgray;}
-.sidemenu>h3{cursor:pointer;color:gray;}
-.sidemenu>h3.selected,.sidemenu>h3:hover{color:black;}
+.sidemenu>a{color:gray;display:block;font-size:1.17em;font-weight:bold;line-height:2.5em;text-decoration:none;}
+.sidemenu>a.selected,.sidemenu>a:hover{color:black;}
 .content{background:white;margin-left:200px;box-sizing:border-box;border-left:1px solid darkgray;border-right:1px solid darkgray;height:100%;overflow-y:auto;position:relative;}
 .content>div{margin:20px;}
 .controls{height:1px;}
@@ -13,7 +13,7 @@ textarea,input[type=text]{box-sizing:border-box;width:100%;}
 .right{text-align:right;}
 .list{background:white;}
 .list>div{border-bottom:1px dashed lightgray;line-height:2em;}
-.list .selected{background:gray;color:white;}
+.list .selected{background:lightgreen;color:darkgreen;}
 .new{color:red;}
 
 /* Installed styles */
@@ -32,6 +32,8 @@ textarea,input[type=text]{box-sizing:border-box;width:100%;}
 .rules{width:100%;}
 .rules textarea{height:100px;}
 #wndEditor .side{width:220px;}
+#mSection>div{padding:0 10px;}
+#mSection>.selected{background:gray;color:white;}
 
 /* Settings */
 #tabSettings fieldset{border:none;border-top:1px solid silver;margin:20px 0 0;}

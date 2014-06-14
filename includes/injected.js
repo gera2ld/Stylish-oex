@@ -1,3 +1,4 @@
+var location=window.location;
 // Message
 function fireEvent(t){
 	var e=document.createEvent('Events');
@@ -44,7 +45,7 @@ opera.extension.addEventListener('message', function(event) {
 				if(ping) ping();
 			} else {
 				var t='ParseFirefoxCSS';
-				if(/\.json$/.test(window.location.href)) t='ParseJSON';
+				if(/\.json$/.test(location.href)) t='ParseJSON';
 				opera.extension.postMessage({topic:t,data:{code:document.body.innerText}});
 			}
 		}
@@ -130,11 +131,11 @@ function fixOpera(){
 	document.addEventListener('stylishInstallOpera',install);
 	document.addEventListener('stylishUpdateOpera',update);
 }
-if(/\.user\.css$|\.json$/.test(window.location.href)) {
+if(/\.user\.css$|\.json$/.test(location.href)) {
 	function rawInstall(){
 		if(document&&document.body&&!document.querySelector('title')) opera.extension.postMessage({topic:'InstallStyle'});
 	}
 	if(document.readyState!='complete') window.addEventListener('load',rawInstall,false);
 	else rawInstall();
-} else if(/^http:\/\/userstyles\.org\/styles\//.test(window.location.href))
+} else if(location.host=='userstyles.org'&&location.pathname.substr(0,8)=='/styles/')
 	window.addEventListener('DOMContentLoaded',fixOpera,false);
