@@ -79,10 +79,6 @@
 		"message": "切换样式...",
 		"description": "Menu item to show alternate stylesheets of the current page."
 	},
-	"anchorGetMoreStyles": {
-		"message": "<a href=http://userstyles.org target=_blank>获取更多样式</a>",
-		"description": "Link to get more styles."
-	},
 	"sideMenuInstalled": {
 		"message": "已安装的样式",
 		"description": "Side menu: Installed scripts"
@@ -102,6 +98,10 @@
 	"anchorUpdateAll": {
 		"message": "全部更新",
 		"description": "Check all styles for updates."
+	},
+	"anchorGetMoreStyles": {
+		"message": "获取更多样式",
+		"description": "Label of link to get more styles."
 	},
 	"msgLoading": {
 		"message": "加载中...",

@@ -79,10 +79,6 @@
 		"message": "Alter stylesheet...",
 		"description": "Menu item to show alternate stylesheets of the current page."
 	},
-	"anchorGetMoreStyles": {
-		"message": "<a href=http://userstyles.org target=_blank>Get more styles</a>",
-		"description": "Link to get more styles."
-	},
 	"sideMenuInstalled": {
 		"message": "Installed Styles",
 		"description": "Side menu: Installed scripts"
@@ -102,6 +98,10 @@
 	"anchorUpdateAll": {
 		"message": "Check all for updates",
 		"description": "Check all styles for updates."
+	},
+	"anchorGetMoreStyles": {
+		"message": "Get more styles",
+		"description": "Label of link to get more styles."
 	},
 	"msgLoading": {
 		"message": "Loading...",
