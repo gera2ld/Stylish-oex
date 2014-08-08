@@ -1,11 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="https://addons.opera.com/extensions/details/stylish-for-opera/" version="1.5.1" href="https://addons.opera.com/extensions/details/stylish-for-opera/" defaultlocale="en">
+<widget xmlns="http://www.w3.org/ns/widgets" id="https://addons.opera.com/extensions/details/stylish-for-opera/" version="1.5.2" href="https://addons.opera.com/extensions/details/stylish-for-opera/" defaultlocale="en">
   <name>Stylish</name>
   <author href="http://geraldl.ml" email="gera2ld@163.com">Gerald</author>
   <icon src="images/icon64.png"/>
   <icon src="images/icon18.png"/>
-  <access origin="http://userstyles.org"/>
-  <access origin="https://userstyles.org"/>
+  <access origin="*"/>
   <update-description href="https://extension-updates.opera.com/api/w3c-wd1/update/49c35286-5d6b-4905-9c8d-36380a740fcc/"/>
 
   <description xml:lang="en">Stylish for Opera allows custom styles for different URLs.</description>

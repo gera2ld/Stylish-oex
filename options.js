@@ -27,7 +27,7 @@ function loadItem(n,r){
 		+'<button data=edit>'+_('buttonEdit')+'</button> '
 		+'<button data=enable class=enable></button> '
 		+'<button data=remove>'+_('buttonRemove')+'</button> '
-		+(n.metaUrl?'<button data=update class=update>'+_('anchorUpdate')+'</button> ':'')
+		+(n.md5Url?'<button data=update class=update>'+_('anchorUpdate')+'</button> ':'')
 		+'<span class=message></span>'
 	+'</div>';
 	setTimeout(function(){modifyItem(r);},0);
@@ -154,7 +154,7 @@ $('#bSelect').onclick=function(){
 };
 function getFirefoxCSS(c){
 	var d=[];
-	['id','name','url','metaUrl','updateUrl','updated','enabled'].forEach(function(i){
+	allowedProps.forEach(function(i){
 		if(c[i]!=undefined) d.push('/* @'+i+' '+String(c[i]).replace(/\*/g,'+')+' */');
 	});
 	c.data.forEach(function(i){

@@ -17,27 +17,29 @@ function initMessages(callback){
 	};
 }
 
-/* ===============Data format 0.4==================
- * Database: Stylish
- * metas: {
- * 		id: Auto
- * 		name: String
- * 		url: String
- * 		metaUrl: String
- * 		updateUrl: String
- * 		updated: Integer
- * 		enabled: 0|1
- * }
- * styles: {
- * 		metaId: Integer
- * 		name: String
- * 		domains: List
- * 		regexps: List
- * 		urlPrefixes: List
- * 		urls: List
- * 		code: String
- * }
- */
+/* ===============Data format 0.5=================
+* Database: Stylish
+* metas: {
+*		id: Auto
+*		name: String
+*		url: String
+*		idUrl: String
+*		md5Url: String
+*		md5: String
+*		updateUrl: String
+*		updated: Integer
+*		enabled: 0|1
+*	}
+*	styles: {
+*		metaId: Integer
+*		name: String
+*		domains: List
+*		regexps: List
+*		urlPrefixes: List
+*		urls: List
+*		code: String
+*	}
+*/
 function dbError(t,e){
 	opera.postError('Database error: '+e.message);
 }
@@ -50,7 +52,7 @@ function initDatabase(callback){
 			else if(callback) callback();
 		}
 		var count=0,sql=[
-			'CREATE TABLE IF NOT EXISTS metas(id INTEGER PRIMARY KEY,name VARCHAR,url VARCHAR,metaUrl VARCHAR,updateUrl VARCHAR,updated INTEGER,enabled INTEGER)',
+			'CREATE TABLE IF NOT EXISTS metas(id INTEGER PRIMARY KEY,name TEXT,url TEXT,idUrl VARCHAR,md5Url TEXT,md5 TEXT,updateUrl TEXT,updated INTEGER,enabled INTEGER)',
 			'CREATE TABLE IF NOT EXISTS styles(metaId INTEGER,name VARCHAR,domains TEXT,regexps TEXT,urlPrefixes TEXT,urls TEXT,code TEXT)',
 		];
 		executeSql();
@@ -69,10 +71,8 @@ function upgradeData(callback){
 			t.executeSql('SELECT * FROM metas',[],function(t,r){
 				function update(t,r){
 					var i=d.shift();
-					if(!i) {
-						setOption('version_storage',0.5);
-						finish();
-					} else
+					if(!i) upgrade051();
+					else
 						t.executeSql('UPDATE metas SET updated=? WHERE id=?',[i[1]*1000,i[0]],update,dbError);
 				}
 				var i,o,d=[];
@@ -84,8 +84,29 @@ function upgradeData(callback){
 			});
 		});
 	}
+	function upgrade051(){
+		db.transaction(function(t){
+			function loop(_t,r){
+				var sql=sqls.shift();
+				if(!sql){
+					setOption('version_storage',0.51);
+					finish();
+				} else
+					t.executeSql(sql,[],loop,dbError);
+			}
+			var sqls=[
+				'DROP TABLE IF EXISTS tmp',
+				'ALTER TABLE metas RENAME TO tmp',
+				'CREATE TABLE IF NOT EXISTS metas(id INTEGER PRIMARY KEY,name TEXT,url TEXT,idUrl VARCHAR,md5Url TEXT,md5 TEXT,updateUrl TEXT,updated INTEGER,enabled INTEGER)',
+				'INSERT INTO metas(id,name,url,idUrl,updateUrl,updated,enabled) SELECT id,name,url,url,updateUrl,updated,enabled FROM tmp',
+				'DROP TABLE IF EXISTS tmp',
+			];
+			loop();
+		});
+	}
 	var version=getOption('version_storage',0),i=0;
 	if(version<0.5) upgrade05();
+	else if(version<0.51) upgrade051();
 	else finish();
 }
 function getMeta(o){
@@ -93,8 +114,7 @@ function getMeta(o){
 		id:o.id,
 		name:o.name,
 		url:o.url,
-		metaUrl:o.metaUrl,
-		updateUrl:o.updateUrl,
+		md5Url:o.md5Url,
 		updated:o.updated,
 		enabled:o.enabled,
 	};
@@ -128,8 +148,10 @@ function newStyle(c){
 	var r={
 		name:c.name||_('labelNewStyle'),
 		url:c.url,
-		id:c.id,
-		metaUrl:c.metaUrl,
+		idUrl:c.idUrl||'',
+		md5Url:c.md5Url||'',
+		md5:c.md5||'',
+		updateUrl:c.updateUrl||'',
 		updated:c.updated||null,
 		enabled:c.enabled!=undefined?c.enabled:1,
 		data:[]
@@ -183,11 +205,13 @@ function saveStyle(o,r,callback){
 		d.push(parseInt(o.id)||null);
 		d.push(o.name);
 		d.push(o.url);
-		d.push(o.metaUrl);
+		d.push(o.idUrl);
+		d.push(o.md5Url);
+		d.push(o.md5);
 		d.push(o.updateUrl);
 		d.push(o.updated||0);
 		d.push(o.enabled);
-		t.executeSql('REPLACE INTO metas(id,name,url,metaUrl,updateUrl,updated,enabled) VALUES(?,?,?,?,?,?,?)',d,function(t,r){
+		t.executeSql('REPLACE INTO metas(id,name,url,idUrl,md5Url,md5,updateUrl,updated,enabled) VALUES(?,?,?,?,?,?,?,?,?)',d,function(t,r){
 			o.id=r.insertId;
 			if(!(o.id in metas)) ids.push(o.id);
 			metas[o.id]=o;
@@ -311,7 +335,7 @@ function fetchURL(url, cb){
 }
 function checkStyle(e,d){
 	db.readTransaction(function(t){
-		t.executeSql('SELECT * FROM metas WHERE url=?',[d],function(t,r){
+		t.executeSql('SELECT * FROM metas WHERE idUrl=?',[d],function(t,r){
 			var o=null;
 			if(r.rows.length) o=getMeta(r.rows.item(0));
 			e.source.postMessage({topic:'CheckedStyle',data:o});
@@ -360,8 +384,8 @@ function parseFirefoxCSS(e,d,callback){
 	if(!code) {
 		c=metas[d.id];
 		if(!c) {c=newStyle(d);r.status=1;}
-		else for(i in d) c[i]=d[i];
-		c.data=data;
+		else allowedProps.forEach(function(i){if(d[i]) c[i]=d[i];});
+		c.data=data;c.updated=Date.now();
 		saveStyle(c,r,finish);
 	} else {
 		r.status=-1;
@@ -400,9 +424,9 @@ function parseCSS(e,data,callback){
 			data.name=j.name;
 			c=newStyle(data);
 			r.status=1;
-		} else c.updated=data.updated;
-		c.data=d;
-		c.updateUrl=j.updateUrl;
+		}
+		c.data=d;c.updated=Date.now();c.md5=data.md5;
+		//c.updateUrl=j.updateUrl;
 		saveStyle(c,r,finish);
 	} else finish();
 }
@@ -442,19 +466,19 @@ function checkUpdateO(o){
 	if(_update[o.id]) return;_update[o.id]=1;
 	function finish(){delete _update[o.id];}
 	var r={id:o.id,updating:1,status:2};
-	if(o.metaUrl) {
+	if(o.md5Url) {
 		r.message=_('msgCheckingForUpdate');updateItem(r);
-		fetchURL(o.metaUrl,function(){
+		fetchURL(o.md5Url,function(){
 			r.message=_('msgErrorFetchingUpdateInfo');
 			delete r.updating;
 			if(this.status==200) try{
-				var d=new Date(JSON.parse(this.responseText).updated).getTime();
-				if(!o.updated||o.updated<d) {
+				var md5=this.responseText;
+				if(o.md5!=md5) {
 					if(o.updateUrl) {
 						r.message=_('msgUpdating');
 						r.updating=1;
 						fetchURL(o.updateUrl,function(){
-							parseCSS(null,{status:this.status,id:o.id,updated:d,code:this.responseText});
+							parseCSS(null,{status:this.status,id:o.id,md5:md5,code:this.responseText});
 						});
 					} else r.message='<span class=new>'+_('msgNewVersion')+'</span>';
 				} else r.message=_('msgNoUpdate');
@@ -469,7 +493,7 @@ function checkUpdate(id){
 function checkUpdateAll(){
 	ids.forEach(function(i){
 		var o=metas[i];
-		if(o.metaUrl) checkUpdateO(o);
+		if(o.md5Url) checkUpdateO(o);
 	});
 }
 
