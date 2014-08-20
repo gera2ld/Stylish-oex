@@ -115,6 +115,7 @@ function getMeta(o){
 		name:o.name,
 		url:o.url,
 		md5Url:o.md5Url,
+		md5:o.md5,
 		updated:o.updated,
 		enabled:o.enabled,
 	};
